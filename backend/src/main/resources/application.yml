@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      database: photopia
+      database: photohunter
 server:
   error:
     include-message: always

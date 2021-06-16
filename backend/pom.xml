@@ -12,7 +12,7 @@
 <artifactId>backend</artifactId>
 <version>0.0.1-SNAPSHOT</version>
 <name>backend</name>
-<description>Photopia</description>
+<description>photohunter</description>
 <properties>
     <java.version>16</java.version>
 </properties>
@@ -73,7 +73,7 @@
 </dependencies>
 
 <build>
-    <finalName>github-roulette</finalName>
+    <finalName>photohunter</finalName>
     <plugins>
         <plugin>
             <groupId>org.springframework.boot</groupId>
