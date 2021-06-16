@@ -1,0 +1,7 @@
+spring:
+  data:
+    mongodb:
+      database: photopia
+server:
+  error:
+    include-message: always
