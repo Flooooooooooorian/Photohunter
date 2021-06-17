@@ -7,7 +7,7 @@ export default function LocationItem({location}) {
         <div>
             <Card className={classes.card}>
                 <CardHeader avatar={
-                    <Avatar src={location.thumbnail.url}/>
+                    <Avatar src={location.thumbnail ? location.thumbnail.url: ""}/>
                 } title={location.title}
                   subheader={""}/>
             </Card>
