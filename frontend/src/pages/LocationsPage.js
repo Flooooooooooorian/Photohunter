@@ -7,7 +7,6 @@ export default function LocationsPage() {
 
     return (
         <div>
-            <span>Locations</span>
             {locations.map((location) => <LocationItem key={location.id} location={location}/>)}
         </div>
     );
