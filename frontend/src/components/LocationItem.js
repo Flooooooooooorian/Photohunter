@@ -1,17 +1,24 @@
-import {Card, CardContent} from "@material-ui/core";
+import {Avatar, Card, CardHeader, makeStyles} from "@material-ui/core";
 
 export default function LocationItem({location}) {
+    const classes = useStyles()
 
     return (
         <div>
-            <Card>
-                <CardContent>
-                    <p>
-                        {location.title}
-                    </p>
-                </CardContent>
+            <Card className={classes.card}>
+                <CardHeader avatar={
+                    <Avatar src={location.thumbnail.url}/>
+                } title={location.title}
+                  subheader={""}/>
             </Card>
         </div>
     )
-
 }
+
+const useStyles = makeStyles(
+    {
+        card: {
+            margin: 10
+        }
+    }
+)
