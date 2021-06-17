@@ -1,4 +1,4 @@
-name: Photopia Build CI
+name: photohunter Build CI
 
 on:
   push
