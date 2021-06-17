@@ -1,8 +1,15 @@
+import {BrowserRouter, Switch, Route} from "react-router-dom";
+import LocationsPage from "./pages/LocationsPage";
 
 function App() {
   return (
-    <div>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route path={"/locations"} exact>
+            <LocationsPage/>
+        </Route>
+      </Switch>
+    </BrowserRouter>
   );
 }
 
