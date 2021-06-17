@@ -28,7 +28,7 @@ public class Location {
     private double lng;
 
     private String title;
-    private String thumbnail;
+    private Picture thumbnail;
     private String description;
     private List<String> pictures;
     private double rating;
