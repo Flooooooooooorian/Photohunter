@@ -7,20 +7,18 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Document
 @Builder
-public class User {
-
+public class Comment {
     @Id
     private String id;
-    private String username;
+    private String location_id;
 
-    private List<Location> locations;
-    private List<Picture> pictures;
-    private List<Comment> comments;
+    private User owner;
+    private Date posted_on;
 }
