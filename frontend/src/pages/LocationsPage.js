@@ -4,6 +4,8 @@ import {IconButton} from "@material-ui/core";
 import MapIcon from '@material-ui/icons/Map';
 import ListIcon from '@material-ui/icons/List';
 import {useState} from "react";
+import LocationMap from "../components/LocationMap";
+import styled from "styled-components/macro";
 
 export default function LocationsPage() {
 
@@ -19,16 +21,26 @@ export default function LocationsPage() {
         <div>
             {mapIsEnabled ?
                 <>
-                    <IconButton onClick={(event) => {switchView(event, false)}} aria-label="list" variant="outlined">
-                        <ListIcon/>
-                    </IconButton>
+                    <Wrapper>
+                        <IconButton onClick={(event) => {switchView(event, false)}} aria-label="list" variant="outlined">
+                            <ListIcon/>
+                        </IconButton>
+                    </Wrapper>
+                    <LocationMap locations={locations} />
                 </> :
                 <>
-                    <IconButton onClick={(event) => {switchView(event, true)}} aria-label="map" variant="outlined">
-                        <MapIcon/>
-                    </IconButton>
+                    <Wrapper>
+                        <IconButton onClick={(event) => {switchView(event, true)}} aria-label="map" variant="outlined">
+                            <MapIcon/>
+                        </IconButton>
+                    </Wrapper>
                     <LocationList locations={locations}/>
                 </>}
         </div>
     );
 }
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: end;
+`
