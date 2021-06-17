@@ -1,4 +1,4 @@
-package de.neuefische.flooooooooooorian.backend;
+package de.neuefische.flooooooooooorian.backend.repository;
 
 import de.neuefische.flooooooooooorian.backend.model.Location;
 import org.springframework.data.repository.PagingAndSortingRepository;

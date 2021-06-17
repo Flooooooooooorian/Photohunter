@@ -1,6 +1,6 @@
 package de.neuefische.flooooooooooorian.backend.service;
 
-import de.neuefische.flooooooooooorian.backend.LocationRepository;
+import de.neuefische.flooooooooooorian.backend.repository.LocationRepository;
 import de.neuefische.flooooooooooorian.backend.model.Location;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
