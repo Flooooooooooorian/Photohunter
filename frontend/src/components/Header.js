@@ -3,7 +3,7 @@ import {AppBar, Toolbar} from "@material-ui/core";
 export default function Header() {
 
     return (
-        <AppBar>
+        <AppBar position={"static"}>
             <Toolbar>
                 <p>
                     PhotoHunter
