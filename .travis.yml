@@ -2,4 +2,4 @@ language: java
 jdk: openjdk16
 
 script:
-  - ./mvn package
+  - cd backend && ./mvnw clean install -B
