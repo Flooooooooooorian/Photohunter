@@ -1,6 +1,7 @@
-import {GoogleMap, useLoadScript, Marker} from "@react-google-maps/api";
+import {GoogleMap, useLoadScript} from "@react-google-maps/api";
 import React from "react";
 import styled from "styled-components/macro";
+import LocationMarker from "./LocationMarker";
 
 export default function LocationMap({locations}) {
 
@@ -29,7 +30,7 @@ export default function LocationMap({locations}) {
                 zoom={5}
                 center={mapCenter}>
                 {locations.map((location) =>
-                    <Marker key={location.id} position={{lat: location.lat, lng: location.lng}}/>
+                    <LocationMarker key={location.id} position={{lat: location.lat, lng: location.lng}}/>
                     )
                 }
             </GoogleMap>
