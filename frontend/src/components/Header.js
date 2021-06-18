@@ -1,14 +1,23 @@
-import {AppBar, Toolbar} from "@material-ui/core";
+import {AppBar, makeStyles, Toolbar, Typography} from "@material-ui/core";
 
 export default function Header() {
+    const classes = useStyles()
 
     return (
-        <AppBar position={"static"}>
+        <AppBar position={"static"} className={classes.appbar} >
             <Toolbar>
-                <p>
+                <Typography component={"h3"} variant={"h3"}>
                     PhotoHunter
-                </p>
+                </Typography>
             </Toolbar>
         </AppBar>
     )
 }
+
+const useStyles = makeStyles(
+    {
+        appbar: {
+            background: "#222",
+        },
+    }
+)
