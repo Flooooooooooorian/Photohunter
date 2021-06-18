@@ -19,7 +19,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: coverage-file
-          path: target/site/jacoco/jacoco.xml
+          path: ./target/site/jacoco/jacoco.xml
 
   upload-coverage:
     runs-on: ubuntu-latest
