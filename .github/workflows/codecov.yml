@@ -21,9 +21,9 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./target/site/jacoco/jacoco.xml
-          directory: ./coverage/reports/
-          flags: unittests
+#          files: ./target/site/jacoco/jacoco.xml
+#          directory: ./coverage/reports/
+#          flags: unittests
           fail_ci_if_error: true
-          path_to_write_report: ./coverage/codecov_report.txt
+#          path_to_write_report: ./coverage/codecov_report.txt
           verbose: true
