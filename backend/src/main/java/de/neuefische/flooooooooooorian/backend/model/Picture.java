@@ -16,4 +16,5 @@ public class Picture {
     @Id
     private String id;
     private String url;
+    private User owner;
 }
