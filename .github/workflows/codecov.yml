@@ -14,7 +14,6 @@ jobs:
         with:
           java-version: '16'
           distribution: 'adopt'
-      - name: Build with Maven
       - name: Generate coverage report
         run: |
           mvn test --file backend/pom.xml
