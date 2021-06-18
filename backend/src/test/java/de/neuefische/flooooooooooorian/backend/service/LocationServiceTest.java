@@ -14,7 +14,7 @@ import static org.mockito.Mockito.*;
 class LocationServiceTest {
 
     private final LocationRepository locationRepository = mock(LocationRepository.class);
-    private final LocationService locationService = new LocationService(locationRepository);
+    private final LocationService locationService = new LocationService(locationRepository, null);
 
     @Test
     void getBasicLocationsList() {

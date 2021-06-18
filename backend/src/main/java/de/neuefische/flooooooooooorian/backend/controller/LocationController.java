@@ -1,12 +1,16 @@
 package de.neuefische.flooooooooooorian.backend.controller;
 
+import de.neuefische.flooooooooooorian.backend.dto.LocationCreationDto;
 import de.neuefische.flooooooooooorian.backend.model.Location;
+import de.neuefische.flooooooooooorian.backend.model.Picture;
+import de.neuefische.flooooooooooorian.backend.service.CloudinaryService;
 import de.neuefische.flooooooooooorian.backend.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -14,14 +18,25 @@ import java.util.List;
 public class LocationController {
 
     private final LocationService locationService;
+    private final CloudinaryService cloudinaryService;
 
     @Autowired
-    public LocationController(LocationService locationService) {
+    public LocationController(LocationService locationService, CloudinaryService cloudinaryService) {
         this.locationService = locationService;
+        this.cloudinaryService = cloudinaryService;
     }
 
     @GetMapping
     public List<Location> getLocations() {
         return locationService.getLocations();
+    }
+
+    @PostMapping
+    @ResponseBody
+    public Location createLocation(@RequestPart LocationCreationDto locationCreationDto, @RequestPart(value = "file") MultipartFile thumbnail) throws IOException {
+        File fileToUpload = File.createTempFile("photo", null);
+        thumbnail.transferTo(fileToUpload);
+        Picture photoToSave = cloudinaryService.uploadImage(fileToUpload);
+        return locationService.createLocation(locationCreationDto, photoToSave);
     }
 }
