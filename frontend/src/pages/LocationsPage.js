@@ -10,11 +10,11 @@ import styled from "styled-components/macro";
 export default function LocationsPage() {
 
     const locations = useLocations()
-    const [mapIsEnabled, enableMap] = useState(false)
+    const [mapIsEnabled, setMapIsEnabled] = useState(false)
 
     const switchView = (event, value) => {
         event.preventDefault()
-        enableMap(value)
+        setMapIsEnabled(value)
     }
 
     return (

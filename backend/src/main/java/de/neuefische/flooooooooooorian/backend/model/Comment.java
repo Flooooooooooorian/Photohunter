@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Date;
+import java.time.Instant;
 
 @Data
 @NoArgsConstructor
@@ -18,7 +18,6 @@ public class Comment {
     @Id
     private String id;
     private String location_id;
-
     private User owner;
-    private Date posted_on;
+    private Instant posted_on;
 }

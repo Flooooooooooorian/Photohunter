@@ -9,7 +9,7 @@ export default function useLocations() {
     useEffect(() => {
         axios.get('/api/location')
             .then((response) => response.data)
-            .then((data) => setLocations(data))
+            .then(setLocations)
     }, [])
 
     return locations

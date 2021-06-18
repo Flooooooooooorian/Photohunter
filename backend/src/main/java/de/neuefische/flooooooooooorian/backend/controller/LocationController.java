@@ -13,14 +13,14 @@ import java.util.List;
 @RequestMapping("/api/location")
 public class LocationController {
 
-    private LocationService locationService;
+    private final LocationService locationService;
 
     @Autowired
     public LocationController(LocationService locationService) {
         this.locationService = locationService;
     }
 
-    @GetMapping()
+    @GetMapping
     public List<Location> getLocations() {
         return locationService.getLocations();
     }
