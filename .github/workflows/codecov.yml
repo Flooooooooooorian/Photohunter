@@ -12,6 +12,7 @@ jobs:
       - uses: actions/checkout@master
       - name: Generate coverage report
         run: |
+          cd backend
           mvn test
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
