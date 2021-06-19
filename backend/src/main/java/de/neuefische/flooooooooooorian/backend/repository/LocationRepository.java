@@ -10,4 +10,6 @@ import java.util.List;
 public interface LocationRepository extends PagingAndSortingRepository<Location, String> {
 
     List<Location> findAll();
+
+    Location findById();
 }
