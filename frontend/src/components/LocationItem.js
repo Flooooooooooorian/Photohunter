@@ -1,12 +1,19 @@
 import {Box, Card, CardContent, CardMedia, makeStyles, Typography} from "@material-ui/core";
 import StarIcon from '@material-ui/icons/Star';
+import {useHistory} from "react-router-dom";
 
 export default function LocationItem({location}) {
     const classes = useStyles()
 
+    const history = useHistory()
+
+    const handleListItemClick = () => {
+        history.push("locations/" + location.id)
+    }
+
     return (
         <div>
-            <Card className={classes.card}>
+            <Card className={classes.card} onClick={handleListItemClick}>
                 <CardContent className={classes.content}>
                     <CardMedia className={classes.media} component={"img"} src={location.thumbnail ? location.thumbnail.url : ""}/>
                     <Typography className={classes.title} component={"h5"} variant={"h5"}>
