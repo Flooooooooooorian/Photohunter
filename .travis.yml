@@ -1,0 +1,5 @@
+language: java
+jdk: openjdk16
+
+script:
+  - cd backend && ./mvnw clean install -B
