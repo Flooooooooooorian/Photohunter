@@ -6,12 +6,17 @@ import de.neuefische.flooooooooooorian.backend.model.Picture;
 import de.neuefische.flooooooooooorian.backend.service.CloudinaryService;
 import de.neuefische.flooooooooooorian.backend.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/location")
@@ -38,5 +43,15 @@ public class LocationController {
         thumbnail.transferTo(fileToUpload);
         Picture photoToSave = cloudinaryService.uploadImage(fileToUpload);
         return locationService.createLocation(locationCreationDto, photoToSave);
+    }
+
+    @GetMapping("/{id}")
+    public Location getLocationById(@PathVariable String id) {
+        Optional<Location> optionalLocation = locationService.getLocationById(id);
+        if (optionalLocation.isPresent()){
+            return optionalLocation.get();
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id not valid!");
+
     }
 }

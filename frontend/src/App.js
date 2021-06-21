@@ -3,6 +3,7 @@ import LocationsPage from "./pages/LocationsPage";
 import Header from "./components/Header";
 import {ThemeProvider} from '@material-ui/core/styles';
 import {createMuiTheme} from '@material-ui/core/styles';
+import LocationDetailsPage from "./pages/LocationDetailsPage";
 
 function App() {
     const darkTheme = createMuiTheme({
@@ -18,6 +19,9 @@ function App() {
                 <Switch>
                     <Route path={"/locations"} exact>
                         <LocationsPage/>
+                    </Route>
+                    <Route path={"/locations/:id"} exact>
+                        <LocationDetailsPage/>
                     </Route>
                 </Switch>
             </ThemeProvider>
