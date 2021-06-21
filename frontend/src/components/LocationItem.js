@@ -15,7 +15,7 @@ export default function LocationItem({location}) {
         <div>
             <Card className={classes.card} onClick={handleListItemClick}>
                 <CardContent className={classes.content}>
-                    <CardMedia className={classes.media} component={"img"} src={location.thumbnail ? location.thumbnail.url : ""}/>
+                    <CardMedia className={classes.media} image={location.thumbnail ? location.thumbnail.url : ""}/>
                     <Typography className={classes.title} component={"h5"} variant={"h5"}>
                         {location.title}
                     </Typography>
