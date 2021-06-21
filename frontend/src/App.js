@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter, Switch, Route} from "react-router-dom";
+import LocationsPage from "./pages/LocationsPage";
+import Header from "./components/Header";
+import {ThemeProvider} from '@material-ui/core/styles';
+import {createMuiTheme} from '@material-ui/core/styles';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const darkTheme = createMuiTheme({
+        palette: {
+            mode: 'dark',
+        },
+    });
+
+    return (
+        <BrowserRouter>
+            <ThemeProvider theme={darkTheme}>
+                <Header/>
+                <Switch>
+                    <Route path={"/locations"} exact>
+                        <LocationsPage/>
+                    </Route>
+                </Switch>
+            </ThemeProvider>
+        </BrowserRouter>
+    );
 }
 
 export default App;
