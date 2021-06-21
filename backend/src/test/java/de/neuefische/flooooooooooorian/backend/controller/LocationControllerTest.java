@@ -3,6 +3,7 @@ package de.neuefische.flooooooooooorian.backend.controller;
 import de.neuefische.flooooooooooorian.backend.model.Location;
 import de.neuefische.flooooooooooorian.backend.model.Picture;
 import de.neuefische.flooooooooooorian.backend.repository.LocationRepository;
+import de.neuefische.flooooooooooorian.backend.repository.PictureRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +12,11 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.mock;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class LocationControllerTest {
@@ -26,6 +29,9 @@ class LocationControllerTest {
 
     @Autowired
     private LocationRepository locationRepository;
+
+    @Autowired
+    private PictureRepository pictureRepository;
 
     @BeforeEach
     public void clearDb() {
@@ -62,6 +68,8 @@ class LocationControllerTest {
                 .thumbnail(p2)
                 .build();
 
+        pictureRepository.save(p1);
+        pictureRepository.save(p2);
         locationRepository.save(l1);
         locationRepository.save(l2);
 
@@ -102,6 +110,8 @@ class LocationControllerTest {
                 .thumbnail(p2)
                 .build();
 
+        pictureRepository.save(p1);
+        pictureRepository.save(p2);
         locationRepository.save(l1);
         locationRepository.save(l2);
 
