@@ -6,9 +6,11 @@ import de.neuefische.flooooooooooorian.backend.repository.LocationRepository;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
 
 class LocationServiceTest {
@@ -47,5 +49,28 @@ class LocationServiceTest {
 
         assertThat(actual, containsInAnyOrder(l1, l2));
         verify(locationRepository).findAll();
+    }
+
+    @Test
+    void getLocationById() {
+        Location l1 = Location.builder()
+                .lat(50.0)
+                .lng(15)
+                .id("dsfdsfg4eyt")
+                .description("description l1")
+                .title("title")
+                .thumbnail(Picture.builder()
+                        .id("feraegdarg")
+                        .url("www.url1.com")
+                        .build())
+                .build();
+
+        when(locationRepository.findById(l1.getId())).thenReturn(Optional.of(l1));
+
+        Optional<Location> actual = locationService.getLocationById(l1.getId());
+
+        assertThat(actual.isPresent(), is(true));
+        assertThat(actual.get(), is(l1));
+        verify(locationRepository).findById(l1.getId());
     }
 }
