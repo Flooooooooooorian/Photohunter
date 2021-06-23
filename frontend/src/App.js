@@ -6,7 +6,6 @@ import {ThemeProvider} from '@material-ui/core/styles';
 import {createMuiTheme} from '@material-ui/core/styles';
 import LocationDetailsPage from "./pages/LocationDetailsPage";
 import {geolocated} from "react-geolocated";
-import GeoLocation from "./hooks/GeoLocation";
 
 class App extends React.Component{
 
@@ -27,9 +26,6 @@ class App extends React.Component{
                         </Route>
                         <Route path={"/locations/:id"} exact>
                             <LocationDetailsPage geoLocation={this.props.coords}/>
-                        </Route>
-                        <Route path={"/"}>
-                            <GeoLocation coords={this.props.coords}/>
                         </Route>
                     </Switch>
                 </ThemeProvider>
