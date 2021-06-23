@@ -23,8 +23,8 @@ public class LocationController {
     }
 
     @GetMapping
-    public List<Location> getLocations() {
-        return locationService.getLocations();
+    public List<Location> getLocations(@RequestParam Optional<Double> lat, @RequestParam Optional<Double> lng) {
+        return locationService.getLocations(lat, lng);
     }
 
     @GetMapping("/{id}")

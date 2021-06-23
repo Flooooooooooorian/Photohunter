@@ -10,6 +10,7 @@ import java.util.List;
 public interface LocationRepository extends PagingAndSortingRepository<Location, String> {
 
     List<Location> findAll();
+    List<Location> findAllByLatBetweenAndLngBetween(double lat, double lat2, double lng, double lng2);
 
     Location findById();
 }

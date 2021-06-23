@@ -22,6 +22,13 @@ public class LocationService {
         return locationRepository.findAll();
     }
 
+    public List<Location> getLocations(Optional<Double> lat, Optional<Double> lng) {
+        if (lat.isPresent() && lng.isPresent()) {
+            return locationRepository.findAllByLatBetweenAndLngBetween(lat.get() - 50, lat.get() + 50, lng.get() - 50, lng.get() + 50);
+        }
+        return this.getLocations();
+    }
+
     public Optional<Location> getLocationById(String id) {
         return locationRepository.findById(id);
     }
