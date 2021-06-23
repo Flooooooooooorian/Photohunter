@@ -3,7 +3,7 @@ import LocationList from "../components/LocationList";
 import {useState} from "react";
 import LocationMap from "../components/LocationMap";
 
-export default function LocationsPage() {
+export default function LocationsPage({geoLocation}) {
 
     const locations = useLocations()
     const [mapIsEnabled, setMapIsEnabled] = useState(false)
@@ -16,8 +16,8 @@ export default function LocationsPage() {
     return (
         <div>
             {mapIsEnabled ?
-                <LocationMap locations={locations} switchView={switchView}/> :
-                <LocationList locations={locations} switchView={switchView}/>}
+                <LocationMap locations={locations} switchView={switchView} geoLocation={geoLocation}/> :
+                <LocationList locations={locations} switchView={switchView} geoLocation={geoLocation}/>}
         </div>
     );
 }

@@ -3,7 +3,7 @@ import ListIcon from "@material-ui/icons/List";
 import GoogleMapsContainer from "./GoogleMapsContainer";
 import styled from "styled-components/macro";
 
-export default function LocationMap({locations, switchView}) {
+export default function LocationMap({locations, switchView, geoLocation}) {
 
     return (
         <>
@@ -14,7 +14,7 @@ export default function LocationMap({locations, switchView}) {
                     <ListIcon/>
                 </IconButton>
             </Wrapper>
-            <GoogleMapsContainer locations={locations}/>
+            <GoogleMapsContainer locations={locations} geoLocation={geoLocation}/>
         </>
     )
 

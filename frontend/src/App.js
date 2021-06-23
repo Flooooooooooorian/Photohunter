@@ -23,10 +23,10 @@ class App extends React.Component{
                     <Header/>
                     <Switch>
                         <Route path={"/locations"} exact>
-                            <LocationsPage/>
+                            <LocationsPage geoLocation={this.props.coords}/>
                         </Route>
                         <Route path={"/locations/:id"} exact>
-                            <LocationDetailsPage/>
+                            <LocationDetailsPage geoLocation={this.props.coords}/>
                         </Route>
                         <Route path={"/"}>
                             <GeoLocation coords={this.props.coords}/>
