@@ -29,11 +29,6 @@ public class LocationController {
 
     @GetMapping("/{id}")
     public Location getLocationById(@PathVariable String id) {
-        Optional<Location> optionalLocation = locationService.getLocationById(id);
-        if (optionalLocation.isPresent()){
-            return optionalLocation.get();
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id not valid!");
-
+        return locationService.getLocationById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Id not valid!"));
     }
 }

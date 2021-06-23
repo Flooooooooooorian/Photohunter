@@ -22,41 +22,41 @@ export default function LocationDetailsPage({loc}) {
         }
     }, [id, location, setLocation])
 
-    if (location) {
-        return (
-            <Card className={classes.card}>
-                <CardMedia className={classes.media} image={location.thumbnail.url}/>
-                <CardHeader
-                    title={location.title}
-                    action={
-                        <Box className={classes.box}>
-                            <Typography component={"h5"} variant={"h5"}>
-                                {location.rating}
-                            </Typography>
-                            <StarIcon/>
-                        </Box>}
-                    subheader={
-                        <Box>
-                            <Typography>
-                                {"Tags"}
-                            </Typography>
-                        </Box>
-                    }>
-                </CardHeader>
-                <CardContent className={classes.content}>
-                    <Typography>
-                        {location.description}
-                    </Typography>
-                </CardContent>
-            </Card>
-        )
-    } else {
+    if (!location) {
         return (
             <div>
                 Loading...
             </div>
         )
     }
+
+    return (
+        <Card className={classes.card}>
+            <CardMedia className={classes.media} image={location.thumbnail.url}/>
+            <CardHeader
+                title={location.title}
+                action={
+                    <Box className={classes.box}>
+                        <Typography component={"h5"} variant={"h5"}>
+                            {location.rating}
+                        </Typography>
+                        <StarIcon/>
+                    </Box>}
+                subheader={
+                    <Box>
+                        <Typography>
+                            {"Tags"}
+                        </Typography>
+                    </Box>
+                }>
+            </CardHeader>
+            <CardContent className={classes.content}>
+                <Typography>
+                    {location.description}
+                </Typography>
+            </CardContent>
+        </Card>
+    )
 }
 
 const useStyles = makeStyles(
