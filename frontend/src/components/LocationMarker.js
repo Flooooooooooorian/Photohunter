@@ -6,7 +6,6 @@ export default function LocationMarker(props) {
     const history = useHistory()
 
     const handleMarkerClick = () => {
-        console.log(props.location)
         history.push("locations/" + props.location.id)
     }
 
