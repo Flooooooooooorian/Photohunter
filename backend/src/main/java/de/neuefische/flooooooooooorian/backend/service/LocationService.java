@@ -24,7 +24,7 @@ public class LocationService {
 
     public List<Location> getLocations(Optional<Double> lat, Optional<Double> lng) {
         if (lat.isPresent() && lng.isPresent()) {
-            return locationRepository.findAllByLatBetweenAndLngBetween(lat.get() - 50, lat.get() + 50, lng.get() - 50, lng.get() + 50);
+            return locationRepository.findAllByLatBetweenAndLngBetween((lat.get() - 5), (lat.get() + 5), (lng.get() - 5), (lng.get() + 5));
         }
         return this.getLocations();
     }
