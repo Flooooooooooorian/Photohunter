@@ -5,8 +5,8 @@ import LocationMap from "../components/LocationMap";
 
 export default function LocationsPage({geoLocation}) {
 
-    const locations = useLocations()
     const [mapIsEnabled, setMapIsEnabled] = useState(false)
+    const locations = useLocations(geoLocation)
 
     const switchView = (event, value) => {
         event.preventDefault()
