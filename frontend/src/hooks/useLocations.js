@@ -11,7 +11,7 @@ export default function useLocations(geoLocation) {
         axios.get(url)
             .then((response) => response.data)
             .then(setLocations)
-    }, [])
+    }, [url])
 
     return locations
 }
