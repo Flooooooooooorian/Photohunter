@@ -1,8 +1,10 @@
 package de.neuefische.flooooooooooorian.backend.service;
 
+import de.neuefische.flooooooooooorian.backend.dto.LocationCreationDto;
 import de.neuefische.flooooooooooorian.backend.model.Location;
 import de.neuefische.flooooooooooorian.backend.model.Picture;
 import de.neuefische.flooooooooooorian.backend.repository.LocationRepository;
+import de.neuefische.flooooooooooorian.backend.repository.PictureRepository;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -15,8 +17,11 @@ import static org.mockito.Mockito.*;
 
 class LocationServiceTest {
 
+    private final PictureRepository pictureRepository = mock(PictureRepository.class);
+    private final PictureService pictureService = new PictureService(pictureRepository);
+
     private final LocationRepository locationRepository = mock(LocationRepository.class);
-    private final LocationService locationService = new LocationService(locationRepository, null);
+    private final LocationService locationService = new LocationService(locationRepository, pictureService);
 
     @Test
     void getBasicLocationsList() {
@@ -72,5 +77,44 @@ class LocationServiceTest {
         assertThat(actual.isPresent(), is(true));
         assertThat(actual.get(), is(l1));
         verify(locationRepository).findById(l1.getId());
+    }
+
+    @Test
+    void createBasicLocationTest() {
+        LocationCreationDto dto = LocationCreationDto.builder()
+                .lat(50.0)
+                .lng(15)
+                .description("description l1")
+                .title("title")
+                .build();
+
+        Picture p1 = Picture.builder()
+                .id("feraegdarg")
+                .url("www.url1.com")
+                .build();
+
+        Location newlocation = Location.builder()
+                .lat(dto.getLat())
+                .lng(dto.getLng())
+                .title(dto.getTitle())
+                .description(dto.getDescription())
+                .thumbnail(pictureService.createPicture(p1))
+                .build();
+
+        Location expected = Location.builder()
+                .lat(dto.getLat())
+                .lng(dto.getLng())
+                .id("fdiuasdgiaffgdg")
+                .title(dto.getTitle())
+                .description(dto.getDescription())
+                .thumbnail(pictureService.createPicture(p1))
+                .build();
+
+        when(locationRepository.save(newlocation)).thenReturn(expected);
+
+        Location actual = locationService.createLocation(dto, p1);
+
+        assertThat(actual, is(expected));
+        verify(locationRepository).save(newlocation);
     }
 }
