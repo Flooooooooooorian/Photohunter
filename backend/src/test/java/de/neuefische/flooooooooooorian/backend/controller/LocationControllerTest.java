@@ -150,7 +150,7 @@ class LocationControllerTest {
 
         ObjectMapper mapper = new ObjectMapper();
 
-        MockMultipartFile imageFile = new MockMultipartFile("data", "other-file-name.data", "text/plain", "some other type".getBytes());
+        MockMultipartFile imageFile = new MockMultipartFile("file", "other-file-name.txt", MediaType.TEXT_PLAIN_VALUE, "test_file".getBytes());
         MockMultipartFile dtoFile = new MockMultipartFile("json", "", "application/json", mapper.writeValueAsString(dto).getBytes());
 
 
