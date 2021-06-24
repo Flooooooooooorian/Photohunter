@@ -8,15 +8,15 @@ export default function LocationsPage({geoLocation}) {
     const [mapIsEnabled, setMapIsEnabled] = useState(false)
     const locations = useLocations(geoLocation)
 
-    const switchView = (event, value) => {
-        setMapIsEnabled(value)
+    const toggleView = () => {
+        setMapIsEnabled(!mapIsEnabled)
     }
 
     return (
         <div>
             {mapIsEnabled ?
-                <LocationMap locations={locations} switchView={switchView} geoLocation={geoLocation}/> :
-                <LocationList locations={locations} switchView={switchView} geoLocation={geoLocation}/>}
+                <LocationMap locations={locations} toggleView={toggleView} geoLocation={geoLocation}/> :
+                <LocationList locations={locations} toggleView={toggleView} geoLocation={geoLocation}/>}
         </div>
     );
 }

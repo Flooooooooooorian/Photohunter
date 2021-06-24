@@ -3,11 +3,11 @@ import {IconButton} from "@material-ui/core";
 import MapIcon from "@material-ui/icons/Map";
 import styled from "styled-components/macro";
 
-export default function LocationList({locations, switchView}) {
+export default function LocationList({locations, toggleView}) {
     return (
         <div>
             <Wrapper>
-                <IconButton onClick={(event) => {switchView(event, true)}} aria-label="map" variant="outlined">
+                <IconButton onClick={toggleView} aria-label="map" variant="outlined">
                     <MapIcon/>
                 </IconButton>
             </Wrapper>
