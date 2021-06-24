@@ -7,31 +7,29 @@ import {createMuiTheme} from '@material-ui/core/styles';
 import LocationDetailsPage from "./pages/LocationDetailsPage";
 import {geolocated} from "react-geolocated";
 
-class App extends React.Component{
+function App(props) {
 
-    render() {
-        const darkTheme = createMuiTheme({
-            palette: {
-                mode: 'dark',
-            },
-        });
+    const darkTheme = createMuiTheme({
+        palette: {
+            mode: 'dark',
+        },
+    });
 
-        return (
-            <BrowserRouter>
-                <ThemeProvider theme={darkTheme}>
-                    <Header/>
-                    <Switch>
-                        <Route path={"/locations"}>
-                            <LocationsPage geoLocation={this.props.coords}/>
-                        </Route>
-                        <Route path={"/locations/:id"}>
-                            <LocationDetailsPage geoLocation={this.props.coords}/>
-                        </Route>
-                    </Switch>
-                </ThemeProvider>
-            </BrowserRouter>
-        );
-    }
+    return (
+        <BrowserRouter>
+            <ThemeProvider theme={darkTheme}>
+                <Header/>
+                <Switch>
+                    <Route path={"/locations"}>
+                        <LocationsPage geoLocation={props.coords}/>
+                    </Route>
+                    <Route path={"/locations/:id"}>
+                        <LocationDetailsPage geoLocation={props.coords}/>
+                    </Route>
+                </Switch>
+            </ThemeProvider>
+        </BrowserRouter>
+    );
 }
 
 export default geolocated({
