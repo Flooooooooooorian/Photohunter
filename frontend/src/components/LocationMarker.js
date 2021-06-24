@@ -1,7 +1,7 @@
 import {Marker} from "@react-google-maps/api";
 import {useHistory} from 'react-router-dom';
 
-export default function LocationMarker({key, location}) {
+export default function LocationMarker({location}) {
 
     const history = useHistory()
 
@@ -10,6 +10,6 @@ export default function LocationMarker({key, location}) {
     }
 
     return (
-        <Marker key={key} position={{lat: location.lat, lng: location.lng}} onClick={handleMarkerClick}/>
+        <Marker position={{lat: location.lat, lng: location.lng}} onClick={handleMarkerClick}/>
     )
 }
