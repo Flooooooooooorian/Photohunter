@@ -21,10 +21,10 @@ class App extends React.Component{
                 <ThemeProvider theme={darkTheme}>
                     <Header/>
                     <Switch>
-                        <Route path={"/locations"} exact>
+                        <Route path={"/locations"}>
                             <LocationsPage geoLocation={this.props.coords}/>
                         </Route>
-                        <Route path={"/locations/:id"} exact>
+                        <Route path={"/locations/:id"}>
                             <LocationDetailsPage geoLocation={this.props.coords}/>
                         </Route>
                     </Switch>

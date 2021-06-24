@@ -5,12 +5,14 @@ import axios from "axios";
 export default function useLocations(geoLocation) {
 
     const [locations, setLocations] = useState([])
-    const url = '/api/location' + [geoLocation? ["?lat=" + geoLocation.latitude + "&lng=" + geoLocation.longitude] : ""]
+    const geoUrlData = `${geoLocation?`?lat=${geoLocation.latitude}&lng=${geoLocation.longitude}` : ""}`
+    const url = `/api/location${geoUrlData}`
 
     useEffect(() => {
         axios.get(url)
             .then((response) => response.data)
             .then(setLocations)
+            .catch(console.error)
     }, [url])
 
     return locations

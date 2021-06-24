@@ -148,7 +148,6 @@ class LocationControllerTest {
         ResponseEntity<Location[]> response = testRestTemplate.getForEntity("http://localhost:" + port + "/api/location?lat=50&lng=50", Location[].class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
-        assertThat(response.getBody(), notNullValue());
         assertThat(response.getBody(), arrayContainingInAnyOrder(l1));
     }
 }

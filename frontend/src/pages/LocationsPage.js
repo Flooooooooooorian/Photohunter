@@ -9,7 +9,6 @@ export default function LocationsPage({geoLocation}) {
     const locations = useLocations(geoLocation)
 
     const switchView = (event, value) => {
-        event.preventDefault()
         setMapIsEnabled(value)
     }
 

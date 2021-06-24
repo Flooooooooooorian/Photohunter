@@ -30,7 +30,7 @@ export default function GoogleMapsContainer({locations, geoLocation}) {
                 zoom={9}
                 center={mapCenter}>
                 {locations.map((location) =>
-                    <LocationMarker key={location.id} position={{lat: location.lat, lng: location.lng}} location={location}/>
+                    <LocationMarker key={location.id} location={location}/>
                     )
                 }
             </GoogleMap>

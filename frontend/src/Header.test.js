@@ -4,6 +4,6 @@ import Header from "./components/Header";
 
 test('renders PhotoHunter', () => {
   render(<Header />);
-  const linkElement = screen.getByText(/PhotoHunter/i);
-  expect(linkElement).toBeInTheDocument();
+  const headerElement = screen.getByText(/PhotoHunter/i);
+  expect(headerElement).toBeInTheDocument();
 });
