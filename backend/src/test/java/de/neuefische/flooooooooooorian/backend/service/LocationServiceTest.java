@@ -80,6 +80,39 @@ class LocationServiceTest {
     }
 
     @Test
+    void getLocationsWithGeoLocation() {
+        Location l1 = Location.builder()
+                .lat(50.0)
+                .lng(15)
+                .id("dsfdsfg4eyt")
+                .description("description l1")
+                .title("title")
+                .thumbnail(Picture.builder()
+                        .id("feraegdarg")
+                        .url("www.url1.com")
+                        .build())
+                .build();
+        Location l2 = Location.builder()
+                .lat(10.46484)
+                .lng(1.648)
+                .id("fsdfnaldgadgd")
+                .description("description l2")
+                .title("title")
+                .thumbnail(Picture.builder()
+                        .id("sdofs")
+                        .url("www.url2.com")
+                        .build())
+                .build();
+
+        when(locationRepository.findAllByLatBetweenAndLngBetween(45.0, 55.0, 13.0, 23.0)).thenReturn(List.of(l1));
+
+        List<Location> actual = locationService.getLocations(Optional.of(50.0), Optional.of(18.0));
+
+        assertThat(actual, containsInAnyOrder(l1));
+        verify(locationRepository).findAllByLatBetweenAndLngBetween(45.0, 55.0, 13.0, 23.0);
+    }
+
+    @Test
     void createBasicLocationTest() {
         LocationCreationDto dto = LocationCreationDto.builder()
                 .lat(50.0)

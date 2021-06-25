@@ -26,6 +26,13 @@ public class LocationService {
         return locationRepository.findAll();
     }
 
+    public List<Location> getLocations(Optional<Double> lat, Optional<Double> lng) {
+        if (lat.isPresent() && lng.isPresent()) {
+            return locationRepository.findAllByLatBetweenAndLngBetween((lat.get() - 5), (lat.get() + 5), (lng.get() - 5), (lng.get() + 5));
+        }
+        return this.getLocations();
+    }
+
     public Location createLocation(LocationCreationDto locationCreationDto, Picture picture) {
 
         Location location = Location.builder()

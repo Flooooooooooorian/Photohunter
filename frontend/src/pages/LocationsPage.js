@@ -3,21 +3,20 @@ import LocationList from "../components/LocationList";
 import {useState} from "react";
 import LocationMap from "../components/LocationMap";
 
-export default function LocationsPage() {
+export default function LocationsPage({geoLocation}) {
 
-    const locations = useLocations()
     const [mapIsEnabled, setMapIsEnabled] = useState(false)
+    const locations = useLocations(geoLocation)
 
-    const switchView = (event, value) => {
-        event.preventDefault()
-        setMapIsEnabled(value)
+    const toggleView = () => {
+        setMapIsEnabled(!mapIsEnabled)
     }
 
     return (
         <div>
             {mapIsEnabled ?
-                <LocationMap locations={locations} switchView={switchView}/> :
-                <LocationList locations={locations} switchView={switchView}/>}
+                <LocationMap locations={locations} toggleView={toggleView} geoLocation={geoLocation}/> :
+                <LocationList locations={locations} toggleView={toggleView} geoLocation={geoLocation}/>}
         </div>
     );
 }

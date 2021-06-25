@@ -3,12 +3,12 @@ import React from "react";
 import styled from "styled-components/macro";
 import LocationMarker from "./LocationMarker";
 
-export default function GoogleMapsContainer({locations}) {
+export default function GoogleMapsContainer({locations, geoLocation}) {
 
     const googleLibraries = []
     const mapCenter = {
-        lat: 51.163361,
-        lng: 10.447683,
+        lat: geoLocation ? geoLocation.latitude : 51.163361,
+        lng: geoLocation ? geoLocation.longitude : 10.447683,
     }
     const mapContainerStyle = {
         width: '80vw',
@@ -27,10 +27,10 @@ export default function GoogleMapsContainer({locations}) {
         <Wrapper>
             <GoogleMap
                 mapContainerStyle={mapContainerStyle}
-                zoom={5}
+                zoom={9}
                 center={mapCenter}>
                 {locations.map((location) =>
-                    <LocationMarker key={location.id} position={{lat: location.lat, lng: location.lng}} location={location}/>
+                    <LocationMarker key={location.id} location={location}/>
                     )
                 }
             </GoogleMap>
