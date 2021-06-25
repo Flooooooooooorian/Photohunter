@@ -1,12 +1,13 @@
 import {useEffect, useState} from "react";
 import {Box, Card, CardContent, CardHeader, CardMedia, makeStyles, Typography} from "@material-ui/core";
-import {useParams} from "react-router-dom";
+import {useLocation, useParams} from "react-router-dom";
 import StarIcon from '@material-ui/icons/Star';
 import axios from "axios";
 
 
-export default function LocationDetailsPage({loc}) {
-    const [location, setLocation] = useState(loc)
+export default function LocationDetailsPage() {
+    const historyState = useLocation();
+    const [location, setLocation] = useState(historyState.state.loc)
     const {id} = useParams()
 
     const classes = useStyles()
@@ -32,7 +33,7 @@ export default function LocationDetailsPage({loc}) {
 
     return (
         <Card className={classes.card}>
-            <CardMedia className={classes.media} image={location.thumbnail.url}/>
+            <CardMedia className={classes.media} image={location.thumbnail?.url}/>
             <CardHeader
                 title={location.title}
                 action={
