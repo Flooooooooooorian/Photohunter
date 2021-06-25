@@ -36,7 +36,6 @@ public class LocationController {
     }
 
     @PostMapping
-    @ResponseBody
     public Location createLocation(@RequestPart LocationCreationDto locationCreationDto, @RequestPart(value = "file") Optional<MultipartFile> thumbnail) throws IOException {
         if (thumbnail.isPresent()) {
             File fileToUpload = File.createTempFile("photo", null);
