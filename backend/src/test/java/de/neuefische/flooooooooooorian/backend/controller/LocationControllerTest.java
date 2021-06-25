@@ -216,4 +216,35 @@ class LocationControllerTest {
                 .description(dto.getDescription())
                 .build()));
     }
+
+    @Test
+    void createBasicLocationWithoutThumbnailControllerIntegrationTest() {
+        LocationCreationDto dto = LocationCreationDto.builder()
+                .lat(50.0)
+                .lng(15)
+                .description("description l1")
+                .title("title")
+                .build();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_MIXED);
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("locationCreationDto", dto);
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+        ResponseEntity<Location> response = testRestTemplate.exchange("http://localhost:" + port + "/api/location/", HttpMethod.POST, requestEntity, Location.class);
+
+        assertThat(response.getStatusCode(), is(HttpStatus.OK));
+        assertThat(response.getBody().getId(), notNullValue());
+        assertThat(response.getBody(), is(Location
+                .builder()
+                .id(response.getBody().getId())
+                .lat(dto.getLat())
+                .lng(dto.getLng())
+                .title(dto.getTitle())
+                .description(dto.getDescription())
+                .build()));
+    }
 }
