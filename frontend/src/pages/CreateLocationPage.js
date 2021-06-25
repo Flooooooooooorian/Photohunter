@@ -1,4 +1,4 @@
-import {useLocation} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 import styled from 'styled-components/macro'
 import {Button, Card, CardContent, CardMedia, TextField} from "@material-ui/core";
 import {useRef} from "react";
@@ -12,6 +12,7 @@ export default function CreateLocationPage() {
 
     const inputRef = useRef()
     let query = useQuery();
+    const history = useHistory()
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -35,9 +36,18 @@ export default function CreateLocationPage() {
             type: "application/json"
         }));
 
+        if (inputRef.current.files[0]) {
+            formData.append("file", inputRef.current.files[0])
+        }
+
         axios.post("/api/location", formData, config)
             .then((response) => response.data)
-            .then(console.log)
+            .then((data) => {
+                history.push({
+                    pathname: "/locations/" + data.id,
+                    state: {loc: data}
+                })
+            })
             .catch(console.error)
     }
 
