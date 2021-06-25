@@ -33,6 +33,18 @@ public class LocationService {
         return this.getLocations();
     }
 
+    public Location createLocation(LocationCreationDto locationCreationDto) {
+
+        Location location = Location.builder()
+                .lat(locationCreationDto.getLat())
+                .lng(locationCreationDto.getLng())
+                .title(locationCreationDto.getTitle())
+                .description(locationCreationDto.getDescription())
+                .build();
+
+        return locationRepository.save(location);
+    }
+
     public Location createLocation(LocationCreationDto locationCreationDto, Picture picture) {
 
         Location location = Location.builder()

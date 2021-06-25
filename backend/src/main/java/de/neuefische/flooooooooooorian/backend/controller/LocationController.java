@@ -37,11 +37,14 @@ public class LocationController {
 
     @PostMapping
     @ResponseBody
-    public Location createLocation(@RequestPart LocationCreationDto locationCreationDto, @RequestPart(value = "file") MultipartFile thumbnail) throws IOException {
-        File fileToUpload = File.createTempFile("photo", null);
-        thumbnail.transferTo(fileToUpload);
-        Picture photoToSave = cloudinaryService.uploadImage(fileToUpload);
-        return locationService.createLocation(locationCreationDto, photoToSave);
+    public Location createLocation(@RequestPart LocationCreationDto locationCreationDto, @RequestPart(value = "file") Optional<MultipartFile> thumbnail) throws IOException {
+        if (thumbnail.isPresent()) {
+            File fileToUpload = File.createTempFile("photo", null);
+            thumbnail.get().transferTo(fileToUpload);
+            Picture photoToSave = cloudinaryService.uploadImage(fileToUpload);
+            return locationService.createLocation(locationCreationDto, photoToSave);
+        }
+        return locationService.createLocation(locationCreationDto);
     }
 
     @GetMapping("/{id}")
