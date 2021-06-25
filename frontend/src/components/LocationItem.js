@@ -1,14 +1,11 @@
 import {Box, Card, CardContent, CardMedia, makeStyles, Typography} from "@material-ui/core";
 import StarIcon from '@material-ui/icons/Star';
-import {useHistory} from "react-router-dom";
 
-export default function LocationItem({location}) {
+export default function LocationItem({location, showDetailsPage}) {
     const classes = useStyles()
 
-    const history = useHistory()
-
     const handleListItemClick = () => {
-        history.push("locations/" + location.id)
+        showDetailsPage(location)
     }
 
     return (

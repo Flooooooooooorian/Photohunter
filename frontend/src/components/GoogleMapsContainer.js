@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components/macro";
 import LocationMarker from "./LocationMarker";
 
-export default function GoogleMapsContainer({locations, geoLocation}) {
+export default function GoogleMapsContainer({locations, geoLocation, showDetailsPage}) {
 
     const googleLibraries = []
     const mapCenter = {
@@ -30,7 +30,7 @@ export default function GoogleMapsContainer({locations, geoLocation}) {
                 zoom={9}
                 center={mapCenter}>
                 {locations.map((location) =>
-                    <LocationMarker key={location.id} location={location}/>
+                    <LocationMarker showDetailsPage={showDetailsPage} key={location.id} location={location}/>
                     )
                 }
             </GoogleMap>
