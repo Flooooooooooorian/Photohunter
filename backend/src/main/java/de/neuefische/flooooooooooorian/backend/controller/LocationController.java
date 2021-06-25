@@ -5,7 +5,6 @@ import de.neuefische.flooooooooooorian.backend.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -23,8 +22,8 @@ public class LocationController {
     }
 
     @GetMapping
-    public List<Location> getLocations() {
-        return locationService.getLocations();
+    public List<Location> getLocations(@RequestParam Optional<Double> lat, @RequestParam Optional<Double> lng) {
+        return locationService.getLocations(lat, lng);
     }
 
     @GetMapping("/{id}")

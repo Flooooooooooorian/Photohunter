@@ -111,4 +111,43 @@ class LocationControllerTest {
         assertThat(response.getBody(), notNullValue());
         assertThat(response.getBody(), is(l2));
     }
+
+    @Test
+    void getLocationsWithGeoLocation() {
+        Picture p1 = Picture.builder()
+                .id("feraegdarg")
+                .url("www.url1.com")
+                .build();
+
+        Picture p2 = Picture.builder()
+                .id("sdofs")
+                .url("www.url2.com")
+                .build();
+
+
+        Location l1 = Location.builder()
+                .lat(50.0)
+                .lng(48)
+                .id("dsfdsfg4eyt")
+                .description("description l1")
+                .title("title")
+                .thumbnail(p1)
+                .build();
+        Location l2 = Location.builder()
+                .lat(10.46484)
+                .lng(1.648)
+                .id("fsdfnaldgadgd")
+                .description("description l2")
+                .title("title")
+                .thumbnail(p2)
+                .build();
+
+        locationRepository.save(l1);
+        locationRepository.save(l2);
+
+        ResponseEntity<Location[]> response = testRestTemplate.getForEntity("http://localhost:" + port + "/api/location?lat=50&lng=50", Location[].class);
+
+        assertThat(response.getStatusCode(), is(HttpStatus.OK));
+        assertThat(response.getBody(), arrayContainingInAnyOrder(l1));
+    }
 }
