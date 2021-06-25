@@ -139,7 +139,7 @@ class LocationControllerTest {
     }
 
     @Test
-    void getLocationsWithGeoLocation() throws IOException {
+    void getLocationsWithGeoLocation() {
         Picture p1 = Picture.builder()
                 .id("feraegdarg")
                 .url("www.url1.com")
