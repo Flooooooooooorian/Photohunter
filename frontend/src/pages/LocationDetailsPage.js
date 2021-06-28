@@ -3,11 +3,11 @@ import {Box, Card, CardContent, CardHeader, CardMedia, makeStyles, Typography} f
 import {useLocation, useParams} from "react-router-dom";
 import StarIcon from '@material-ui/icons/Star';
 import axios from "axios";
-
+import {createMuiTheme} from "@material-ui/core/styles";
 
 export default function LocationDetailsPage() {
     const historyState = useLocation();
-    const [location, setLocation] = useState(historyState.state.loc)
+    const [location, setLocation] = useState(historyState.state?.loc)
     const {id} = useParams()
 
     const classes = useStyles()
@@ -23,6 +23,7 @@ export default function LocationDetailsPage() {
         }
     }, [id, location, setLocation])
 
+    console.log(location)
     if (!location) {
         return (
             <div>
@@ -33,7 +34,7 @@ export default function LocationDetailsPage() {
 
     return (
         <Card className={classes.card}>
-            <CardMedia className={classes.media} image={location.thumbnail?.url}/>
+            <CardMedia className={classes.media} image={location.thumbnail ? location.thumbnail.url : "https://picsum.photos/300/200"}/>
             <CardHeader
                 title={location.title}
                 action={
@@ -60,10 +61,21 @@ export default function LocationDetailsPage() {
     )
 }
 
+const theme = createMuiTheme({
+    palette: {
+        mode: 'dark',
+    },
+});
+
 const useStyles = makeStyles(
     {
         card: {
-            margin: 10,
+            [theme.breakpoints.down('sm')]: {
+                margin: 10,
+            },
+            [theme.breakpoints.up('sm')]: {
+                margin: "10px 20%",
+            },
         },
         media: {
             height: 0,

@@ -1,6 +1,5 @@
 import {useHistory, useLocation} from "react-router-dom";
-import styled from 'styled-components/macro'
-import {Button, Card, CardContent, CardMedia, makeStyles, TextField} from "@material-ui/core";
+import {Button, Card, CardContent, makeStyles, TextField} from "@material-ui/core";
 import {useRef} from "react";
 import axios from "axios";
 
@@ -26,9 +25,11 @@ export default function CreateLocationPage() {
             },
         }
 
+        console.log(event)
+
         const data = {
             title: event.target[0].value,
-            description: event.target[3].value,
+            description: event.target[2].value,
             lat: query.get("lat"),
             lng: query.get("lng")
         }
@@ -67,7 +68,6 @@ export default function CreateLocationPage() {
                 </CardContent>
             </form>
         </Card>
-
     );
 }
 

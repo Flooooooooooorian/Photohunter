@@ -12,7 +12,7 @@ export default function LocationItem({location, showDetailsPage}) {
         <div>
             <Card className={classes.card} onClick={handleListItemClick}>
                 <CardContent className={classes.content}>
-                    <CardMedia className={classes.media} image={location.thumbnail ? location.thumbnail.url : ""}/>
+                    <CardMedia className={classes.media} image={location.thumbnail ? location.thumbnail.url : "https://picsum.photos/300/200"}/>
                     <Typography className={classes.title} component={"h5"} variant={"h5"}>
                         {location.title}
                     </Typography>
