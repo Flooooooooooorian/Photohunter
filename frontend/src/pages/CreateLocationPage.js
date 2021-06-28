@@ -1,6 +1,6 @@
 import {useHistory, useLocation} from "react-router-dom";
 import styled from 'styled-components/macro'
-import {Button, Card, CardContent, CardMedia, TextField} from "@material-ui/core";
+import {Button, Card, CardContent, CardMedia, makeStyles, TextField} from "@material-ui/core";
 import {useRef} from "react";
 import axios from "axios";
 
@@ -13,6 +13,7 @@ export default function CreateLocationPage() {
     const inputRef = useRef()
     let query = useQuery();
     const history = useHistory()
+    const classes = useStyles()
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -21,7 +22,7 @@ export default function CreateLocationPage() {
 
         const config = {
             headers: {
-              "Content-Type": "multipart/form-data",
+                "Content-Type": "multipart/form-data",
             },
         }
 
@@ -29,7 +30,7 @@ export default function CreateLocationPage() {
             title: event.target[0].value,
             description: event.target[3].value,
             lat: query.get("lat"),
-            lng:  query.get("lng")
+            lng: query.get("lng")
         }
 
         formData.append('locationCreationDto', new Blob([JSON.stringify(data)], {
@@ -51,24 +52,43 @@ export default function CreateLocationPage() {
             .catch(console.error)
     }
 
-    return(
-        <Wrapper>
+    return (
+        <Card className={classes.card}>
             <form onSubmit={handleSubmit}>
-                <Card>
-                    <CardContent>
-                        <TextField required variant={"outlined"} label={"title"}/>
-                        {/*<CardMedia image={inputRef.current?.files[0] ? inputRef.current?.files[0] : ""}/>*/}
-                        <input type="file" ref={inputRef} />
-                        <TextField required multiline variant={"outlined"} label={"description"}/>
-                    </CardContent>
-                    <Button variant={"contained"} color={"primary"} type={"submit"}>
+                <CardContent className={classes.content}>
+                    <TextField className={classes.item} size={"small"} required variant={"outlined"} label={"title"}/>
+                    <TextField className={classes.item} size={"medium"} required multiline variant={"outlined"}
+                               label={"description"}/>
+                    {/*<CardMedia image={inputRef.current?.files[0] ? inputRef.current?.files[0] : ""}/>*/}
+                    <input className={classes.item} type="file" ref={inputRef}/>
+                    <Button className={classes.button} variant={"contained"} color={"primary"} type={"submit"}>
                         Save
                     </Button>
-                </Card>
+                </CardContent>
             </form>
-        </Wrapper>
+        </Card>
+
     );
 }
 
-const Wrapper = styled.div`
-`
+const useStyles = makeStyles(
+    {
+        card: {
+            margin: 10,
+        },
+        content: {
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "stretch",
+            margin: 0,
+            padding: 0,
+        },
+        button: {
+            alignSelf: "flex-end",
+            marginRight: 10,
+        },
+        item: {
+            margin: 10,
+        }
+    }
+)
