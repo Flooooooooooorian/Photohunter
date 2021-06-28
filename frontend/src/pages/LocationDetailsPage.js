@@ -23,7 +23,6 @@ export default function LocationDetailsPage() {
         }
     }, [id, location, setLocation])
 
-    console.log(location)
     if (!location) {
         return (
             <div>

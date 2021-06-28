@@ -21,10 +21,14 @@ export default function LocationsPage({geoLocation}) {
         })
     }
 
+    const showCreateLocationPage = (event) => {
+        history.push(`/locations/new/?lat=${event.latLng.lat()}&lng=${event.latLng.lng()}`)
+    }
+
     return (
         <div>
             {mapIsEnabled ?
-                <LocationMap showDetailsPage={showDetailsPage} locations={locations} toggleView={toggleView} geoLocation={geoLocation}/> :
+                <LocationMap showCreateLocationPage={showCreateLocationPage} showDetailsPage={showDetailsPage} locations={locations} toggleView={toggleView} geoLocation={geoLocation}/> :
                 <LocationList showDetailsPage={showDetailsPage} locations={locations} toggleView={toggleView} geoLocation={geoLocation}/>}
         </div>
     );

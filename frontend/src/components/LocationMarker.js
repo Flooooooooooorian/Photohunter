@@ -1,12 +1,12 @@
 import {Marker} from "@react-google-maps/api";
 
-export default function LocationMarker({location, showDetailsPage}) {
+export default function LocationMarker({location, handleMarkerClick}) {
 
-    const handleMarkerClick = () => {
-        showDetailsPage(location)
+    const handleClick = () => {
+        handleMarkerClick(location)
     }
 
     return (
-        <Marker position={{lat: location.lat, lng: location.lng}} onClick={handleMarkerClick}/>
+        <Marker position={{lat: location.lat, lng: location.lng}} onClick={handleClick}/>
     )
 }
