@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components/macro";
 import LocationMarker from "./LocationMarker";
 import {useHistory} from "react-router-dom";
+import GeoLocationMarker from "./GeoLocationMarker";
 
 export default function GoogleMapsContainer({locations, geoLocation, showDetailsPage}) {
 
@@ -36,6 +37,7 @@ export default function GoogleMapsContainer({locations, geoLocation, showDetails
                 mapContainerStyle={mapContainerStyle}
                 zoom={9}
                 center={mapCenter}>
+                {geoLocation && <GeoLocationMarker geoLocation={geoLocation}/>}
                 {locations.map((location) =>
                     <LocationMarker showDetailsPage={showDetailsPage} key={location.id} location={location}/>
                     )
