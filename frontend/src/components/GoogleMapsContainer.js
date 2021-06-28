@@ -19,7 +19,7 @@ export default function GoogleMapsContainer({locations, geoLocation, handleMarke
     }
 
     const {isLoaded, loadError} = useLoadScript({
-        googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
+        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
         googleLibraries,
     })
 
