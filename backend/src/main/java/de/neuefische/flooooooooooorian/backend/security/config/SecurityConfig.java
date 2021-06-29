@@ -1,7 +1,7 @@
 package de.neuefische.flooooooooooorian.backend.security.config;
 
 import de.neuefische.flooooooooooorian.backend.security.filter.JwtAuthFilter;
-import de.neuefische.flooooooooooorian.backend.security.service.UserService;
+import de.neuefische.flooooooooooorian.backend.security.service.UserSecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,11 +17,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserService userService;
+    private final UserSecurityService userService;
     private final JwtAuthFilter jwtAuthFilter;
 
     @Autowired
-    public SecurityConfig(UserService userService, JwtAuthFilter jwtAuthFilter) {
+    public SecurityConfig(UserSecurityService userService, JwtAuthFilter jwtAuthFilter) {
         this.userService = userService;
         this.jwtAuthFilter = jwtAuthFilter;
     }
