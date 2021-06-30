@@ -6,6 +6,9 @@ import {ThemeProvider} from '@material-ui/core/styles';
 import {createMuiTheme} from '@material-ui/core/styles';
 import LocationDetailsPage from "./pages/LocationDetailsPage";
 import {geolocated} from "react-geolocated";
+import LoginPage from "./pages/LoginPage";
+import GoogleRedirectPage from "./pages/GoogleRedirectPage";
+import AuthProvider from "./context/AuthProvider";
 
 function App(props) {
 
@@ -17,17 +20,25 @@ function App(props) {
 
     return (
         <BrowserRouter>
-            <ThemeProvider theme={darkTheme}>
-                <Header/>
-                <Switch>
-                    <Route path={"/locations"}>
-                        <LocationsPage geoLocation={props.coords}/>
-                    </Route>
-                    <Route path={"/locations/:id"}>
-                        <LocationDetailsPage geoLocation={props.coords}/>
-                    </Route>
-                </Switch>
-            </ThemeProvider>
+            <AuthProvider>
+                <ThemeProvider theme={darkTheme}>
+                    <Header/>
+                    <Switch>
+                        <Route path={"/locations"}>
+                            <LocationsPage geoLocation={props.coords}/>
+                        </Route>
+                        <Route path={"/locations/:id"}>
+                            <LocationDetailsPage geoLocation={props.coords}/>
+                        </Route>
+                        <Route path={"/login"}>
+                            <LoginPage/>
+                        </Route>
+                        <Route path={"/auth/google/redirect"}>
+                            <GoogleRedirectPage/>
+                        </Route>
+                    </Switch>
+                </ThemeProvider>
+            </AuthProvider>
         </BrowserRouter>
     );
 }
