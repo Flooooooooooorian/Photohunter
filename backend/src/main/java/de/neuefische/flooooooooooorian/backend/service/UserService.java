@@ -1,6 +1,7 @@
 package de.neuefische.flooooooooooorian.backend.service;
 
 import de.neuefische.flooooooooooorian.backend.security.dto.UserCreationDto;
+import de.neuefische.flooooooooooorian.backend.security.dto.UserLoginDto;
 import de.neuefische.flooooooooooorian.backend.security.model.User;
 import de.neuefische.flooooooooooorian.backend.security.repository.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -30,5 +32,24 @@ public class UserService {
             return userRepository.save(newUser);
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already registered");
+    }
+
+    public String login(UserLoginDto userLoginDto) {
+        Optional<User> optionalUser = userRepository.findUserByUsername(userLoginDto.getEmail());
+        if (optionalUser.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        User user = optionalUser.get();
+
+        if (!passwordEncoder.matches(user.getPassword(), userLoginDto.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+
+
+
+        return null;
+
     }
 }
