@@ -3,7 +3,6 @@ package de.neuefische.flooooooooooorian.backend.controller;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserCreationDto;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserLoginDto;
 import de.neuefische.flooooooooooorian.backend.security.model.User;
-import de.neuefische.flooooooooooorian.backend.security.service.UserSecurityService;
 import de.neuefische.flooooooooooorian.backend.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +30,6 @@ public class UserController {
 
     @PostMapping("/register")
     public User registerUser(@RequestBody UserCreationDto userCreationDto) {
-        return userService.registerUser(userCreationDto);
+        return userService.registerUserByEmail(userCreationDto);
     }
 }

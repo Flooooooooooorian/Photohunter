@@ -5,7 +5,7 @@ export default function LoginPage() {
 
     const [config, setConfig] = useState();
     const parameter = {
-        scope: "https%3A//www.googleapis.com/auth/userinfo.profile",
+        scope: "https%3A//www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
         access_type: "offline",
         response_type: "code",
         state: "state_parameter_passthrough_value",

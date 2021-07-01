@@ -9,6 +9,8 @@ import {geolocated} from "react-geolocated";
 import LoginPage from "./pages/LoginPage";
 import GoogleRedirectPage from "./pages/GoogleRedirectPage";
 import AuthProvider from "./context/AuthProvider";
+import ProfilePage from "./pages/ProfilePage";
+import PrivateRoute from "./routing/PrivateRoute";
 
 function App(props) {
 
@@ -36,6 +38,9 @@ function App(props) {
                         <Route path={"/auth/google/redirect"}>
                             <GoogleRedirectPage/>
                         </Route>
+                        <PrivateRoute path={"/profile"}>
+                            <ProfilePage/>
+                        </PrivateRoute>
                     </Switch>
                 </ThemeProvider>
             </AuthProvider>

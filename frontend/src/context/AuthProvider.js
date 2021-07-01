@@ -18,7 +18,7 @@ export default function AuthProvider({children}) {
                 setToken(data)
                 setJwtDecoded(jwt_decode(data.toString()))
             })
-            .then(() => history.push('/home'))
+            .then(() => history.push('/profile'))
             .catch(error => console.error(error.message))
     }
 
@@ -30,7 +30,7 @@ export default function AuthProvider({children}) {
                 setToken(data)
                 setJwtDecoded(jwt_decode(data.toString()))
             })
-            .then(() => history.push('/home'))
+            .then(() => history.push('/profile'))
             .catch(error => console.error(error.message))
 
 

@@ -1,38 +1,22 @@
 package de.neuefische.flooooooooooorian.backend.security.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.security.core.GrantedAuthority;
-
-import java.util.Collection;
 
 @Document(collection = "users")
-public class User extends org.springframework.security.core.userdetails.User {
+@Data
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+public abstract class User {
 
     @Id
-    private String id;
+    protected String id;
+    protected String email;
+    protected String full_name;
 
-    public User(String username, String password, Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, authorities);
-    }
+    protected boolean enabled;
 
-    public User(String username, String password, boolean enabled, Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, enabled, true, true, true, authorities);
-    }
-
-    public User(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getId() {
-        return this.id;
-    }
+    public abstract String getPassword();
 }
