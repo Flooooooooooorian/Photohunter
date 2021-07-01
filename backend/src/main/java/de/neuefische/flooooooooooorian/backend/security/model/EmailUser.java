@@ -10,8 +10,8 @@ public class EmailUser extends User {
     private String password;
 
     @Builder
-    public EmailUser(String id, String email, String full_name, boolean enabled, String password) {
-        super(id, email, full_name, enabled);
+    public EmailUser(String id, String email, String full_name,String avatar_url, String role, boolean enabled, String password) {
+        super(id, email, full_name, avatar_url, role, enabled);
         this.password = password;
     }
 

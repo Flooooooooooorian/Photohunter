@@ -23,11 +23,6 @@ public class UserController {
         return userService.login(userLoginDto);
     }
 
-    @GetMapping("/profile")
-    public Object getOwnProfile(Principal principal) {
-        return principal;
-    }
-
     @PostMapping("/register")
     public User registerUser(@RequestBody UserCreationDto userCreationDto) {
         return userService.registerUserByEmail(userCreationDto);

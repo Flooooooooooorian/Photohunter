@@ -15,7 +15,9 @@ public abstract class User {
     protected String id;
     protected String email;
     protected String full_name;
+    protected String avatar_url;
 
+    protected String role;
     protected boolean enabled;
 
     public abstract String getPassword();
