@@ -38,7 +38,7 @@ public class GoogleLoginService {
         map.set("client_id", googleLoginConfig.getClientId());
         map.set("client_secret", googleLoginConfig.getClientSecret());
         map.set("grant_type", "authorization_code");
-        map.set("redirect_uri", "http://localhost:3000/auth/google/redirect");
+        map.set("redirect_uri", googleLoginConfig.getRedirectUri());
 
         HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(map, headers);
         ResponseEntity<GoogleAccessTokenDto> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, GoogleAccessTokenDto.class);
