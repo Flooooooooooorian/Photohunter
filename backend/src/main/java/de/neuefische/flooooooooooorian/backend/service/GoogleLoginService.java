@@ -20,6 +20,8 @@ public class GoogleLoginService {
 
     private final RestTemplate restTemplate;
 
+
+    //Its me an Idiot, not valid
     private String client_id = "420356622210-a9lk1sicvrs5hojneedf4273i8cg10lo.apps.googleusercontent.com";
     private String client_secret = "IMQ6Hthp4iPYB7XO5L07LQNI";
 
