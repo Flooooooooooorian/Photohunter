@@ -35,14 +35,7 @@ public class LocationService {
 
     public Location createLocation(LocationCreationDto locationCreationDto) {
 
-        Location location = Location.builder()
-                .lat(locationCreationDto.getLat())
-                .lng(locationCreationDto.getLng())
-                .title(locationCreationDto.getTitle())
-                .description(locationCreationDto.getDescription())
-                .build();
-
-        return locationRepository.save(location);
+        return this.createLocation(locationCreationDto, null);
     }
 
     public Location createLocation(LocationCreationDto locationCreationDto, Picture picture) {
@@ -52,8 +45,11 @@ public class LocationService {
                 .lng(locationCreationDto.getLng())
                 .title(locationCreationDto.getTitle())
                 .description(locationCreationDto.getDescription())
-                .thumbnail(pictureService.createPicture(picture))
                 .build();
+
+        if (picture != null) {
+            location.setThumbnail(pictureService.createPicture(picture));
+        }
 
         return locationRepository.save(location);
     }

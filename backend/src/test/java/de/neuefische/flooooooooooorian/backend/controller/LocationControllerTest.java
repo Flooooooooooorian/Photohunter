@@ -13,8 +13,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.*;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.util.LinkedMultiValueMap;
@@ -44,7 +46,8 @@ class LocationControllerTest {
     @Autowired
     private PictureRepository pictureRepository;
 
-    private final CloudinaryService cloudinaryService = mock(CloudinaryService.class);
+    @MockBean
+    private CloudinaryService cloudinaryService;
 
     @BeforeEach
     public void clearDb() {
@@ -165,6 +168,8 @@ class LocationControllerTest {
                 .thumbnail(p2)
                 .build();
 
+        pictureRepository.save(p1);
+        pictureRepository.save(p2);
         locationRepository.save(l1);
         locationRepository.save(l2);
 
@@ -187,23 +192,59 @@ class LocationControllerTest {
                 .title("title")
                 .build();
 
-        ObjectMapper mapper = new ObjectMapper();
-
-        MockMultipartFile imageFile = new MockMultipartFile("file", "other-file-name.txt", MediaType.TEXT_PLAIN_VALUE, "test_file".getBytes());
-        MockMultipartFile dtoFile = new MockMultipartFile("json", "", "application/json", mapper.writeValueAsString(dto).getBytes());
-
-
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        headers.setContentType(MediaType.MULTIPART_MIXED);
 
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        body.add("file", imageFile);
-        body.add("locationCreationDto", dtoFile);
+        body.add("locationCreationDto", dto);
+        body.add("file", new ClassPathResource("test_img.jpg"));
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
-        ResponseEntity<Location> response = testRestTemplate.postForEntity("http://localhost:" + port + "/api/location/", requestEntity, Location.class);
+        ResponseEntity<Location> response = testRestTemplate.exchange("http://localhost:" + port + "/api/location/", HttpMethod.POST, requestEntity, Location.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
+        assertThat(response.getBody().getId(), notNullValue());
+        assertThat(response.getBody().getThumbnail().getId(), notNullValue());
+        assertThat(response.getBody(), is(Location
+                .builder()
+                .id(response.getBody().getId())
+                .lat(dto.getLat())
+                .lng(dto.getLng())
+                .title(dto.getTitle())
+                .thumbnail(Picture.builder().id(response.getBody().getThumbnail().getId()).url("testurl").build())
+                .description(dto.getDescription())
+                .build()));
+    }
+
+    @Test
+    void createBasicLocationWithoutThumbnailControllerIntegrationTest() {
+        LocationCreationDto dto = LocationCreationDto.builder()
+                .lat(50.0)
+                .lng(15)
+                .description("description l1")
+                .title("title")
+                .build();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_MIXED);
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("locationCreationDto", dto);
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+        ResponseEntity<Location> response = testRestTemplate.exchange("http://localhost:" + port + "/api/location/", HttpMethod.POST, requestEntity, Location.class);
+
+        assertThat(response.getStatusCode(), is(HttpStatus.OK));
+        assertThat(response.getBody().getId(), notNullValue());
+        assertThat(response.getBody(), is(Location
+                .builder()
+                .id(response.getBody().getId())
+                .lat(dto.getLat())
+                .lng(dto.getLng())
+                .title(dto.getTitle())
+                .description(dto.getDescription())
+                .build()));
     }
 }
