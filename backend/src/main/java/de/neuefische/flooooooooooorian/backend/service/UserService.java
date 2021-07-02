@@ -51,8 +51,8 @@ public class UserService {
     }
 
     public User loginUserWithGoogle(GoogleProfileDto googleProfileDto, GoogleAccessTokenDto googleAccessTokenDto) {
-        if (existsUserByUsername(googleProfileDto.getEmail())) {
-            Optional<User> google_user = findUserByEmail(googleProfileDto.getEmail());
+        if (userRepository.existsUserByEmail(googleProfileDto.getEmail())) {
+            Optional<User> google_user = userRepository.findUserByEmail(googleProfileDto.getEmail());
             return google_user.get();
         } else {
             User google_user = User.builder()
@@ -68,25 +68,15 @@ public class UserService {
         }
     }
 
-    public Optional<User> findUserByEmail(String email) {
-        return userRepository.findUserByEmail(email);
-    }
-
-    public boolean existsUserByUsername(String email) {
-        return userRepository.existsUserByEmail(email);
-    }
-
     public String login(UserLoginDto userLoginDto) {
         try {
             UsernamePasswordAuthenticationToken usernamePasswordData = new UsernamePasswordAuthenticationToken(userLoginDto.getEmail(), userLoginDto.getPassword());
             Authentication auth = authenticationManager.authenticate(usernamePasswordData);
-            System.out.println(auth);
             HashMap<String, Object> claims = new HashMap<>();
             claims.put("name", ((CustomUserDetails)auth.getPrincipal()).getFullName());
             return jwtUtilsService.createToken(claims, auth.getName());
 
         } catch (Exception e) {
-            System.out.println(e);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad login data");
         }
     }
