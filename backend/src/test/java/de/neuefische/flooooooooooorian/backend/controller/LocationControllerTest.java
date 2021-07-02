@@ -1,19 +1,35 @@
 package de.neuefische.flooooooooooorian.backend.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import de.neuefische.flooooooooooorian.backend.dto.LocationCreationDto;
 import de.neuefische.flooooooooooorian.backend.model.Location;
 import de.neuefische.flooooooooooorian.backend.model.Picture;
 import de.neuefische.flooooooooooorian.backend.repository.LocationRepository;
+import de.neuefische.flooooooooooorian.backend.repository.PictureRepository;
+import de.neuefische.flooooooooooorian.backend.service.CloudinaryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.*;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+
+import java.io.File;
+import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.mockito.ArgumentMatchers.anyObject;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class LocationControllerTest {
@@ -26,6 +42,12 @@ class LocationControllerTest {
 
     @Autowired
     private LocationRepository locationRepository;
+
+    @Autowired
+    private PictureRepository pictureRepository;
+
+    @MockBean
+    private CloudinaryService cloudinaryService;
 
     @BeforeEach
     public void clearDb() {
@@ -62,6 +84,8 @@ class LocationControllerTest {
                 .thumbnail(p2)
                 .build();
 
+        pictureRepository.save(p1);
+        pictureRepository.save(p2);
         locationRepository.save(l1);
         locationRepository.save(l2);
 
@@ -102,6 +126,8 @@ class LocationControllerTest {
                 .thumbnail(p2)
                 .build();
 
+        pictureRepository.save(p1);
+        pictureRepository.save(p2);
         locationRepository.save(l1);
         locationRepository.save(l2);
 
@@ -142,6 +168,8 @@ class LocationControllerTest {
                 .thumbnail(p2)
                 .build();
 
+        pictureRepository.save(p1);
+        pictureRepository.save(p2);
         locationRepository.save(l1);
         locationRepository.save(l2);
 
@@ -149,5 +177,74 @@ class LocationControllerTest {
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
         assertThat(response.getBody(), arrayContainingInAnyOrder(l1));
+    }
+
+    @Test
+    void createBasicLocationControllerIntegrationTest() throws IOException {
+        Picture picture = Picture.builder().url("testurl").id("fsfsdf").build();
+
+        when(cloudinaryService.uploadImage(Mockito.any(File.class))).thenReturn(picture);
+
+        LocationCreationDto dto = LocationCreationDto.builder()
+                .lat(50.0)
+                .lng(15)
+                .description("description l1")
+                .title("title")
+                .build();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_MIXED);
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("locationCreationDto", dto);
+        body.add("file", new ClassPathResource("test_img.jpg"));
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+        ResponseEntity<Location> response = testRestTemplate.exchange("http://localhost:" + port + "/api/location/", HttpMethod.POST, requestEntity, Location.class);
+
+        assertThat(response.getStatusCode(), is(HttpStatus.OK));
+        assertThat(response.getBody().getId(), notNullValue());
+        assertThat(response.getBody().getThumbnail().getId(), notNullValue());
+        assertThat(response.getBody(), is(Location
+                .builder()
+                .id(response.getBody().getId())
+                .lat(dto.getLat())
+                .lng(dto.getLng())
+                .title(dto.getTitle())
+                .thumbnail(Picture.builder().id(response.getBody().getThumbnail().getId()).url("testurl").build())
+                .description(dto.getDescription())
+                .build()));
+    }
+
+    @Test
+    void createBasicLocationWithoutThumbnailControllerIntegrationTest() {
+        LocationCreationDto dto = LocationCreationDto.builder()
+                .lat(50.0)
+                .lng(15)
+                .description("description l1")
+                .title("title")
+                .build();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_MIXED);
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("locationCreationDto", dto);
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+        ResponseEntity<Location> response = testRestTemplate.exchange("http://localhost:" + port + "/api/location/", HttpMethod.POST, requestEntity, Location.class);
+
+        assertThat(response.getStatusCode(), is(HttpStatus.OK));
+        assertThat(response.getBody().getId(), notNullValue());
+        assertThat(response.getBody(), is(Location
+                .builder()
+                .id(response.getBody().getId())
+                .lat(dto.getLat())
+                .lng(dto.getLng())
+                .title(dto.getTitle())
+                .description(dto.getDescription())
+                .build()));
     }
 }

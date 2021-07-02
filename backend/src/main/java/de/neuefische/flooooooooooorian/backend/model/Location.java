@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
@@ -24,6 +25,7 @@ public class Location {
     private double lat;
     private double lng;
     private String title;
+    @DBRef
     private Picture thumbnail;
     private String description;
     private List<String> pictures;
