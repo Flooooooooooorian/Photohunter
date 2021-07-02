@@ -1,5 +1,7 @@
 package de.neuefische.flooooooooooorian.backend.service;
 
+import de.neuefische.flooooooooooorian.backend.dto.LocationCreationDto;
+import de.neuefische.flooooooooooorian.backend.model.Picture;
 import de.neuefische.flooooooooooorian.backend.repository.LocationRepository;
 import de.neuefische.flooooooooooorian.backend.model.Location;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +14,12 @@ import java.util.Optional;
 public class LocationService {
 
     private final LocationRepository locationRepository;
+    private final PictureService pictureService;
 
     @Autowired
-    public LocationService(LocationRepository locationRepository) {
+    public LocationService(LocationRepository locationRepository, PictureService pictureService) {
         this.locationRepository = locationRepository;
+        this.pictureService = pictureService;
     }
 
     public List<Location> getLocations() {
@@ -27,6 +31,27 @@ public class LocationService {
             return locationRepository.findAllByLatBetweenAndLngBetween((lat.get() - 5), (lat.get() + 5), (lng.get() - 5), (lng.get() + 5));
         }
         return this.getLocations();
+    }
+
+    public Location createLocation(LocationCreationDto locationCreationDto) {
+
+        return this.createLocation(locationCreationDto, null);
+    }
+
+    public Location createLocation(LocationCreationDto locationCreationDto, Picture picture) {
+
+        Location location = Location.builder()
+                .lat(locationCreationDto.getLat())
+                .lng(locationCreationDto.getLng())
+                .title(locationCreationDto.getTitle())
+                .description(locationCreationDto.getDescription())
+                .build();
+
+        if (picture != null) {
+            location.setThumbnail(pictureService.createPicture(picture));
+        }
+
+        return locationRepository.save(location);
     }
 
     public Optional<Location> getLocationById(String id) {
