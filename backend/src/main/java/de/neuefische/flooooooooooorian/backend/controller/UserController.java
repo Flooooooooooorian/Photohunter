@@ -6,7 +6,7 @@ import de.neuefische.flooooooooooorian.backend.security.model.User;
 import de.neuefische.flooooooooooorian.backend.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("user")
@@ -24,7 +24,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public User registerUser(@RequestBody UserCreationDto userCreationDto) {
+    public User registerUser(@Valid @RequestBody UserCreationDto userCreationDto) {
         return userService.registerUserByEmail(userCreationDto);
     }
 }

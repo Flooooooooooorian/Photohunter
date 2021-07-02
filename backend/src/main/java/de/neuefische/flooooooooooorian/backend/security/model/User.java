@@ -4,21 +4,27 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.Email;
+
 @Document(collection = "users")
 @Data
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class User {
+@Builder
+public class User {
 
     @Id
-    protected String id;
-    protected String email;
-    protected String full_name;
-    protected String avatar_url;
+    private String id;
+    private String email;
+    private String full_name;
+    private String avatar_url;
 
-    protected String role;
-    protected boolean enabled;
+    private String password;
 
-    public abstract String getPassword();
+    private String role;
+    private boolean enabled;
+
+    private String google_access_token;
+    private String google_refresh_token;
+
 }

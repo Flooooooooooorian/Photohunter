@@ -5,8 +5,6 @@ import de.neuefische.flooooooooooorian.backend.dto.GoogleProfileDto;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserCreationDto;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserLoginDto;
 import de.neuefische.flooooooooooorian.backend.security.model.CustomUserDetails;
-import de.neuefische.flooooooooooorian.backend.security.model.EmailUser;
-import de.neuefische.flooooooooooorian.backend.security.model.GoogleUser;
 import de.neuefische.flooooooooooorian.backend.security.model.User;
 import de.neuefische.flooooooooooorian.backend.security.repository.UserRepository;
 import de.neuefische.flooooooooooorian.backend.security.service.JwtUtilsService;
@@ -20,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -41,7 +38,7 @@ public class UserService {
     public User registerUserByEmail(UserCreationDto userCreationDto) {
         if (!userRepository.existsUserByEmail(userCreationDto.getEmail())) {
 
-            EmailUser emailUser = EmailUser.builder()
+            User emailUser = User.builder()
                     .email(userCreationDto.getEmail())
                     .full_name(userCreationDto.getName())
                     .role("User")
@@ -58,16 +55,16 @@ public class UserService {
             Optional<User> google_user = findUserByEmail(googleProfileDto.getEmail());
             return google_user.get();
         } else {
-            GoogleUser new_google_user = GoogleUser.builder()
-                    .access_token(googleAccessTokenDto.getAccess_token())
-                    .refresh_token(googleAccessTokenDto.getRefresh_token())
+            User google_user = User.builder()
+                    .google_access_token(googleAccessTokenDto.getAccess_token())
+                    .google_refresh_token(googleAccessTokenDto.getRefresh_token())
                     .avatar_url(googleProfileDto.getPicture())
                     .full_name(googleProfileDto.getName())
                     .email(googleProfileDto.getEmail())
                     .role("User")
                     .enabled(googleProfileDto.isVerified_email())
                     .build();
-            return userRepository.save(new_google_user);
+            return userRepository.save(google_user);
         }
     }
 
