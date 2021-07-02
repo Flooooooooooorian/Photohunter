@@ -7,6 +7,9 @@ import de.neuefische.flooooooooooorian.backend.model.Location;
 import de.neuefische.flooooooooooorian.backend.model.Picture;
 import de.neuefische.flooooooooooorian.backend.repository.LocationRepository;
 import de.neuefische.flooooooooooorian.backend.repository.PictureRepository;
+import de.neuefische.flooooooooooorian.backend.security.dto.UserLoginDto;
+import de.neuefische.flooooooooooorian.backend.security.model.User;
+import de.neuefische.flooooooooooorian.backend.security.repository.UserRepository;
 import de.neuefische.flooooooooooorian.backend.service.CloudinaryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,6 +22,8 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.*;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
@@ -32,6 +37,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestPropertySource(properties = "jwt.secret=testSecret")
 class LocationControllerTest {
 
     @LocalServerPort
@@ -44,6 +50,12 @@ class LocationControllerTest {
     private LocationRepository locationRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
     private PictureRepository pictureRepository;
 
     @MockBean
@@ -52,6 +64,7 @@ class LocationControllerTest {
     @BeforeEach
     public void clearDb() {
         locationRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test
@@ -192,7 +205,7 @@ class LocationControllerTest {
                 .title("title")
                 .build();
 
-        HttpHeaders headers = new HttpHeaders();
+        HttpHeaders headers = getHttpHeaderWithAuthToken();
         headers.setContentType(MediaType.MULTIPART_MIXED);
 
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
@@ -226,7 +239,7 @@ class LocationControllerTest {
                 .title("title")
                 .build();
 
-        HttpHeaders headers = new HttpHeaders();
+        HttpHeaders headers = getHttpHeaderWithAuthToken();
         headers.setContentType(MediaType.MULTIPART_MIXED);
 
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
@@ -246,5 +259,16 @@ class LocationControllerTest {
                 .title(dto.getTitle())
                 .description(dto.getDescription())
                 .build()));
+    }
+
+    private HttpHeaders getHttpHeaderWithAuthToken() {
+        User u = userRepository.save(User.builder().email("test_email").role("User").password(passwordEncoder.encode("test_password")).build());
+        System.out.println(u);
+        UserLoginDto loginData = new UserLoginDto("test_email", "test_password");
+        ResponseEntity<String> tokenResponse = testRestTemplate.postForEntity("http://localhost:" + port + "/user/login", loginData, String.class);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(tokenResponse.getBody());
+        System.out.println(tokenResponse.getBody());
+        return headers;
     }
 }
