@@ -35,12 +35,12 @@ public class LocationService {
         return this.getLocations();
     }
 
-    public Location createLocation(LocationCreationDto locationCreationDto) {
+    public Location createLocation(LocationCreationDto locationCreationDto, User user) {
 
-        return this.createLocation(locationCreationDto, null);
+        return this.createLocation(locationCreationDto, null, user);
     }
 
-    public Location createLocation(LocationCreationDto locationCreationDto, Picture picture) {
+    public Location createLocation(LocationCreationDto locationCreationDto, Picture picture, User user) {
 
         Location location = Location.builder()
                 .creationDate(Instant.now())
@@ -48,10 +48,11 @@ public class LocationService {
                 .lng(locationCreationDto.getLng())
                 .title(locationCreationDto.getTitle())
                 .description(locationCreationDto.getDescription())
+                .owner(user)
                 .build();
 
         if (picture != null) {
-            location.setThumbnail(pictureService.createPicture(picture));
+            location.setThumbnail(pictureService.createPicture(picture, user));
         }
 
         return locationRepository.save(location);

@@ -2,6 +2,7 @@ package de.neuefische.flooooooooooorian.backend.service;
 
 import de.neuefische.flooooooooooorian.backend.model.Picture;
 import de.neuefische.flooooooooooorian.backend.repository.PictureRepository;
+import de.neuefische.flooooooooooorian.backend.security.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -4,7 +4,10 @@ import de.neuefische.flooooooooooorian.backend.security.dto.UserCreationDto;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserLoginDto;
 import de.neuefische.flooooooooooorian.backend.security.model.User;
 import de.neuefische.flooooooooooorian.backend.service.UserService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 

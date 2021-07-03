@@ -214,6 +214,7 @@ class LocationControllerTest {
         ResponseEntity<Location> response = testRestTemplate.exchange("http://localhost:" + port + "/api/location/", HttpMethod.POST, requestEntity, Location.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
+        assertThat(response.getBody(), notNullValue());
         assertThat(response.getBody().getId(), notNullValue());
         assertThat(response.getBody().getThumbnail().getId(), notNullValue());
         assertThat(response.getBody().getOwner(), notNullValue());
@@ -254,6 +255,7 @@ class LocationControllerTest {
         ResponseEntity<Location> response = testRestTemplate.exchange("http://localhost:" + port + "/api/location/", HttpMethod.POST, requestEntity, Location.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
+        assertThat(response.getBody(), notNullValue());
         assertThat(response.getBody().getId(), notNullValue());
         assertThat(response.getBody().getOwner(), notNullValue());
         assertThat(response.getBody().getCreationDate().isBefore(Instant.now()), is(true));
@@ -264,6 +266,7 @@ class LocationControllerTest {
                 .lat(dto.getLat())
                 .lng(dto.getLng())
                 .title(dto.getTitle())
+                .owner(response.getBody().getOwner())
                 .description(dto.getDescription())
                 .creationDate(response.getBody().getCreationDate())
                 .build()));

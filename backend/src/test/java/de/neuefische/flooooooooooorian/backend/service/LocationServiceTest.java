@@ -17,11 +17,12 @@ import static org.mockito.Mockito.*;
 
 class LocationServiceTest {
 
-    private final PictureRepository pictureRepository = mock(PictureRepository.class);
-    private final PictureService pictureService = new PictureService(pictureRepository);
+    private final PictureService pictureService = mock(PictureService.class);
 
     private final LocationRepository locationRepository = mock(LocationRepository.class);
     private final LocationService locationService = new LocationService(locationRepository, pictureService);
+
+    private final UserService userService = mock(UserService.class);
 
     @Test
     void getBasicLocationsList() {
@@ -92,17 +93,6 @@ class LocationServiceTest {
                         .url("www.url1.com")
                         .build())
                 .build();
-        Location l2 = Location.builder()
-                .lat(10.46484)
-                .lng(1.648)
-                .id("fsdfnaldgadgd")
-                .description("description l2")
-                .title("title")
-                .thumbnail(Picture.builder()
-                        .id("sdofs")
-                        .url("www.url2.com")
-                        .build())
-                .build();
 
         when(locationRepository.findAllByLatBetweenAndLngBetween(45.0, 55.0, 13.0, 23.0)).thenReturn(List.of(l1));
 
@@ -114,6 +104,16 @@ class LocationServiceTest {
 
     @Test
     void createBasicLocationTest() {
+        User user = User.builder()
+                .email("test@test.com")
+                .enabled(true)
+                .password("password")
+                .full_name("name")
+                .avatar_url("avatar_url")
+                .google_access_token("google_access_token")
+                .google_refresh_token("google_refresh_token")
+        .build();
+
         LocationCreationDto dto = LocationCreationDto.builder()
                 .lat(50.0)
                 .lng(15)
@@ -121,17 +121,26 @@ class LocationServiceTest {
                 .title("title")
                 .build();
 
-        Picture p1 = Picture.builder()
+        Picture p1dto = Picture.builder()
                 .id("feraegdarg")
                 .url("www.url1.com")
                 .build();
+
+        Picture p1 = Picture.builder()
+                .id("feraegdarg")
+                .url("www.url1.com")
+                .owner(user)
+                .build();
+
+        when(pictureService.createPicture(p1dto, user)).thenReturn(p1);
 
         Location newlocation = Location.builder()
                 .lat(dto.getLat())
                 .lng(dto.getLng())
                 .title(dto.getTitle())
                 .description(dto.getDescription())
-                .thumbnail(pictureService.createPicture(p1))
+                .owner(user)
+                .thumbnail(p1)
                 .build();
 
         Location expected = Location.builder()
@@ -140,16 +149,15 @@ class LocationServiceTest {
                 .id("fdiuasdgiaffgdg")
                 .title(dto.getTitle())
                 .description(dto.getDescription())
-                .thumbnail(pictureService.createPicture(p1))
+                .thumbnail(p1)
                 .build();
 
         when(locationRepository.save(any())).thenReturn(expected);
 
-        Location actual = locationService.createLocation(dto, p1);
+        Location actual = locationService.createLocation(dto, p1dto, user);
 
         verify(locationRepository).save(any());
         verify(pictureService, atLeastOnce()).createPicture(p1dto, user);
         assertThat(actual, is(expected));
-        verify(locationRepository).save(newlocation);
     }
 }
