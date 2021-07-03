@@ -9,5 +9,4 @@ import java.util.List;
 @Repository
 public interface PictureRepository extends PagingAndSortingRepository<Picture, String> {
 
-    List<Picture> findAll();
 }

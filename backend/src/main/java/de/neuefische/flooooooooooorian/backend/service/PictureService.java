@@ -17,10 +17,6 @@ public class PictureService {
         this.pictureRepository = pictureRepository;
     }
 
-    public List<Picture> getPictures() {
-        return pictureRepository.findAll();
-    }
-
     public Picture createPicture(Picture picture) {
         return pictureRepository.save(picture);
     }
