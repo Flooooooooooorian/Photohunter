@@ -27,6 +27,7 @@ import static org.hamcrest.MatcherAssert.assertThat;;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
 class UserServiceTest {
@@ -188,10 +189,30 @@ class UserServiceTest {
         String jwt = userService.login(userLoginDto);
 
         verify(authenticationManager).authenticate(usernamePasswordAuthenticationToken);
-        verify(authentication).getPrincipal();
+        verify(authentication, atLeastOnce()).getPrincipal();
         verify(authentication).getName();
         verify(jwtUtilsService).createToken(new HashMap<>(Map.of("name", "test_username")), userLoginDto.getEmail());
         assertThat(jwt, equalTo("jwt_test_token"));
+    }
+
+    @Test
+    void loginEmailNotVerifiedData() {
+        UserLoginDto userLoginDto = new UserLoginDto("testemail@test.com", "test_password");
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userLoginDto.getEmail(), userLoginDto.getPassword());
+        Authentication authentication = mock(Authentication.class);
+
+        when(authenticationManager.authenticate(usernamePasswordAuthenticationToken)).thenReturn(authentication);
+        when(authentication.getPrincipal()).thenReturn(new CustomUserDetails("test_username", userLoginDto.getEmail(), userLoginDto.getPassword(), false, true, true, true, List.of(new SimpleGrantedAuthority("User"))));
+        when(authentication.getName()).thenReturn(userLoginDto.getEmail());
+        try {
+            userService.login(userLoginDto);
+            fail();
+        }
+        catch (ResponseStatusException e) {
+            assertThat(e.getRawStatusCode(), is(403));
+            verify(authenticationManager).authenticate(usernamePasswordAuthenticationToken);
+            verify(authentication, atLeastOnce()).getPrincipal();
+        }
     }
 
     @Test

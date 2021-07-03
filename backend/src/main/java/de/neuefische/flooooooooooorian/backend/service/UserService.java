@@ -1,5 +1,6 @@
 package de.neuefische.flooooooooooorian.backend.service;
 
+import de.neuefische.flooooooooooorian.backend.dto.EmailVerificationDto;
 import de.neuefische.flooooooooooorian.backend.dto.GoogleAccessTokenDto;
 import de.neuefische.flooooooooooorian.backend.dto.GoogleProfileDto;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserCreationDto;
@@ -69,15 +70,33 @@ public class UserService {
     }
 
     public String login(UserLoginDto userLoginDto) {
+        Authentication auth;
         try {
             UsernamePasswordAuthenticationToken usernamePasswordData = new UsernamePasswordAuthenticationToken(userLoginDto.getEmail(), userLoginDto.getPassword());
-            Authentication auth = authenticationManager.authenticate(usernamePasswordData);
-            HashMap<String, Object> claims = new HashMap<>();
-            claims.put("name", ((CustomUserDetails)auth.getPrincipal()).getFullName());
-            return jwtUtilsService.createToken(claims, auth.getName());
+            auth = authenticationManager.authenticate(usernamePasswordData);
 
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad login data");
         }
+
+        if (!((CustomUserDetails)auth.getPrincipal()).isEnabled()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Email not verified");
+        }
+        HashMap<String, Object> claims = new HashMap<>();
+        claims.put("name", ((CustomUserDetails)auth.getPrincipal()).getFullName());
+        return jwtUtilsService.createToken(claims, auth.getName());
+    }
+
+    public boolean verificateEmail(EmailVerificationDto emailVerificationDto) {
+        Optional<User> userOptional = userRepository.findUserByEmail(emailVerificationDto.getEmail());
+        User user = userOptional.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+        if (user.isEnabled()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        jwtUtilsService.parseClaim(emailVerificationDto.getToken());
+        user.setEnabled(true);
+        userRepository.save(user);
+        return true;
     }
 }
