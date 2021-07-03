@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 
@@ -61,7 +62,10 @@ public class GoogleLoginService {
         HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(map, headers);
         ResponseEntity<GoogleAccessTokenDto> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, GoogleAccessTokenDto.class);
 
-        return responseEntity.getBody();
+        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+            return responseEntity.getBody();
+        }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
 
     private GoogleProfileDto getGoogleProfileInformations(String access_token) {
