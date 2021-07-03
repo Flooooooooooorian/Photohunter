@@ -1,7 +1,5 @@
 package de.neuefische.flooooooooooorian.backend.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import de.neuefische.flooooooooooorian.backend.dto.LocationCreationDto;
 import de.neuefische.flooooooooooorian.backend.model.Location;
 import de.neuefische.flooooooooooorian.backend.model.Picture;
@@ -21,7 +19,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.*;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.util.LinkedMultiValueMap;
@@ -32,8 +29,6 @@ import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.mockito.ArgumentMatchers.anyObject;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
