@@ -8,6 +8,9 @@ import de.neuefische.flooooooooooorian.backend.security.service.JwtUtilsService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -127,9 +130,42 @@ class UserControllerTest {
         }
     }
 
+    @ParameterizedTest(name = "Password {0}")
+    @CsvSource({"Too short, T3s!, false",
+            "Too long, T3s!Password!IsToLongForThisShitButNotSureHowLongIsTooLongForAPassword?Is128CharactersAsMaximumLenghtResonableOrShouldItBeLonger?, false",
+            "No Lowercase Letter, T3E!PASSWORD, false",
+            "No Uppercase Letter, t3s!password, false",
+            "No Special Character, T3stPassword, false",
+            "No Number, Tes!Password, false",
+            "With Withspace, T3s! Password, false",
+            "Valid, T3s!PA7sw0rd, true",
+    })
+    void registeUserPasswordValidation(String textRepresantation, String password, boolean result) {
+        UserCreationDto userCreationDto = new UserCreationDto("test@test.com", password, "fullname");
+        User expected = User.builder()
+                .email(userCreationDto.getEmail())
+                .full_name(userCreationDto.getName())
+                .role("User")
+                .build();
+
+        ResponseEntity<User> response = testRestTemplate.exchange("http://localhost:" + port + "/user/register", HttpMethod.POST, new HttpEntity<>(userCreationDto), User.class);
+
+        assertThat(response.getStatusCode() == HttpStatus.OK, is(result));
+        if (result) {
+            assertThat(response.getBody(), notNullValue());
+            assertThat(response.getBody().getId(), notNullValue());
+            assertThat(passwordEncoder.matches(userCreationDto.getPassword(), response.getBody().getPassword()), is(true));
+
+            expected.setId(response.getBody().getId());
+            expected.setPassword(response.getBody().getPassword());
+            assertThat(response.getBody(), is(expected));
+        }
+
+    }
+
     @Test
     void registerValidNewUser() {
-        UserCreationDto userCreationDto = new UserCreationDto("test@test.com", "test_password", "fullname");
+        UserCreationDto userCreationDto = new UserCreationDto("test@test.com", "test_Password_12412@!", "fullname");
         User expected = User.builder()
                 .email(userCreationDto.getEmail())
                 .full_name(userCreationDto.getName())
