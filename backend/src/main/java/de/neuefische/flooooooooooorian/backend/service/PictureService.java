@@ -5,7 +5,7 @@ import de.neuefische.flooooooooooorian.backend.repository.PictureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.time.Instant;
 
 @Service
 public class PictureService {
@@ -17,7 +17,9 @@ public class PictureService {
         this.pictureRepository = pictureRepository;
     }
 
-    public Picture createPicture(Picture picture) {
+    public Picture createPicture(Picture picture, User user) {
+        picture.setOwner(user);
+        picture.setCreationDate(Instant.now());
         return pictureRepository.save(picture);
     }
 }

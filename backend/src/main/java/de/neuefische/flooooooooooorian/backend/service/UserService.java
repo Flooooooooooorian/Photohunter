@@ -80,4 +80,8 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad login data");
         }
     }
+
+    public Optional<User> findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
+    }
 }

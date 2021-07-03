@@ -1,12 +1,14 @@
 package de.neuefische.flooooooooooorian.backend.service;
 
 import de.neuefische.flooooooooooorian.backend.dto.LocationCreationDto;
+import de.neuefische.flooooooooooorian.backend.model.Location;
 import de.neuefische.flooooooooooorian.backend.model.Picture;
 import de.neuefische.flooooooooooorian.backend.repository.LocationRepository;
-import de.neuefische.flooooooooooorian.backend.model.Location;
+import de.neuefische.flooooooooooorian.backend.security.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +43,7 @@ public class LocationService {
     public Location createLocation(LocationCreationDto locationCreationDto, Picture picture) {
 
         Location location = Location.builder()
+                .creationDate(Instant.now())
                 .lat(locationCreationDto.getLat())
                 .lng(locationCreationDto.getLng())
                 .title(locationCreationDto.getTitle())

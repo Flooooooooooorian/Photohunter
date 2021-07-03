@@ -4,7 +4,7 @@ import de.neuefische.flooooooooooorian.backend.dto.LocationCreationDto;
 import de.neuefische.flooooooooooorian.backend.model.Location;
 import de.neuefische.flooooooooooorian.backend.model.Picture;
 import de.neuefische.flooooooooooorian.backend.repository.LocationRepository;
-import de.neuefische.flooooooooooorian.backend.repository.PictureRepository;
+import de.neuefische.flooooooooooorian.backend.security.model.User;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -143,10 +143,12 @@ class LocationServiceTest {
                 .thumbnail(pictureService.createPicture(p1))
                 .build();
 
-        when(locationRepository.save(newlocation)).thenReturn(expected);
+        when(locationRepository.save(any())).thenReturn(expected);
 
         Location actual = locationService.createLocation(dto, p1);
 
+        verify(locationRepository).save(any());
+        verify(pictureService, atLeastOnce()).createPicture(p1dto, user);
         assertThat(actual, is(expected));
         verify(locationRepository).save(newlocation);
     }

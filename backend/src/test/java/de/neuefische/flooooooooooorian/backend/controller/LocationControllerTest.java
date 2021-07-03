@@ -26,6 +26,8 @@ import org.springframework.util.MultiValueMap;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Instant;
+import java.time.temporal.TemporalAmount;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -214,13 +216,20 @@ class LocationControllerTest {
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
         assertThat(response.getBody().getId(), notNullValue());
         assertThat(response.getBody().getThumbnail().getId(), notNullValue());
+        assertThat(response.getBody().getOwner(), notNullValue());
+        assertThat(response.getBody().getCreationDate().isBefore(Instant.now()), is(true));
+        assertThat(response.getBody().getCreationDate().isAfter(Instant.now().minusSeconds(1)), is(true));
+        assertThat(response.getBody().getThumbnail().getCreationDate().isBefore(Instant.now()), is(true));
+        assertThat(response.getBody().getThumbnail().getCreationDate().isAfter(Instant.now().minusSeconds(1)), is(true));
         assertThat(response.getBody(), is(Location
                 .builder()
+                .creationDate(response.getBody().getCreationDate())
                 .id(response.getBody().getId())
                 .lat(dto.getLat())
                 .lng(dto.getLng())
                 .title(dto.getTitle())
-                .thumbnail(Picture.builder().id(response.getBody().getThumbnail().getId()).url("testurl").build())
+                .owner(response.getBody().getOwner())
+                .thumbnail(Picture.builder().id(response.getBody().getThumbnail().getId()).creationDate(response.getBody().getThumbnail().getCreationDate()).owner(response.getBody().getThumbnail().getOwner()).url("testurl").build())
                 .description(dto.getDescription())
                 .build()));
     }
@@ -246,6 +255,9 @@ class LocationControllerTest {
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
         assertThat(response.getBody().getId(), notNullValue());
+        assertThat(response.getBody().getOwner(), notNullValue());
+        assertThat(response.getBody().getCreationDate().isBefore(Instant.now()), is(true));
+        assertThat(response.getBody().getCreationDate().isAfter(Instant.now().minusSeconds(1)), is(true));
         assertThat(response.getBody(), is(Location
                 .builder()
                 .id(response.getBody().getId())
@@ -253,6 +265,7 @@ class LocationControllerTest {
                 .lng(dto.getLng())
                 .title(dto.getTitle())
                 .description(dto.getDescription())
+                .creationDate(response.getBody().getCreationDate())
                 .build()));
     }
 
