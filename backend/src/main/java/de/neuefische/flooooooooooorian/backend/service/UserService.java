@@ -1,5 +1,6 @@
 package de.neuefische.flooooooooooorian.backend.service;
 
+import de.neuefische.flooooooooooorian.backend.config.EmailConfig;
 import de.neuefische.flooooooooooorian.backend.dto.EmailVerificationDto;
 import de.neuefische.flooooooooooorian.backend.dto.GoogleAccessTokenDto;
 import de.neuefische.flooooooooooorian.backend.dto.GoogleProfileDto;
@@ -9,8 +10,10 @@ import de.neuefische.flooooooooooorian.backend.security.model.CustomUserDetails;
 import de.neuefische.flooooooooooorian.backend.security.model.User;
 import de.neuefische.flooooooooooorian.backend.security.repository.UserRepository;
 import de.neuefische.flooooooooooorian.backend.security.service.JwtUtilsService;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,13 +30,15 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtilsService jwtUtilsService;
     private final AuthenticationManager authenticationManager;
+    private final EmailConfig emailConfig;
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtilsService jwtUtilsService, AuthenticationManager authenticationManager) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtilsService jwtUtilsService, AuthenticationManager authenticationManager, EmailConfig emailConfig) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtilsService = jwtUtilsService;
         this.authenticationManager = authenticationManager;
+        this.emailConfig = emailConfig;
     }
 
     public User registerUserByEmail(UserCreationDto userCreationDto) {
@@ -87,14 +92,26 @@ public class UserService {
         return jwtUtilsService.createToken(claims, auth.getName());
     }
 
-    public boolean verificateEmail(EmailVerificationDto emailVerificationDto) {
-        Optional<User> userOptional = userRepository.findUserByEmail(emailVerificationDto.getEmail());
+    public void startEmailVerification(String email) {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom("info.photohunter@gmail.com");
+            message.setTo(email);
+            message.setSubject("Email Verification PhotoHunter");
+            message.setText("Hallo \n" + "http://localhost:8080/user/email/" + jwtUtilsService.createToken(new HashMap<>(), email));
+            emailConfig.getJavaMailSender().send(message);
+    }
+
+    public boolean verificateEmailToken(EmailVerificationDto emailVerificationDto, String email) {
+        Optional<User> userOptional = userRepository.findUserByEmail(email);
         User user = userOptional.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
         if (user.isEnabled()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
-        jwtUtilsService.parseClaim(emailVerificationDto.getToken());
+        Claims claims = jwtUtilsService.parseClaim(emailVerificationDto.getToken());
+        if (!email.equals(claims.get("sub"))) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
         user.setEnabled(true);
         userRepository.save(user);
         return true;

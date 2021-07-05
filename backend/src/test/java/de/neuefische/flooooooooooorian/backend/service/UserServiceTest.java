@@ -1,5 +1,6 @@
 package de.neuefische.flooooooooooorian.backend.service;
 
+import de.neuefische.flooooooooooorian.backend.config.EmailConfig;
 import de.neuefische.flooooooooooorian.backend.dto.GoogleAccessTokenDto;
 import de.neuefische.flooooooooooorian.backend.dto.GoogleProfileDto;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserCreationDto;
@@ -9,14 +10,12 @@ import de.neuefische.flooooooooooorian.backend.security.model.User;
 import de.neuefische.flooooooooooorian.backend.security.repository.UserRepository;
 import de.neuefische.flooooooooooorian.backend.security.service.JwtUtilsService;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
@@ -35,9 +34,10 @@ class UserServiceTest {
     private final UserRepository userRepository = mock(UserRepository.class);
     private final PasswordEncoder passwordEncoder = mock(PasswordEncoder.class);
     private final JwtUtilsService jwtUtilsService = mock(JwtUtilsService.class);
+    private final EmailConfig emailConfig = mock(EmailConfig.class);
     private final AuthenticationManager authenticationManager = mock(AuthenticationManager.class);
 
-    private final UserService userService = new UserService(userRepository, passwordEncoder, jwtUtilsService, authenticationManager);
+    private final UserService userService = new UserService(userRepository, passwordEncoder, jwtUtilsService, authenticationManager, emailConfig);
 
     @Test
     void registerNewUserByEmail() {

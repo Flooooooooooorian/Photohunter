@@ -1,6 +1,7 @@
 package de.neuefische.flooooooooooorian.backend.controller;
 
 import de.neuefische.flooooooooooorian.backend.dto.EmailVerificationDto;
+import de.neuefische.flooooooooooorian.backend.dto.SendEmailVerificationDto;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserCreationDto;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserLoginDto;
 import de.neuefische.flooooooooooorian.backend.security.model.User;
@@ -34,9 +35,11 @@ public class UserController {
 
     @PostMapping("/email")
     public boolean verificateEmail(Principal principal, @RequestBody @Valid EmailVerificationDto emailVerificationDto) {
-        if (!emailVerificationDto.getEmail().equals(principal.getName())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
-        return userService.verificateEmail(emailVerificationDto);
+        return userService.verificateEmailToken(emailVerificationDto, principal.getName());
+    }
+
+    @PostMapping("/sendemail")
+    public void sendEmailVerification(@RequestBody @Valid SendEmailVerificationDto sendEmailVerificationDto) {
+        userService.startEmailVerification(sendEmailVerificationDto.getEmail());
     }
 }
