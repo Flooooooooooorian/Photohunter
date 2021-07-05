@@ -4,6 +4,7 @@ import de.neuefische.flooooooooooorian.backend.config.EmailConfig;
 import de.neuefische.flooooooooooorian.backend.dto.EmailVerificationDto;
 import de.neuefische.flooooooooooorian.backend.dto.GoogleAccessTokenDto;
 import de.neuefische.flooooooooooorian.backend.dto.GoogleProfileDto;
+import de.neuefische.flooooooooooorian.backend.dto.PasswordResetDto;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserCreationDto;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserLoginDto;
 import de.neuefische.flooooooooooorian.backend.security.model.CustomUserDetails;
@@ -113,6 +114,27 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         user.setEnabled(true);
+        userRepository.save(user);
+        return true;
+    }
+
+    public void sendPasswordResetEmail(String email) {
+        Optional<User> userOptional = userRepository.findUserByEmail(email);
+        User user = userOptional.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("info.photohunter@gmail.com");
+        message.setTo(email);
+        message.setSubject("Password Reset PhotoHunter");
+        message.setText("Hallo \n" + "http://localhost:8080/user/email/" + jwtUtilsService.createPasswordResetToken(new HashMap<>(), user));
+        emailConfig.getJavaMailSender().send(message);
+    }
+
+    public boolean resetPassword(PasswordResetDto passwordResetDto) {
+        Optional<User> optionalUser = userRepository.findUserByEmail(passwordResetDto.getEmail());
+        User user = optionalUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+        Claims claims = jwtUtilsService.parseClaimsForPasswordResetToken(passwordResetDto.getToken(), user);
+
+        user.setPassword(passwordEncoder.encode(passwordResetDto.getPassword()));
         userRepository.save(user);
         return true;
     }
