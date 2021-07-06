@@ -129,7 +129,7 @@ public class UserService {
     public boolean resetPassword(PasswordResetDto passwordResetDto) {
         Optional<User> optionalUser = userRepository.findUserByEmail(passwordResetDto.getEmail());
         User user = optionalUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
-        Claims claims = jwtUtilsService.parseClaimsForPasswordResetToken(passwordResetDto.getToken(), user);
+        jwtUtilsService.parseClaimsForPasswordResetToken(passwordResetDto.getToken(), user);
 
         user.setPassword(passwordEncoder.encode(passwordResetDto.getPassword()));
         userRepository.save(user);
