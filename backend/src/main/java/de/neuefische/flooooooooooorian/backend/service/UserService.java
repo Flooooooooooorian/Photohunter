@@ -102,16 +102,13 @@ public class UserService {
             emailConfig.getJavaMailSender().send(message);
     }
 
-    public boolean verificateEmailToken(EmailVerificationDto emailVerificationDto, String email) {
-        Optional<User> userOptional = userRepository.findUserByEmail(email);
-        User user = userOptional.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
-        if (user.isEnabled()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
-
+    public boolean verificateEmailToken(EmailVerificationDto emailVerificationDto) {
         Claims claims = jwtUtilsService.parseClaim(emailVerificationDto.getToken());
-        if (!email.equals(claims.get("sub"))) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        Optional<User> optionalUser = userRepository.findUserByEmail(claims.getSubject());
+        User user = optionalUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+
+        if (user.isEnabled()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already verified");
         }
         user.setEnabled(true);
         userRepository.save(user);

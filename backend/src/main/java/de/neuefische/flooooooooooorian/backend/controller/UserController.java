@@ -36,8 +36,8 @@ public class UserController {
     }
 
     @PostMapping("/email")
-    public boolean verificateEmail(Principal principal, @RequestBody @Valid EmailVerificationDto emailVerificationDto) {
-        return userService.verificateEmailToken(emailVerificationDto, principal.getName());
+    public boolean verificateEmail(@RequestBody @Valid EmailVerificationDto emailVerificationDto) {
+        return userService.verificateEmailToken(emailVerificationDto);
     }
 
     @PostMapping("/sendemailvarification")
