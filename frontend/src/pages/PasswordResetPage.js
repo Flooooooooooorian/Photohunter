@@ -1,7 +1,7 @@
 import {Button, Card, CardContent, CircularProgress, makeStyles, TextField, Typography} from "@material-ui/core";
 import {useState} from "react";
 import axios from "axios";
-import {useHistory, useLocation, useParams} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
 function useQuery() {
@@ -13,7 +13,7 @@ export default function PasswordResetPage() {
     const [passwordError, setPasswordError] = useState()
     const [error, setError] = useState()
     const [loading, setLoading] = useState(false)
-    let query = useQuery();
+    const token = useQuery().get("token");
     const history = useHistory()
 
     const handleSubmit = (event) => {
@@ -21,7 +21,7 @@ export default function PasswordResetPage() {
 
         if (validatePasswords(event.target[0].value, event.target[2].value)) {
             setLoading(true)
-            const credentials = {"email": jwt_decode(query.get("token")).sub, "password": event.target[0].value, "token": query.get("token")}
+            const credentials = {"email": jwt_decode(token).sub, "password": event.target[0].value, "token": token}
             axios.post("/user/passwordreset", credentials)
                 .then((response) => response.data)
                 .then((data) => {

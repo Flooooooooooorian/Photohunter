@@ -1,4 +1,4 @@
-import {useLocation, useParams} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {Card, CircularProgress, makeStyles, Typography} from "@material-ui/core";
@@ -11,10 +11,10 @@ export default function EmailValidationRedirectPage() {
     const [result, setResult] = useState()
     const [loading, setLoading] = useState(true)
     const classes = useStyles()
-    let query = useQuery();
+    const token = useQuery().get("token");
 
     useEffect(() => {
-        axios.post("/user/email", {"token": query.get("token")})
+        axios.post("/user/email", {"token": token})
             .then((response) => response.data)
             .then((data) => {
                 if (data) {
@@ -30,7 +30,7 @@ export default function EmailValidationRedirectPage() {
             .finally(() => {
                 setLoading(false)
             })
-    }, [query.get("token")])
+    }, [token])
 
     return (
         <Card className={classes.card}>
