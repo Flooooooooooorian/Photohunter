@@ -1,5 +1,6 @@
 package de.neuefische.flooooooooooorian.backend.model;
 
+import de.neuefische.flooooooooooorian.backend.security.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

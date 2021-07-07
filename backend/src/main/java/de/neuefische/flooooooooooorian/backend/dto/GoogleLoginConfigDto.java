@@ -6,12 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class LocationCreationDto {
-    private String title;
-    private String description;
-    private double lng;
-    private double lat;
+public class GoogleLoginConfigDto {
+    private String clientId;
+    private String redirectUri;
 }
