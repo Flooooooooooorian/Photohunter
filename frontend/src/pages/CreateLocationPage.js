@@ -1,8 +1,9 @@
 import {useHistory, useLocation} from "react-router-dom";
 import {Box, Button, Card, CardContent, makeStyles, TextField} from "@material-ui/core";
-import {useRef, useState} from "react";
+import {useContext, useRef, useState} from "react";
 import axios from "axios";
 import GoogleMapsContainer from "../components/GoogleMapsContainer";
+import AuthContext from "../context/AuthContext";
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -15,6 +16,7 @@ export default function CreateLocationPage() {
     let query = useQuery();
     const history = useHistory()
     const classes = useStyles()
+    const {token} = useContext(AuthContext)
 
     const [coords, setCoords] = useState({
         latitude: parseFloat(query.get("lat")),
@@ -36,6 +38,7 @@ export default function CreateLocationPage() {
 
         const config = {
             headers: {
+                "Authorization": token,
                 "Content-Type": "multipart/form-data",
             },
         }

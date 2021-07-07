@@ -25,7 +25,6 @@ export default function AuthProvider({children}) {
         axios.post("/auth/google/login", {code})
             .then(response => response.data)
             .then(data => {
-                console.log(data)
                 setToken(data)
                 setJwtDecoded(jwt_decode(data.toString()))
             })
