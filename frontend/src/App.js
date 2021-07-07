@@ -11,6 +11,7 @@ import GoogleRedirectPage from "./pages/GoogleRedirectPage";
 import AuthProvider from "./context/AuthProvider";
 import ProfilePage from "./pages/ProfilePage";
 import PrivateRoute from "./routing/PrivateRoute";
+import CreateLocationPage from "./pages/CreateLocationPage";
 
 function App(props) {
 
@@ -26,8 +27,11 @@ function App(props) {
                 <ThemeProvider theme={darkTheme}>
                     <Header/>
                     <Switch>
-                        <Route path={"/locations"}>
+                        <Route path={"/locations"} exact>
                             <LocationsPage geoLocation={props.coords}/>
+                    </Route>
+                    <Route path={"/locations/new/"}>
+                        <CreateLocationPage geoLocation={props.coords}/>
                         </Route>
                         <Route path={"/locations/:id"}>
                             <LocationDetailsPage geoLocation={props.coords}/>
