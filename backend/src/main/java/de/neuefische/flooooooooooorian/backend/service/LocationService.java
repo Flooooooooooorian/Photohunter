@@ -4,9 +4,11 @@ import de.neuefische.flooooooooooorian.backend.dto.LocationCreationDto;
 import de.neuefische.flooooooooooorian.backend.model.Location;
 import de.neuefische.flooooooooooorian.backend.model.Picture;
 import de.neuefische.flooooooooooorian.backend.repository.LocationRepository;
+import de.neuefische.flooooooooooorian.backend.security.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,22 +35,24 @@ public class LocationService {
         return this.getLocations();
     }
 
-    public Location createLocation(LocationCreationDto locationCreationDto) {
+    public Location createLocation(LocationCreationDto locationCreationDto, User user) {
 
-        return this.createLocation(locationCreationDto, null);
+        return this.createLocation(locationCreationDto, null, user);
     }
 
-    public Location createLocation(LocationCreationDto locationCreationDto, Picture picture) {
+    public Location createLocation(LocationCreationDto locationCreationDto, Picture picture, User user) {
 
         Location location = Location.builder()
+                .creationDate(Instant.now())
                 .lat(locationCreationDto.getLat())
                 .lng(locationCreationDto.getLng())
                 .title(locationCreationDto.getTitle())
                 .description(locationCreationDto.getDescription())
+                .owner(user)
                 .build();
 
         if (picture != null) {
-            location.setThumbnail(pictureService.createPicture(picture));
+            location.setThumbnail(pictureService.createPicture(picture, user));
         }
 
         return locationRepository.save(location);
