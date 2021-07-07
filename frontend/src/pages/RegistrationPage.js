@@ -76,7 +76,7 @@ export default function RegistrationPage() {
             setPasswordError("number required")
             return false
         }
-        if (!/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(password1)) {
+        if (!/[ `!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~]/.test(password1)) {
             setPasswordError("special character required")
             return false
         }

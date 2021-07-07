@@ -55,7 +55,7 @@ export default function PasswordResetPage() {
             setPasswordError("number required")
             return false
         }
-        if (!/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(password1)) {
+        if (!/[ `!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~]/.test(password1)) {
             setPasswordError("special character required")
             return false
         }
