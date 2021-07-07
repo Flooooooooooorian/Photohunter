@@ -1,6 +1,9 @@
 package de.neuefische.flooooooooooorian.backend.controller;
 
 import de.neuefische.flooooooooooorian.backend.dto.LocationCreationDto;
+import de.neuefische.flooooooooooorian.backend.dto.LocationDto;
+import de.neuefische.flooooooooooorian.backend.dto.PictureDto;
+import de.neuefische.flooooooooooorian.backend.dto.UserDto;
 import de.neuefische.flooooooooooorian.backend.model.Location;
 import de.neuefische.flooooooooooorian.backend.model.Picture;
 import de.neuefische.flooooooooooorian.backend.repository.LocationRepository;
@@ -9,6 +12,7 @@ import de.neuefische.flooooooooooorian.backend.security.dto.UserLoginDto;
 import de.neuefische.flooooooooooorian.backend.security.model.User;
 import de.neuefische.flooooooooooorian.backend.security.repository.UserRepository;
 import de.neuefische.flooooooooooorian.backend.service.CloudinaryService;
+import de.neuefische.flooooooooooorian.backend.utils.LocationMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -66,14 +70,24 @@ class LocationControllerTest {
 
     @Test
     void getBasicLocationsControllerIntegrationTest() {
+        User user = User.builder()
+                .enabled(true)
+                .full_name("test")
+                .avatar_url("avatar")
+                .email("test_email")
+                .role("User")
+                .build();
+
         Picture p1 = Picture.builder()
                 .id("feraegdarg")
                 .url("www.url1.com")
+                .owner(user)
                 .build();
 
         Picture p2 = Picture.builder()
                 .id("sdofs")
                 .url("www.url2.com")
+                .owner(user)
                 .build();
 
 
@@ -84,7 +98,9 @@ class LocationControllerTest {
                 .description("description l1")
                 .title("title")
                 .thumbnail(p1)
+                .owner(user)
                 .build();
+
         Location l2 = Location.builder()
                 .lat(10.46484)
                 .lng(1.648)
@@ -92,32 +108,43 @@ class LocationControllerTest {
                 .description("description l2")
                 .title("title")
                 .thumbnail(p2)
+                .owner(user)
                 .build();
 
+        userRepository.save(user);
         pictureRepository.save(p1);
         pictureRepository.save(p2);
         locationRepository.save(l1);
         locationRepository.save(l2);
 
-        ResponseEntity<Location[]> response = testRestTemplate.getForEntity("http://localhost:" + port + "/api/location", Location[].class);
+        ResponseEntity<LocationDto[]> response = testRestTemplate.getForEntity("http://localhost:" + port + "/api/location", LocationDto[].class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
         assertThat(response.getBody(), notNullValue());
-        assertThat(response.getBody(), arrayContainingInAnyOrder(l1, l2));
+        assertThat(response.getBody(), arrayContainingInAnyOrder(LocationMapper.toLocationDto(l1), LocationMapper.toLocationDto(l2)));
     }
 
     @Test
     void getBasicLocationByIdControllerIntegrationTest() {
+        User user = User.builder()
+                .enabled(true)
+                .full_name("test")
+                .avatar_url("avatar")
+                .email("test_email")
+                .role("User")
+                .build();
+
         Picture p1 = Picture.builder()
                 .id("feraegdarg")
                 .url("www.url1.com")
+                .owner(user)
                 .build();
 
         Picture p2 = Picture.builder()
                 .id("sdofs")
                 .url("www.url2.com")
+                .owner(user)
                 .build();
-
 
         Location l1 = Location.builder()
                 .lat(50.0)
@@ -126,40 +153,53 @@ class LocationControllerTest {
                 .description("description l1")
                 .title("title")
                 .thumbnail(p1)
+                .owner(user)
                 .build();
+
         Location l2 = Location.builder()
                 .lat(10.46484)
                 .lng(1.648)
                 .id("fsdfnaldgadgd")
                 .description("description l2")
                 .title("title")
+                .owner(user)
                 .thumbnail(p2)
                 .build();
 
+        userRepository.save(user);
         pictureRepository.save(p1);
         pictureRepository.save(p2);
         locationRepository.save(l1);
         locationRepository.save(l2);
 
-        ResponseEntity<Location> response = testRestTemplate.getForEntity("http://localhost:" + port + "/api/location/" + l2.getId(), Location.class);
+        ResponseEntity<LocationDto> response = testRestTemplate.getForEntity("http://localhost:" + port + "/api/location/" + l2.getId(), LocationDto.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
         assertThat(response.getBody(), notNullValue());
-        assertThat(response.getBody(), is(l2));
+        assertThat(response.getBody(), is(LocationMapper.toLocationDto(l2)));
     }
 
     @Test
     void getLocationsWithGeoLocation() {
+        User user = User.builder()
+                .enabled(true)
+                .full_name("test")
+                .avatar_url("avatar")
+                .email("test_email")
+                .role("User")
+                .build();
+
         Picture p1 = Picture.builder()
                 .id("feraegdarg")
                 .url("www.url1.com")
+                .owner(user)
                 .build();
 
         Picture p2 = Picture.builder()
                 .id("sdofs")
                 .url("www.url2.com")
+                .owner(user)
                 .build();
-
 
         Location l1 = Location.builder()
                 .lat(50.0)
@@ -168,7 +208,9 @@ class LocationControllerTest {
                 .description("description l1")
                 .title("title")
                 .thumbnail(p1)
+                .owner(user)
                 .build();
+
         Location l2 = Location.builder()
                 .lat(10.46484)
                 .lng(1.648)
@@ -176,17 +218,19 @@ class LocationControllerTest {
                 .description("description l2")
                 .title("title")
                 .thumbnail(p2)
+                .owner(user)
                 .build();
 
+        userRepository.save(user);
         pictureRepository.save(p1);
         pictureRepository.save(p2);
         locationRepository.save(l1);
         locationRepository.save(l2);
 
-        ResponseEntity<Location[]> response = testRestTemplate.getForEntity("http://localhost:" + port + "/api/location?lat=50&lng=50", Location[].class);
+        ResponseEntity<LocationDto[]> response = testRestTemplate.getForEntity("http://localhost:" + port + "/api/location?lat=50&lng=50", LocationDto[].class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
-        assertThat(response.getBody(), arrayContainingInAnyOrder(l1));
+        assertThat(response.getBody(), arrayContainingInAnyOrder(LocationMapper.toLocationDto(l1)));
     }
 
     @Test
@@ -211,26 +255,23 @@ class LocationControllerTest {
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
-        ResponseEntity<Location> response = testRestTemplate.exchange("http://localhost:" + port + "/api/location/", HttpMethod.POST, requestEntity, Location.class);
+        ResponseEntity<LocationDto> response = testRestTemplate.exchange("http://localhost:" + port + "/api/location/", HttpMethod.POST, requestEntity, LocationDto.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
         assertThat(response.getBody(), notNullValue());
-        assertThat(response.getBody().getId(), notNullValue());
-        assertThat(response.getBody().getThumbnail().getId(), notNullValue());
         assertThat(response.getBody().getOwner(), notNullValue());
         assertThat(response.getBody().getCreationDate().isBefore(Instant.now()), is(true));
         assertThat(response.getBody().getCreationDate().isAfter(Instant.now().minusSeconds(1)), is(true));
         assertThat(response.getBody().getThumbnail().getCreationDate().isBefore(Instant.now()), is(true));
         assertThat(response.getBody().getThumbnail().getCreationDate().isAfter(Instant.now().minusSeconds(1)), is(true));
-        assertThat(response.getBody(), is(Location
+        assertThat(response.getBody(), is(LocationDto
                 .builder()
                 .creationDate(response.getBody().getCreationDate())
-                .id(response.getBody().getId())
                 .lat(dto.getLat())
                 .lng(dto.getLng())
                 .title(dto.getTitle())
                 .owner(response.getBody().getOwner())
-                .thumbnail(Picture.builder().id(response.getBody().getThumbnail().getId()).creationDate(response.getBody().getThumbnail().getCreationDate()).owner(response.getBody().getThumbnail().getOwner()).url("testurl").build())
+                .thumbnail(PictureDto.builder().creationDate(response.getBody().getThumbnail().getCreationDate()).owner(response.getBody().getThumbnail().getOwner()).url("testurl").build())
                 .description(dto.getDescription())
                 .build()));
     }
@@ -252,23 +293,22 @@ class LocationControllerTest {
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
-        ResponseEntity<Location> response = testRestTemplate.exchange("http://localhost:" + port + "/api/location/", HttpMethod.POST, requestEntity, Location.class);
+        ResponseEntity<LocationDto> response = testRestTemplate.exchange("http://localhost:" + port + "/api/location/", HttpMethod.POST, requestEntity, LocationDto.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
         assertThat(response.getBody(), notNullValue());
-        assertThat(response.getBody().getId(), notNullValue());
         assertThat(response.getBody().getOwner(), notNullValue());
         assertThat(response.getBody().getCreationDate().isBefore(Instant.now()), is(true));
         assertThat(response.getBody().getCreationDate().isAfter(Instant.now().minusSeconds(1)), is(true));
-        assertThat(response.getBody(), is(Location
-                .builder()
-                .id(response.getBody().getId())
-                .lat(dto.getLat())
+        assertThat(response.getBody(), is(LocationDto.builder()
                 .lng(dto.getLng())
-                .title(dto.getTitle())
-                .owner(response.getBody().getOwner())
-                .description(dto.getDescription())
+                .lat(dto.getLat())
                 .creationDate(response.getBody().getCreationDate())
+                .description(dto.getDescription())
+                .title(dto.getTitle())
+                .owner(UserDto.builder()
+                        .email("test_email")
+                        .build())
                 .build()));
     }
 
