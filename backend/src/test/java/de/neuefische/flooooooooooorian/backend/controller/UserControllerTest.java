@@ -171,7 +171,7 @@ class UserControllerTest {
         if (result) {
             assertThat(response.getBody(), notNullValue());
 
-            assertThat(response.getBody(), is(UserDto.builder().full_name(expected.getFull_name()).avatar_url(expected.getAvatar_url()).email(expected.getEmail()).build()));
+            assertThat(response.getBody(), is(UserDto.builder().full_name(expected.getFull_name()).avatar_url(expected.getAvatar_url()).build()));
         }
 
     }
@@ -191,7 +191,7 @@ class UserControllerTest {
 
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
-        assertThat(response.getBody(), is(UserDto.builder().full_name(expected.getFull_name()).avatar_url(expected.getAvatar_url()).email(expected.getEmail()).build()));
+        assertThat(response.getBody(), is(UserDto.builder().full_name(expected.getFull_name()).avatar_url(expected.getAvatar_url()).build()));
     }
 
     @Test

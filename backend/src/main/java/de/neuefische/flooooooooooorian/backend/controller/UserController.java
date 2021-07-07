@@ -29,7 +29,7 @@ public class UserController {
     public UserDto registerUser(@Valid @RequestBody UserCreationDto userCreationDto) {
         User user = userService.registerUserByEmail(userCreationDto);
         userService.startEmailVerification(user.getEmail());
-        return UserDto.builder().email(user.getEmail()).full_name(user.getFull_name()).avatar_url(user.getAvatar_url()).build();
+        return UserDto.builder().full_name(user.getFull_name()).avatar_url(user.getAvatar_url()).build();
     }
 
     @PostMapping("/email")

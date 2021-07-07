@@ -307,7 +307,6 @@ class LocationControllerTest {
                 .description(dto.getDescription())
                 .title(dto.getTitle())
                 .owner(UserDto.builder()
-                        .email("test_email")
                         .build())
                 .build()));
     }

@@ -10,7 +10,6 @@ public class LocationMapper {
     public static LocationDto toLocationDto(Location location) {
         return LocationDto.builder()
                 .owner(UserDto.builder()
-                        .email(location.getOwner().getEmail())
                         .avatar_url(location.getOwner().getAvatar_url())
                         .full_name(location.getOwner().getFull_name())
                         .build())
@@ -26,7 +25,6 @@ public class LocationMapper {
                         .creationDate(location.getThumbnail().getCreationDate())
                         .url(location.getThumbnail().getUrl())
                         .owner(UserDto.builder()
-                                .email(location.getOwner().getEmail())
                                 .avatar_url(location.getOwner().getAvatar_url())
                                 .full_name(location.getOwner().getFull_name())
                                 .build())

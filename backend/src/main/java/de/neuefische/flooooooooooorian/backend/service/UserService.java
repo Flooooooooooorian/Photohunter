@@ -155,7 +155,6 @@ public class UserService {
 
         return ProfileDto.builder()
                 .user(UserDto.builder()
-                        .email(user.getEmail())
                         .avatar_url(user.getAvatar_url())
                         .full_name(user.getFull_name())
                         .build())
