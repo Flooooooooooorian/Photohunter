@@ -1,15 +1,20 @@
 package de.neuefische.flooooooooooorian.backend.service;
 
+import de.neuefische.flooooooooooorian.backend.config.EmailConfig;
+import de.neuefische.flooooooooooorian.backend.dto.EmailVerificationDto;
 import de.neuefische.flooooooooooorian.backend.dto.GoogleAccessTokenDto;
 import de.neuefische.flooooooooooorian.backend.dto.GoogleProfileDto;
+import de.neuefische.flooooooooooorian.backend.dto.PasswordResetDto;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserCreationDto;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserLoginDto;
 import de.neuefische.flooooooooooorian.backend.security.model.CustomUserDetails;
 import de.neuefische.flooooooooooorian.backend.security.model.User;
 import de.neuefische.flooooooooooorian.backend.security.repository.UserRepository;
 import de.neuefische.flooooooooooorian.backend.security.service.JwtUtilsService;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,13 +31,15 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtilsService jwtUtilsService;
     private final AuthenticationManager authenticationManager;
+    private final EmailConfig emailConfig;
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtilsService jwtUtilsService, AuthenticationManager authenticationManager) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtilsService jwtUtilsService, AuthenticationManager authenticationManager, EmailConfig emailConfig) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtilsService = jwtUtilsService;
         this.authenticationManager = authenticationManager;
+        this.emailConfig = emailConfig;
     }
 
     public User registerUserByEmail(UserCreationDto userCreationDto) {
@@ -69,16 +76,64 @@ public class UserService {
     }
 
     public String login(UserLoginDto userLoginDto) {
+        Authentication auth;
         try {
             UsernamePasswordAuthenticationToken usernamePasswordData = new UsernamePasswordAuthenticationToken(userLoginDto.getEmail(), userLoginDto.getPassword());
-            Authentication auth = authenticationManager.authenticate(usernamePasswordData);
-            HashMap<String, Object> claims = new HashMap<>();
-            claims.put("name", ((CustomUserDetails)auth.getPrincipal()).getFullName());
-            return jwtUtilsService.createToken(claims, auth.getName());
+            auth = authenticationManager.authenticate(usernamePasswordData);
 
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad login data");
         }
+
+        if (!((CustomUserDetails)auth.getPrincipal()).isEnabled()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Email not verified");
+        }
+        HashMap<String, Object> claims = new HashMap<>();
+        claims.put("name", ((CustomUserDetails)auth.getPrincipal()).getFullName());
+        return jwtUtilsService.createToken(claims, auth.getName());
+    }
+
+    public void startEmailVerification(String email) {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom("info.photohunter@gmail.com");
+            message.setTo(email);
+            message.setSubject("Email Verification PhotoHunter");
+            message.setText("Hallo \n" + "http://localhost:8080/user/email/" + jwtUtilsService.createToken(new HashMap<>(), email));
+            emailConfig.getJavaMailSender().send(message);
+    }
+
+    public boolean verificateEmailToken(EmailVerificationDto emailVerificationDto) {
+        Claims claims = jwtUtilsService.parseClaim(emailVerificationDto.getToken());
+        Optional<User> optionalUser = userRepository.findUserByEmail(claims.getSubject());
+        User user = optionalUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+
+        if (user.isEnabled()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already verified");
+        }
+        user.setEnabled(true);
+        userRepository.save(user);
+        return true;
+    }
+
+    public void sendPasswordResetEmail(String email) {
+        Optional<User> userOptional = userRepository.findUserByEmail(email);
+        User user = userOptional.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("info.photohunter@gmail.com");
+        message.setTo(email);
+        message.setSubject("Password Reset PhotoHunter");
+        message.setText("Hallo \n" + "http://localhost:8080/user/email/" + jwtUtilsService.createPasswordResetToken(new HashMap<>(), user));
+        emailConfig.getJavaMailSender().send(message);
+    }
+
+    public boolean resetPassword(PasswordResetDto passwordResetDto) {
+        Optional<User> optionalUser = userRepository.findUserByEmail(passwordResetDto.getEmail());
+        User user = optionalUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+        jwtUtilsService.parseClaimsForPasswordResetToken(passwordResetDto.getToken(), user);
+
+        user.setPassword(passwordEncoder.encode(passwordResetDto.getPassword()));
+        userRepository.save(user);
+        return true;
     }
 
     public Optional<User> findUserByEmail(String email) {

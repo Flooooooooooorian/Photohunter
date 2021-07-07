@@ -1,5 +1,8 @@
 package de.neuefische.flooooooooooorian.backend.controller;
 
+import de.neuefische.flooooooooooorian.backend.dto.EmailDto;
+import de.neuefische.flooooooooooorian.backend.dto.EmailVerificationDto;
+import de.neuefische.flooooooooooorian.backend.dto.PasswordResetDto;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserCreationDto;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserLoginDto;
 import de.neuefische.flooooooooooorian.backend.security.model.User;
@@ -29,5 +32,25 @@ public class UserController {
     @PostMapping("/register")
     public User registerUser(@Valid @RequestBody UserCreationDto userCreationDto) {
         return userService.registerUserByEmail(userCreationDto);
+    }
+
+    @PostMapping("/email")
+    public boolean verificateEmail(@RequestBody @Valid EmailVerificationDto emailVerificationDto) {
+        return userService.verificateEmailToken(emailVerificationDto);
+    }
+
+    @PostMapping("/sendemailvarification")
+    public void sendEmailVerification(@RequestBody @Valid EmailDto sendEmailVerificationDto) {
+        userService.startEmailVerification(sendEmailVerificationDto.getEmail());
+    }
+
+    @PostMapping("/sendpasswordreset")
+    public void sendPasswordResetEmail(@RequestBody @Valid EmailDto emailDto) {
+        userService.sendPasswordResetEmail(emailDto.getEmail());
+    }
+
+    @PostMapping("/passwordreset")
+    public boolean resetPassword(@RequestBody @Valid PasswordResetDto passwordDto) {
+        return userService.resetPassword(passwordDto);
     }
 }
