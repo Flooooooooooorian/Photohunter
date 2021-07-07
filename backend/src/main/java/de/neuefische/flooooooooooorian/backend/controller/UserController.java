@@ -8,6 +8,7 @@ import de.neuefische.flooooooooooorian.backend.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("user")
@@ -49,5 +50,10 @@ public class UserController {
     @PostMapping("/passwordreset")
     public boolean resetPassword(@RequestBody @Valid PasswordResetDto passwordDto) {
         return userService.resetPassword(passwordDto);
+    }
+
+    @GetMapping("/profile")
+    public ProfileDto getProfile(Principal principal) {
+        return userService.getProfile(principal.getName());
     }
 }

@@ -1,16 +1,15 @@
 package de.neuefische.flooooooooooorian.backend.service;
 
 import de.neuefische.flooooooooooorian.backend.config.EmailConfig;
-import de.neuefische.flooooooooooorian.backend.dto.EmailVerificationDto;
-import de.neuefische.flooooooooooorian.backend.dto.GoogleAccessTokenDto;
-import de.neuefische.flooooooooooorian.backend.dto.GoogleProfileDto;
-import de.neuefische.flooooooooooorian.backend.dto.PasswordResetDto;
+import de.neuefische.flooooooooooorian.backend.dto.*;
+import de.neuefische.flooooooooooorian.backend.model.Location;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserCreationDto;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserLoginDto;
 import de.neuefische.flooooooooooorian.backend.security.model.CustomUserDetails;
 import de.neuefische.flooooooooooorian.backend.security.model.User;
 import de.neuefische.flooooooooooorian.backend.security.repository.UserRepository;
 import de.neuefische.flooooooooooorian.backend.security.service.JwtUtilsService;
+import de.neuefische.flooooooooooorian.backend.utils.LocationMapper;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,7 +24,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -33,16 +35,18 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtilsService jwtUtilsService;
     private final AuthenticationManager authenticationManager;
+    private final LocationService locationService;
     private final EmailConfig emailConfig;
     @Value("${domain_name:}")
     private String domain_name;
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtilsService jwtUtilsService, AuthenticationManager authenticationManager, EmailConfig emailConfig) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtilsService jwtUtilsService, AuthenticationManager authenticationManager, LocationService locationService, EmailConfig emailConfig) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtilsService = jwtUtilsService;
         this.authenticationManager = authenticationManager;
+        this.locationService = locationService;
         this.emailConfig = emailConfig;
     }
 
@@ -142,5 +146,20 @@ public class UserService {
 
     public Optional<User> findUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
+    }
+
+    public ProfileDto getProfile(String email) {
+        Optional<User> optionalUser = userRepository.findUserByEmail(email);
+        User user = optionalUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+        List<Location> locations = locationService.getLocationsFromUser(user);
+
+        return ProfileDto.builder()
+                .user(UserDto.builder()
+                        .email(user.getEmail())
+                        .avatar_url(user.getAvatar_url())
+                        .full_name(user.getFull_name())
+                        .build())
+                .locations(locations.stream().map(LocationMapper::toLocationDto).collect(Collectors.toList()))
+                .build();
     }
 }
