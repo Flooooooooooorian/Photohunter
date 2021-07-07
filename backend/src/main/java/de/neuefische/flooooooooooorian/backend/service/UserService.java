@@ -136,4 +136,8 @@ public class UserService {
         userRepository.save(user);
         return true;
     }
+
+    public Optional<User> findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
+    }
 }

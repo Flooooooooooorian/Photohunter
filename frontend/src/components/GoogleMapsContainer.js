@@ -2,10 +2,12 @@ import {GoogleMap, useLoadScript} from "@react-google-maps/api";
 import React from "react";
 import styled from "styled-components/macro";
 import LocationMarker from "./LocationMarker";
+import GeoLocationMarker from "./GeoLocationMarker";
 
-export default function GoogleMapsContainer({locations, geoLocation}) {
+export default function GoogleMapsContainer({locations, geoLocation, handleMarkerClick, handleMapClick, onMapLoad, styles}) {
 
     const googleLibraries = []
+
     const mapCenter = {
         lat: geoLocation ? geoLocation.latitude : 51.163361,
         lng: geoLocation ? geoLocation.longitude : 10.447683,
@@ -14,10 +16,11 @@ export default function GoogleMapsContainer({locations, geoLocation}) {
         width: '100vw',
         height: '100vh',
         margin: '15px 25px',
+        ...styles
     }
 
     const {isLoaded, loadError} = useLoadScript({
-        googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
+        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
         googleLibraries,
     })
 
@@ -27,11 +30,14 @@ export default function GoogleMapsContainer({locations, geoLocation}) {
     return (
         <Wrapper>
             <GoogleMap
+                onClick={handleMapClick}
+                onLoad={onMapLoad}
                 mapContainerStyle={mapContainerStyle}
                 zoom={9}
                 center={mapCenter}>
+                {geoLocation && <GeoLocationMarker geoLocation={geoLocation}/>}
                 {locations.map((location) =>
-                    <LocationMarker key={location.id} location={location}/>
+                    <LocationMarker handleMarkerClick={handleMarkerClick} key={location.id} location={location}/>
                     )
                 }
             </GoogleMap>

@@ -3,7 +3,7 @@ import {IconButton} from "@material-ui/core";
 import MapIcon from "@material-ui/icons/Map";
 import styled from "styled-components/macro";
 
-export default function LocationList({locations, toggleView}) {
+export default function LocationList({locations, toggleView, showDetailsPage}) {
     return (
         <>
             <Wrapper>
@@ -11,7 +11,7 @@ export default function LocationList({locations, toggleView}) {
                     <MapIcon/>
                 </IconButton>
             </Wrapper>
-            {locations.map((location) => <LocationItem key={location.id} location={location}/>)}
+            {locations.map((location) => <LocationItem key={location.id} showDetailsPage={showDetailsPage} location={location}/>)}
         </>
     )
 }

@@ -1,4 +1,4 @@
-import {AppBar, Avatar, makeStyles, Toolbar, Typography} from "@material-ui/core";
+import {AppBar, Box, Avatar, makeStyles, Toolbar, Typography} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
 
 export default function Header() {

@@ -17,6 +17,7 @@ import PasswordForgotPage from "./pages/PasswordForgotPage";
 import PasswordResetPage from "./pages/PasswordResetPage";
 import EmailValidationRedirectPage from "./pages/EmailValidationRedirectPage";
 import PasswordRedirectPage from "./pages/PasswordRedirectPage";
+import CreateLocationPage from "./pages/CreateLocationPage";
 
 function App(props) {
 
@@ -32,8 +33,11 @@ function App(props) {
                 <ThemeProvider theme={darkTheme}>
                     <Header/>
                     <Switch>
-                        <Route path={"/locations"}>
+                        <Route path={"/locations"} exact>
                             <LocationsPage geoLocation={props.coords}/>
+                    </Route>
+                    <Route path={"/locations/new/"}>
+                        <CreateLocationPage geoLocation={props.coords}/>
                         </Route>
                         <Route path={"/locations/:id"}>
                             <LocationDetailsPage geoLocation={props.coords}/>
