@@ -34,7 +34,7 @@ export default function LocationItem({location}) {
 const useStyles = makeStyles(
     {
         card: {
-            margin: 10,
+            margin: "15px 25px",
         },
         media: {
             width: 80,

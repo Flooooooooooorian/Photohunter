@@ -11,6 +11,12 @@ import GoogleRedirectPage from "./pages/GoogleRedirectPage";
 import AuthProvider from "./context/AuthProvider";
 import ProfilePage from "./pages/ProfilePage";
 import PrivateRoute from "./routing/PrivateRoute";
+import RegistrationPage from "./pages/RegistrationPage";
+import RegistrationRedirectPage from "./pages/RegistrationRedirectPage";
+import PasswordForgotPage from "./pages/PasswordForgotPage";
+import PasswordResetPage from "./pages/PasswordResetPage";
+import EmailValidationRedirectPage from "./pages/EmailValidationRedirectPage";
+import PasswordRedirectPage from "./pages/PasswordRedirectPage";
 
 function App(props) {
 
@@ -34,6 +40,24 @@ function App(props) {
                         </Route>
                         <Route path={"/login"}>
                             <LoginPage/>
+                        </Route>
+                        <Route path={"/registration"} exact>
+                            <RegistrationPage/>
+                        </Route>
+                        <Route path={"/registration/done"}>
+                            <RegistrationRedirectPage/>
+                        </Route>
+                        <Route path={"/forgot"}>
+                            <PasswordForgotPage/>
+                        </Route>
+                        <Route path={"/password/done"}>
+                            <PasswordRedirectPage/>
+                        </Route>
+                        <Route path={"/password:token"}>
+                            <PasswordResetPage/>
+                        </Route>
+                        <Route path={"/email:token"}>
+                            <EmailValidationRedirectPage/>
                         </Route>
                         <Route path={"/auth/google/redirect"}>
                             <GoogleRedirectPage/>

@@ -11,15 +11,14 @@ export default function AuthProvider({children}) {
     const [jwtDecoded, setJwtDecoded] = useState()
 
     const login = credentials => {
-        axios
-            .post('/auth/login', credentials)
+        return axios
+            .post('/user/login', credentials)
             .then(response => response.data)
             .then(data => {
                 setToken(data)
                 setJwtDecoded(jwt_decode(data.toString()))
             })
             .then(() => history.push('/profile'))
-            .catch(error => console.error(error.message))
     }
 
     const loginWithGoogleCode = code =>

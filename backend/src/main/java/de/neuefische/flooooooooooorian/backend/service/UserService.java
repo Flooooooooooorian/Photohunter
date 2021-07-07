@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -81,12 +82,12 @@ public class UserService {
             UsernamePasswordAuthenticationToken usernamePasswordData = new UsernamePasswordAuthenticationToken(userLoginDto.getEmail(), userLoginDto.getPassword());
             auth = authenticationManager.authenticate(usernamePasswordData);
 
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad login data");
         }
-
-        if (!((CustomUserDetails)auth.getPrincipal()).isEnabled()) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Email not verified");
+        catch (DisabledException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email not verified");
+        }
+        catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad Credentials");
         }
         HashMap<String, Object> claims = new HashMap<>();
         claims.put("name", ((CustomUserDetails)auth.getPrincipal()).getFullName());
@@ -98,7 +99,7 @@ public class UserService {
             message.setFrom("info.photohunter@gmail.com");
             message.setTo(email);
             message.setSubject("Email Verification PhotoHunter");
-            message.setText("Hallo \n" + "http://localhost:8080/user/email/" + jwtUtilsService.createToken(new HashMap<>(), email));
+            message.setText("Hallo \n" + "http://localhost:3000/email" + jwtUtilsService.createToken(new HashMap<>(), email));
             emailConfig.getJavaMailSender().send(message);
     }
 
@@ -122,7 +123,7 @@ public class UserService {
         message.setFrom("info.photohunter@gmail.com");
         message.setTo(email);
         message.setSubject("Password Reset PhotoHunter");
-        message.setText("Hallo \n" + "http://localhost:8080/user/email/" + jwtUtilsService.createPasswordResetToken(new HashMap<>(), user));
+        message.setText("Hallo \n" + "http://localhost:3000/password" + jwtUtilsService.createPasswordResetToken(new HashMap<>(), user));
         emailConfig.getJavaMailSender().send(message);
     }
 

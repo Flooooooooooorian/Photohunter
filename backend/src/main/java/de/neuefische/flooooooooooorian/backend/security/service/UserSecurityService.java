@@ -24,7 +24,7 @@ public class UserSecurityService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepository.findUserByEmail(email)
-                .map(user -> new CustomUserDetails(user.getFull_name(), user.getEmail(), user.getPassword(), List.of(new SimpleGrantedAuthority(user.getRole()))))
+                .map(user -> new CustomUserDetails(user.getFull_name(), user.getEmail(), user.getPassword(), user.isEnabled(), true, true, true, List.of(new SimpleGrantedAuthority(user.getRole()))))
                 .orElseThrow(() -> new UsernameNotFoundException("User does not exist!"));
     }
 }

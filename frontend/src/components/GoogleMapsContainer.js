@@ -11,8 +11,9 @@ export default function GoogleMapsContainer({locations, geoLocation}) {
         lng: geoLocation ? geoLocation.longitude : 10.447683,
     }
     const mapContainerStyle = {
-        width: '80vw',
-        height: '80vh',
+        width: '100vw',
+        height: '100vh',
+        margin: '15px 25px',
     }
 
     const {isLoaded, loadError} = useLoadScript({

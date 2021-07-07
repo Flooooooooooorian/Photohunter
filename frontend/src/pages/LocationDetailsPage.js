@@ -62,7 +62,7 @@ export default function LocationDetailsPage({loc}) {
 const useStyles = makeStyles(
     {
         card: {
-            margin: 10,
+            margin: 25,
         },
         media: {
             height: 0,

@@ -257,13 +257,11 @@ class LocationControllerTest {
     }
 
     private HttpHeaders getHttpHeaderWithAuthToken() {
-        User u = userRepository.save(User.builder().email("test_email").role("User").password(passwordEncoder.encode("test_password")).build());
-        System.out.println(u);
+        User u = userRepository.save(User.builder().enabled(true).email("test_email").role("User").password(passwordEncoder.encode("test_password")).build());
         UserLoginDto loginData = new UserLoginDto("test_email", "test_password");
         ResponseEntity<String> tokenResponse = testRestTemplate.postForEntity("http://localhost:" + port + "/user/login", loginData, String.class);
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(tokenResponse.getBody());
-        System.out.println(tokenResponse.getBody());
         return headers;
     }
 }
