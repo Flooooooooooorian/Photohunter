@@ -3,6 +3,7 @@ import {useState} from "react";
 import axios from "axios";
 import {useHistory, useLocation} from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import {createMuiTheme} from "@material-ui/core/styles";
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -110,6 +111,12 @@ export default function PasswordResetPage() {
     )
 }
 
+const theme = createMuiTheme({
+    palette: {
+        mode: 'dark',
+    },
+});
+
 const useStyles = makeStyles(
     {
         card: {
@@ -117,6 +124,12 @@ const useStyles = makeStyles(
             flexDirection: "column",
             alignItems: "center",
             margin: "25px",
+            [theme.breakpoints.down('sm')]: {
+                margin: 25,
+            },
+            [theme.breakpoints.up('sm')]: {
+                margin: "10px 20%",
+            },
         },
         content: {
             display: "flex",

@@ -3,6 +3,7 @@ import styled from "styled-components/macro";
 import {useState} from "react";
 import axios from "axios";
 import {useHistory} from "react-router-dom";
+import {createMuiTheme} from "@material-ui/core/styles";
 
 
 export default function RegistrationPage() {
@@ -124,6 +125,13 @@ export default function RegistrationPage() {
 
 }
 
+const theme = createMuiTheme({
+    palette: {
+        mode: 'dark',
+    },
+});
+
+
 const Title = styled.div`
     margin-top: 10px
 `
@@ -135,6 +143,12 @@ const useStyles = makeStyles(
             flexDirection: "column",
             alignItems: "center",
             margin: "25px",
+            [theme.breakpoints.down('sm')]: {
+                margin: 25,
+            },
+            [theme.breakpoints.up('sm')]: {
+                margin: "10px 20%",
+            },
         },
         content: {
             display: "flex",
