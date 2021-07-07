@@ -70,7 +70,7 @@ const useStyles = makeStyles(
     {
         card: {
             [theme.breakpoints.down('sm')]: {
-                margin: 10,
+                margin: 25,
             },
             [theme.breakpoints.up('sm')]: {
                 margin: "10px 20%",

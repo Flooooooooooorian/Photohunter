@@ -12,6 +12,7 @@ import de.neuefische.flooooooooooorian.backend.security.service.JwtUtilsService;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -201,17 +202,14 @@ class UserServiceTest {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userLoginDto.getEmail(), userLoginDto.getPassword());
         Authentication authentication = mock(Authentication.class);
 
-        when(authenticationManager.authenticate(usernamePasswordAuthenticationToken)).thenReturn(authentication);
-        when(authentication.getPrincipal()).thenReturn(new CustomUserDetails("test_username", userLoginDto.getEmail(), userLoginDto.getPassword(), false, true, true, true, List.of(new SimpleGrantedAuthority("User"))));
-        when(authentication.getName()).thenReturn(userLoginDto.getEmail());
+        when(authenticationManager.authenticate(usernamePasswordAuthenticationToken)).thenThrow(new DisabledException("Disabled"));
         try {
             userService.login(userLoginDto);
             fail();
         }
         catch (ResponseStatusException e) {
-            assertThat(e.getRawStatusCode(), is(403));
+            assertThat(e.getRawStatusCode(), is(400));
             verify(authenticationManager).authenticate(usernamePasswordAuthenticationToken);
-            verify(authentication, atLeastOnce()).getPrincipal();
         }
     }
 
@@ -225,6 +223,6 @@ class UserServiceTest {
         Exception exception = assertThrows(ResponseStatusException.class, () -> userService.login(userLoginDto));
 
         verify(authenticationManager).authenticate(usernamePasswordAuthenticationToken);
-        assertThat(exception.getMessage(), equalTo("400 BAD_REQUEST \"bad login data\""));
+        assertThat(exception.getMessage(), equalTo("400 BAD_REQUEST \"Bad Credentials\""));
     }
 }

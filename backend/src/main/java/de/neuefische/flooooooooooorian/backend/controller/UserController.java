@@ -31,7 +31,9 @@ public class UserController {
 
     @PostMapping("/register")
     public User registerUser(@Valid @RequestBody UserCreationDto userCreationDto) {
-        return userService.registerUserByEmail(userCreationDto);
+        User user = userService.registerUserByEmail(userCreationDto);
+        userService.startEmailVerification(user.getEmail());
+        return user;
     }
 
     @PostMapping("/email")

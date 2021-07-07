@@ -5,14 +5,14 @@ import styled from "styled-components/macro";
 
 export default function LocationList({locations, toggleView, showDetailsPage}) {
     return (
-        <div>
+        <>
             <Wrapper>
                 <IconButton onClick={toggleView} aria-label="map" variant="outlined">
                     <MapIcon/>
                 </IconButton>
             </Wrapper>
             {locations.map((location) => <LocationItem key={location.id} showDetailsPage={showDetailsPage} location={location}/>)}
-        </div>
+        </>
     )
 }
 
