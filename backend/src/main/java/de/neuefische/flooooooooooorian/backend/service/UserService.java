@@ -13,6 +13,7 @@ import de.neuefische.flooooooooooorian.backend.security.repository.UserRepositor
 import de.neuefische.flooooooooooorian.backend.security.service.JwtUtilsService;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,6 +34,8 @@ public class UserService {
     private final JwtUtilsService jwtUtilsService;
     private final AuthenticationManager authenticationManager;
     private final EmailConfig emailConfig;
+    @Value("${domain_name:}")
+    private String domain_name;
 
     @Autowired
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtilsService jwtUtilsService, AuthenticationManager authenticationManager, EmailConfig emailConfig) {
@@ -99,7 +102,7 @@ public class UserService {
             message.setFrom("info.photohunter@gmail.com");
             message.setTo(email);
             message.setSubject("Email Verification PhotoHunter");
-            message.setText("Hallo \n" + "http://localhost:3000/email" + jwtUtilsService.createToken(new HashMap<>(), email));
+            message.setText("Hallo \n" + domain_name + "/email/?token=" + jwtUtilsService.createToken(new HashMap<>(), email));
             emailConfig.getJavaMailSender().send(message);
     }
 
@@ -123,7 +126,7 @@ public class UserService {
         message.setFrom("info.photohunter@gmail.com");
         message.setTo(email);
         message.setSubject("Password Reset PhotoHunter");
-        message.setText("Hallo \n" + "http://localhost:3000/password" + jwtUtilsService.createPasswordResetToken(new HashMap<>(), user));
+        message.setText("Hallo \n" + domain_name + "/password/?token=" + jwtUtilsService.createPasswordResetToken(new HashMap<>(), user));
         emailConfig.getJavaMailSender().send(message);
     }
 

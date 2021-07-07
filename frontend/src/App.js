@@ -57,10 +57,10 @@ function App(props) {
                         <Route path={"/password/done"} exact>
                             <PasswordRedirectPage/>
                         </Route>
-                        <Route path={"/password/:token"}>
+                        <Route path={"/password/"}>
                             <PasswordResetPage/>
                         </Route>
-                        <Route path={"/email/:token"}>
+                        <Route path={"/email/"}>
                             <EmailValidationRedirectPage/>
                         </Route>
                         <Route path={"/auth/google/redirect"}>
