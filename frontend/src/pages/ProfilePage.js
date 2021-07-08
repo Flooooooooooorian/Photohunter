@@ -2,6 +2,7 @@ import {useContext} from "react";
 import AuthContext from "../context/AuthContext";
 import {Card, makeStyles, Typography} from "@material-ui/core";
 import {createMuiTheme} from "@material-ui/core/styles";
+import LocationsPage from "./LocationsPage";
 
 export default function ProfilePage() {
 
@@ -16,6 +17,7 @@ export default function ProfilePage() {
             <Typography className={classes.title} variant={"h5"}>
                 {context.jwtDecoded.name}
             </Typography>
+            <LocationsPage/>
         </Card>
     )
 }
