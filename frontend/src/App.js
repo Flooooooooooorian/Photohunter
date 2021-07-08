@@ -35,10 +35,10 @@ function App(props) {
                     <Switch>
                         <Route path={"/locations"} exact>
                             <LocationsPage geoLocation={props.coords}/>
-                    </Route>
-                    <Route path={"/locations/new/"}>
-                        <CreateLocationPage geoLocation={props.coords}/>
                         </Route>
+                        <PrivateRoute path={"/locations/new/"}>
+                            <CreateLocationPage geoLocation={props.coords}/>
+                        </PrivateRoute>
                         <Route path={"/locations/:id"}>
                             <LocationDetailsPage geoLocation={props.coords}/>
                         </Route>
@@ -69,6 +69,9 @@ function App(props) {
                         <PrivateRoute path={"/profile"}>
                             <ProfilePage/>
                         </PrivateRoute>
+                        <Route path={"/"}>
+                            <LocationsPage geoLocation={props.coords}/>
+                        </Route>
                     </Switch>
                 </ThemeProvider>
             </AuthProvider>
