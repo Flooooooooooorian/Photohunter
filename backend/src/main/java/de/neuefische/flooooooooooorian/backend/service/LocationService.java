@@ -61,4 +61,8 @@ public class LocationService {
     public Optional<Location> getLocationById(String id) {
         return locationRepository.findById(id);
     }
+
+    public List<Location> getLocationsFromUser(User user) {
+        return locationRepository.findAllByOwner(user);
+    }
 }

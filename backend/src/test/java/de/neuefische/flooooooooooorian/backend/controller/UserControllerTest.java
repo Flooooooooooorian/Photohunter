@@ -1,6 +1,7 @@
 package de.neuefische.flooooooooooorian.backend.controller;
 
 import de.neuefische.flooooooooooorian.backend.config.EmailConfig;
+import de.neuefische.flooooooooooorian.backend.dto.UserDto;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserCreationDto;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserLoginDto;
 import de.neuefische.flooooooooooorian.backend.security.model.User;
@@ -164,17 +165,13 @@ class UserControllerTest {
 
         when(emailConfig.getJavaMailSender()).thenReturn(javaMailSender);
 
-        ResponseEntity<User> response = testRestTemplate.exchange("http://localhost:" + port + "/user/register", HttpMethod.POST, new HttpEntity<>(userCreationDto), User.class);
+        ResponseEntity<UserDto> response = testRestTemplate.exchange("http://localhost:" + port + "/user/register", HttpMethod.POST, new HttpEntity<>(userCreationDto), UserDto.class);
 
         assertThat(response.getStatusCode() == HttpStatus.OK, is(result));
         if (result) {
             assertThat(response.getBody(), notNullValue());
-            assertThat(response.getBody().getId(), notNullValue());
-            assertThat(passwordEncoder.matches(userCreationDto.getPassword(), response.getBody().getPassword()), is(true));
 
-            expected.setId(response.getBody().getId());
-            expected.setPassword(response.getBody().getPassword());
-            assertThat(response.getBody(), is(expected));
+            assertThat(response.getBody(), is(UserDto.builder().full_name(expected.getFull_name()).avatar_url(expected.getAvatar_url()).build()));
         }
 
     }
@@ -190,17 +187,11 @@ class UserControllerTest {
 
         when(emailConfig.getJavaMailSender()).thenReturn(javaMailSender);
 
-        ResponseEntity<User> response = testRestTemplate.exchange("http://localhost:" + port + "/user/register", HttpMethod.POST, new HttpEntity<>(userCreationDto), User.class);
+        ResponseEntity<UserDto> response = testRestTemplate.exchange("http://localhost:" + port + "/user/register", HttpMethod.POST, new HttpEntity<>(userCreationDto), UserDto.class);
 
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
-        assertThat(response.getBody(), notNullValue());
-        assertThat(response.getBody().getId(), notNullValue());
-        assertThat(passwordEncoder.matches(userCreationDto.getPassword(), response.getBody().getPassword()), is(true));
-
-        expected.setId(response.getBody().getId());
-        expected.setPassword(response.getBody().getPassword());
-        assertThat(response.getBody(), is(expected));
+        assertThat(response.getBody(), is(UserDto.builder().full_name(expected.getFull_name()).avatar_url(expected.getAvatar_url()).build()));
     }
 
     @Test

@@ -1,18 +1,14 @@
 package de.neuefische.flooooooooooorian.backend.controller;
 
-import de.neuefische.flooooooooooorian.backend.dto.EmailDto;
-import de.neuefische.flooooooooooorian.backend.dto.EmailVerificationDto;
-import de.neuefische.flooooooooooorian.backend.dto.PasswordResetDto;
+import de.neuefische.flooooooooooorian.backend.dto.*;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserCreationDto;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserLoginDto;
 import de.neuefische.flooooooooooorian.backend.security.model.User;
 import de.neuefische.flooooooooooorian.backend.service.UserService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("user")
@@ -30,10 +26,10 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public User registerUser(@Valid @RequestBody UserCreationDto userCreationDto) {
+    public UserDto registerUser(@Valid @RequestBody UserCreationDto userCreationDto) {
         User user = userService.registerUserByEmail(userCreationDto);
         userService.startEmailVerification(user.getEmail());
-        return user;
+        return UserDto.builder().full_name(user.getFull_name()).avatar_url(user.getAvatar_url()).build();
     }
 
     @PostMapping("/email")
@@ -54,5 +50,10 @@ public class UserController {
     @PostMapping("/passwordreset")
     public boolean resetPassword(@RequestBody @Valid PasswordResetDto passwordDto) {
         return userService.resetPassword(passwordDto);
+    }
+
+    @GetMapping("/profile")
+    public ProfileDto getProfile(Principal principal) {
+        return userService.getProfile(principal.getName());
     }
 }

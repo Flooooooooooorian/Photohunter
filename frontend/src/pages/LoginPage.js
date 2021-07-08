@@ -4,6 +4,7 @@ import {Button, Card, CardContent, makeStyles, TextField, Typography} from "@mat
 import {useHistory} from "react-router-dom";
 import google_logo from "../resources/btn_google_light_normal_ios.svg"
 import AuthContext from "../context/AuthContext";
+import {createMuiTheme} from "@material-ui/core/styles";
 
 export default function LoginPage() {
 
@@ -80,10 +81,21 @@ export default function LoginPage() {
         </Card>
     )
 };
+const theme = createMuiTheme({
+    palette: {
+        mode: 'dark',
+    },
+});
 
 const useStyles = makeStyles(
     {
         card: {
+            [theme.breakpoints.down('sm')]: {
+                margin: 25,
+            },
+            [theme.breakpoints.up('sm')]: {
+                margin: "10px 20%",
+            },
             display: "flex",
             flexDirection: "column",
             alignItems: "center",

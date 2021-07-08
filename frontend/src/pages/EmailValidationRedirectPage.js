@@ -2,6 +2,7 @@ import {useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {Card, CircularProgress, makeStyles, Typography} from "@material-ui/core";
+import {createMuiTheme} from "@material-ui/core/styles";
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -43,6 +44,13 @@ export default function EmailValidationRedirectPage() {
     )
 }
 
+const theme = createMuiTheme({
+    palette: {
+        mode: 'dark',
+    },
+});
+
+
 const useStyles = makeStyles(
     {
         card: {
@@ -50,6 +58,12 @@ const useStyles = makeStyles(
             flexDirection: "column",
             alignItems: "center",
             margin: "25px",
+            [theme.breakpoints.down('sm')]: {
+                margin: 25,
+            },
+            [theme.breakpoints.up('sm')]: {
+                margin: "10px 20%",
+            },
         },
     }
 )

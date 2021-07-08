@@ -1,22 +1,41 @@
 import LocationItem from "./LocationItem";
-import {IconButton} from "@material-ui/core";
+import {Box, IconButton, makeStyles, Typography} from "@material-ui/core";
 import MapIcon from "@material-ui/icons/Map";
-import styled from "styled-components/macro";
 
 export default function LocationList({locations, toggleView, showDetailsPage}) {
+    const classes = useStyles()
+
     return (
         <>
-            <Wrapper>
-                <IconButton onClick={toggleView} aria-label="map" variant="outlined">
+            <Box className={classes.box}>
+                <Box className={classes.space}/>
+                <Typography className={classes.title} variant={"h3"}>
+                    Locations
+                </Typography>
+                <IconButton className={classes.icon} onClick={toggleView} aria-label="map" variant="outlined">
                     <MapIcon/>
                 </IconButton>
-            </Wrapper>
+            </Box>
             {locations.map((location) => <LocationItem key={location.id} showDetailsPage={showDetailsPage} location={location}/>)}
         </>
     )
 }
 
-const Wrapper = styled.div`
-display: flex;
-justify-content: end;
-`
+const useStyles = makeStyles(
+    {
+        title: {
+            textAlign: "center",
+        },
+        icon: {
+            justifySelf: "end",
+        },
+        box: {
+            margin: "0px 10px",
+            display: "flex",
+            justifyContent: "space-between",
+        },
+        space:{
+            width: 48,
+        }
+    }
+)

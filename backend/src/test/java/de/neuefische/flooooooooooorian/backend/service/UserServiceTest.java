@@ -35,10 +35,11 @@ class UserServiceTest {
     private final UserRepository userRepository = mock(UserRepository.class);
     private final PasswordEncoder passwordEncoder = mock(PasswordEncoder.class);
     private final JwtUtilsService jwtUtilsService = mock(JwtUtilsService.class);
+    private final LocationService locationService = mock(LocationService.class);
     private final EmailConfig emailConfig = mock(EmailConfig.class);
     private final AuthenticationManager authenticationManager = mock(AuthenticationManager.class);
 
-    private final UserService userService = new UserService(userRepository, passwordEncoder, jwtUtilsService, authenticationManager, emailConfig);
+    private final UserService userService = new UserService(userRepository, passwordEncoder, jwtUtilsService, authenticationManager, locationService, emailConfig);
 
     @Test
     void registerNewUserByEmail() {
