@@ -1,25 +1,85 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {BrowserRouter, Switch, Route} from "react-router-dom";
+import LocationsPage from "./pages/LocationsPage";
+import Header from "./components/Header";
+import {ThemeProvider} from '@material-ui/core/styles';
+import {createMuiTheme} from '@material-ui/core/styles';
+import LocationDetailsPage from "./pages/LocationDetailsPage";
+import {geolocated} from "react-geolocated";
+import LoginPage from "./pages/LoginPage";
+import GoogleRedirectPage from "./pages/GoogleRedirectPage";
+import AuthProvider from "./context/AuthProvider";
+import ProfilePage from "./pages/ProfilePage";
+import PrivateRoute from "./routing/PrivateRoute";
+import RegistrationPage from "./pages/RegistrationPage";
+import RegistrationRedirectPage from "./pages/RegistrationRedirectPage";
+import PasswordForgotPage from "./pages/PasswordForgotPage";
+import PasswordResetPage from "./pages/PasswordResetPage";
+import EmailValidationRedirectPage from "./pages/EmailValidationRedirectPage";
+import PasswordRedirectPage from "./pages/PasswordRedirectPage";
+import CreateLocationPage from "./pages/CreateLocationPage";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function App(props) {
+
+    const darkTheme = createMuiTheme({
+        palette: {
+            mode: 'dark',
+        },
+    });
+
+    return (
+        <BrowserRouter>
+            <AuthProvider>
+                <ThemeProvider theme={darkTheme}>
+                    <Header/>
+                    <Switch>
+                        <Route path={"/locations"} exact>
+                            <LocationsPage geoLocation={props.coords}/>
+                    </Route>
+                    <Route path={"/locations/new/"}>
+                        <CreateLocationPage geoLocation={props.coords}/>
+                        </Route>
+                        <Route path={"/locations/:id"}>
+                            <LocationDetailsPage geoLocation={props.coords}/>
+                        </Route>
+                        <Route path={"/login"}>
+                            <LoginPage/>
+                        </Route>
+                        <Route path={"/registration"} exact>
+                            <RegistrationPage/>
+                        </Route>
+                        <Route path={"/registration/done"}>
+                            <RegistrationRedirectPage/>
+                        </Route>
+                        <Route path={"/forgot"}>
+                            <PasswordForgotPage/>
+                        </Route>
+                        <Route path={"/password/done"} exact>
+                            <PasswordRedirectPage/>
+                        </Route>
+                        <Route path={"/password/"}>
+                            <PasswordResetPage/>
+                        </Route>
+                        <Route path={"/email/"}>
+                            <EmailValidationRedirectPage/>
+                        </Route>
+                        <Route path={"/auth/google/redirect"}>
+                            <GoogleRedirectPage/>
+                        </Route>
+                        <PrivateRoute path={"/profile"}>
+                            <ProfilePage/>
+                        </PrivateRoute>
+                    </Switch>
+                </ThemeProvider>
+            </AuthProvider>
+        </BrowserRouter>
+    );
 }
 
-export default App;
+export default geolocated({
+    positionOptions: {
+        enableHighAccuracy: false,
+        watchPosition: true,
+    },
+    userDecisionTimeout: 5000,
+})(App);
