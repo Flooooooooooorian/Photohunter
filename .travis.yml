@@ -3,3 +3,5 @@ jdk: openjdk16
 
 script:
   - cd backend && ./mvnw clean install -B
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
