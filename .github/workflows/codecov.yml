@@ -15,11 +15,11 @@ jobs:
           distribution: 'adopt'
       - name: Generate coverage report
         run: |
-          mvn test --file backend/pom.xml
+          mvn clear verify --file backend/pom.xml
       - uses: actions/upload-artifact@v2
         with:
           name: coverage-file
-          path: target/site/jacoco/jacoco.xml
+          path: backend/target/site/jacoco/jacoco.xml
 
   upload-coverage:
     runs-on: ubuntu-latest
