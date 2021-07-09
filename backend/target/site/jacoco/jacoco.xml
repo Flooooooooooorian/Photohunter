@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><!DOCTYPE report PUBLIC "-//JACOCO//DTD Report 1.1//EN"
+        "report.dtd">
+<report name="backend">
+    <sessioninfo id="Florians-MBP.fritz.box-15d3530f" start="1624022952473" dump="1624022960767"/>
+    <sessioninfo id="Florians-MBP.fritz.box-ec8ca3eb" start="1624024776361" dump="1624024784085"/>
+    <package name="de/neuefische/flooooooooooorian/backend/config">
+        <class name="de/neuefische/flooooooooooorian/backend/config/ReactRoutingForwarding"
+               sourcefilename="ReactRoutingForwarding.java">
+            <method name="&lt;init&gt;" desc="()V" line="7">
+                <counter type="INSTRUCTION" missed="0" covered="3"/>
+                <counter type="LINE" missed="0" covered="1"/>
+                <counter type="COMPLEXITY" missed="0" covered="1"/>
+                <counter type="METHOD" missed="0" covered="1"/>
+            </method>
+            <method name="forwardToRoutUrl" desc="()Ljava/lang/String;" line="11">
+                <counter type="INSTRUCTION" missed="2" covered="0"/>
+                <counter type="LINE" missed="1" covered="0"/>
+                <counter type="COMPLEXITY" missed="1" covered="0"/>
+                <counter type="METHOD" missed="1" covered="0"/>
+            </method>
+            <counter type="INSTRUCTION" missed="2" covered="3"/>
+            <counter type="LINE" missed="1" covered="1"/>
+            <counter type="COMPLEXITY" missed="1" covered="1"/>
+            <counter type="METHOD" missed="1" covered="1"/>
+            <counter type="CLASS" missed="0" covered="1"/>
+        </class>
+        <sourcefile name="ReactRoutingForwarding.java">
+            <line nr="7" mi="0" ci="3" mb="0" cb="0"/>
+            <line nr="11" mi="2" ci="0" mb="0" cb="0"/>
+            <counter type="INSTRUCTION" missed="2" covered="3"/>
+            <counter type="LINE" missed="1" covered="1"/>
+            <counter type="COMPLEXITY" missed="1" covered="1"/>
+            <counter type="METHOD" missed="1" covered="1"/>
+            <counter type="CLASS" missed="0" covered="1"/>
+        </sourcefile>
+        <counter type="INSTRUCTION" missed="2" covered="3"/>
+        <counter type="LINE" missed="1" covered="1"/>
+        <counter type="COMPLEXITY" missed="1" covered="1"/>
+        <counter type="METHOD" missed="1" covered="1"/>
+        <counter type="CLASS" missed="0" covered="1"/>
+    </package>
+    <package name="de/neuefische/flooooooooooorian/backend">
+        <class name="de/neuefische/flooooooooooorian/backend/BackendApplication"
+               sourcefilename="BackendApplication.java">
+            <method name="&lt;init&gt;" desc="()V" line="7">
+                <counter type="INSTRUCTION" missed="0" covered="3"/>
+                <counter type="LINE" missed="0" covered="1"/>
+                <counter type="COMPLEXITY" missed="0" covered="1"/>
+                <counter type="METHOD" missed="0" covered="1"/>
+            </method>
+            <method name="main" desc="([Ljava/lang/String;)V" line="10">
+                <counter type="INSTRUCTION" missed="5" covered="0"/>
+                <counter type="LINE" missed="2" covered="0"/>
+                <counter type="COMPLEXITY" missed="1" covered="0"/>
+                <counter type="METHOD" missed="1" covered="0"/>
+            </method>
+            <counter type="INSTRUCTION" missed="5" covered="3"/>
+            <counter type="LINE" missed="2" covered="1"/>
+            <counter type="COMPLEXITY" missed="1" covered="1"/>
+            <counter type="METHOD" missed="1" covered="1"/>
+            <counter type="CLASS" missed="0" covered="1"/>
+        </class>
+        <sourcefile name="BackendApplication.java">
+            <line nr="7" mi="0" ci="3" mb="0" cb="0"/>
+            <line nr="10" mi="4" ci="0" mb="0" cb="0"/>
+            <line nr="11" mi="1" ci="0" mb="0" cb="0"/>
+            <counter type="INSTRUCTION" missed="5" covered="3"/>
+            <counter type="LINE" missed="2" covered="1"/>
+            <counter type="COMPLEXITY" missed="1" covered="1"/>
+            <counter type="METHOD" missed="1" covered="1"/>
+            <counter type="CLASS" missed="0" covered="1"/>
+        </sourcefile>
+        <counter type="INSTRUCTION" missed="5" covered="3"/>
+        <counter type="LINE" missed="2" covered="1"/>
+        <counter type="COMPLEXITY" missed="1" covered="1"/>
+        <counter type="METHOD" missed="1" covered="1"/>
+        <counter type="CLASS" missed="0" covered="1"/>
+    </package>
+    <counter type="INSTRUCTION" missed="7" covered="6"/>
+    <counter type="LINE" missed="3" covered="2"/>
+    <counter type="COMPLEXITY" missed="2" covered="2"/>
+    <counter type="METHOD" missed="2" covered="2"/>
+    <counter type="CLASS" missed="0" covered="2"/>
+</report>
