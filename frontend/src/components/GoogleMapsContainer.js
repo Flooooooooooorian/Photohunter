@@ -14,7 +14,7 @@ export default function GoogleMapsContainer({locations, geoLocation, handleMarke
     }
     const mapContainerStyle = {
         width: '100vw',
-        height: '100vh',
+        height: '70vh',
         margin: '15px 25px',
         ...styles
     }
