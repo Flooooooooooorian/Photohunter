@@ -35,6 +35,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: jacoco.xml
+          max_report_age: off
 #          directory: ./coverage/reports/
 #          flags: unittests
           fail_ci_if_error: true
