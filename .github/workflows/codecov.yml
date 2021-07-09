@@ -15,7 +15,7 @@ jobs:
           distribution: 'adopt'
       - name: Generate coverage report
         run: |
-          mvn clear verify --file backend/pom.xml
+          mvn verify --file backend/pom.xml
       - uses: actions/upload-artifact@v2
         with:
           name: coverage-file
