@@ -52,7 +52,7 @@ export default function LocationDetailsPage() {
                 }>
             </CardHeader>
             <CardContent className={classes.content}>
-                <Typography>
+                <Typography display={"block"}>
                     {location.description}
                 </Typography>
             </CardContent>
