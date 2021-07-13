@@ -1,7 +1,0 @@
-spring:
-  data:
-    mongodb:
-      database: photohunter
-server:
-  error:
-    include-message: always

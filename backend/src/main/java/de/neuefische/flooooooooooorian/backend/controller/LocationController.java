@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
@@ -47,7 +48,7 @@ public class LocationController {
     }
 
     @PostMapping
-    public LocationDto createLocation(Principal principal, @RequestPart LocationCreationDto locationCreationDto, @RequestPart(value = "file") Optional<MultipartFile> thumbnail) throws IOException {
+    public LocationDto createLocation(Principal principal, @RequestPart @Valid LocationCreationDto locationCreationDto, @RequestPart(value = "file") Optional<MultipartFile> thumbnail) throws IOException {
         User user = userService.findUserByEmail(principal.getName()).orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN));
         if (thumbnail.isPresent()) {
             File fileToUpload = File.createTempFile("photo", null);
