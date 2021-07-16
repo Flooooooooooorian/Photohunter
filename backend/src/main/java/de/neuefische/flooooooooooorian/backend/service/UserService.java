@@ -161,4 +161,14 @@ public class UserService {
                 .locations(locations.stream().map(LocationMapper::toLocationDto).collect(Collectors.toList()))
                 .build();
     }
+
+    public List<Location> getFavoritesFrom(User user) {
+        return user.getFavorites();
+    }
+
+    public Location favories(User user, Location location) {
+        user.getFavorites().add(location);
+        userRepository.save(user);
+        return location;
+    }
 }

@@ -1,9 +1,6 @@
 package de.neuefische.flooooooooooorian.backend.controller;
 
-import de.neuefische.flooooooooooorian.backend.dto.LocationCreationDto;
-import de.neuefische.flooooooooooorian.backend.dto.LocationDto;
-import de.neuefische.flooooooooooorian.backend.dto.PictureDto;
-import de.neuefische.flooooooooooorian.backend.dto.UserDto;
+import de.neuefische.flooooooooooorian.backend.dto.*;
 import de.neuefische.flooooooooooorian.backend.model.Location;
 import de.neuefische.flooooooooooorian.backend.model.Picture;
 import de.neuefische.flooooooooooorian.backend.security.model.User;
@@ -62,5 +59,19 @@ public class LocationController {
     @GetMapping("/{id}")
     public LocationDto getLocationById(@PathVariable String id) {
         return LocationMapper.toLocationDto(locationService.getLocationById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Id not valid!")));
+    }
+
+    @PutMapping("/{id}/favorite")
+    public LocationDto favoriseLocation(Principal principal, @PathVariable String id, @Valid @RequestBody FavoriteDto favoriteDto) {
+        if (!id.equals(favoriteDto.getId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id not valid");
+        }
+        Optional<User> optionalUser = userService.findUserByEmail(principal.getName());
+        User user = optionalUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+        Optional<Location> optionalLocation = locationService.getLocationById(id);
+        Location location = optionalLocation.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id not valid"));
+
+        location = userService.favories(user, location);
+        return LocationMapper.toLocationDto(location);
     }
 }
