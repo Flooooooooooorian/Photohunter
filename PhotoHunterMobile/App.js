@@ -1,20 +1,20 @@
 import React from "react";
 import {NativeRouter, Route} from "react-router-native";
-import LocationsPage from "./pages/LocationsPage";
-import Header from "./components/Header";
-import LocationDetailsPage from "./pages/LocationDetailsPage";
-import LoginPage from "./pages/LoginPage";
-import GoogleRedirectPage from "./pages/GoogleRedirectPage";
-import AuthProvider from "./context/AuthProvider";
-import ProfilePage from "./pages/ProfilePage";
-import PrivateRoute from "./routing/PrivateRoute";
-import RegistrationPage from "./pages/RegistrationPage";
-import RegistrationRedirectPage from "./pages/RegistrationRedirectPage";
-import PasswordForgotPage from "./pages/PasswordForgotPage";
-import PasswordResetPage from "./pages/PasswordResetPage";
-import EmailValidationRedirectPage from "./pages/EmailValidationRedirectPage";
-import PasswordRedirectPage from "./pages/PasswordRedirectPage";
-import CreateLocationPage from "./pages/CreateLocationPage";
+import LocationsPage from "./src/pages/LocationsPage";
+import Header from "./src/components/Header";
+import LocationDetailsPage from "./src/pages/LocationDetailsPage";
+import LoginPage from "./src/pages/LoginPage";
+import GoogleRedirectPage from "./src/pages/GoogleRedirectPage";
+import AuthProvider from "./src/context/AuthProvider";
+import ProfilePage from "./src/pages/ProfilePage";
+import PrivateRoute from "./src/routing/PrivateRoute";
+import RegistrationPage from "./src/pages/RegistrationPage";
+import RegistrationRedirectPage from "./src/pages/RegistrationRedirectPage";
+import PasswordForgotPage from "./src/pages/PasswordForgotPage";
+import PasswordResetPage from "./src/pages/PasswordResetPage";
+import EmailValidationRedirectPage from "./src/pages/EmailValidationRedirectPage";
+import PasswordRedirectPage from "./src/pages/PasswordRedirectPage";
+import CreateLocationPage from "./src/pages/CreateLocationPage";
 
 export default function App(props) {
 
