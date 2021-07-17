@@ -28,7 +28,7 @@ export default function LocationsPage({geoLocation}) {
     }
 
     return (
-        <View className={classes.box}>
+        <View style={classes.box}>
             {mapIsEnabled ?
                 <LocationMap showCreateLocationPage={showCreateLocationPage} showDetailsPage={showDetailsPage}
                              locations={locations} toggleView={toggleView} geoLocation={geoLocation}/> :

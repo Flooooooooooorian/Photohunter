@@ -3,7 +3,7 @@ import {StyleSheet, Text, View} from "react-native";
 
 export default function PasswordRedirectPage() {
     return (
-        <View className={classes.card}>
+        <View style={classes.card}>
             <Text variant={"h4"}>
                 Password has been reset!
             </Text>

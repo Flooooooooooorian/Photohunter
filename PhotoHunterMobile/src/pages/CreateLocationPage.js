@@ -79,15 +79,15 @@ export default function CreateLocationPage() {
     }
 
     return (
-        <View className={classes.card}>
+        <View style={classes.card}>
             <form onSubmit={handleSubmit}>
-                <View className={classes.content}>
-                    <TextInput error={titleError !== undefined} helperText={titleError} className={classes.item} size={"small"} required variant={"outlined"} label={"title"}/>
-                    <TextInput className={classes.item} size={"medium"} required multiline variant={"outlined"}
+                <View style={classes.content}>
+                    <TextInput error={titleError !== undefined} helperText={titleError} style={classes.item} size={"small"} required variant={"outlined"} label={"title"}/>
+                    <TextInput style={classes.item} size={"medium"} required multiline variant={"outlined"}
                                label={"description"}/>
                     {/*<CardMedia image={inputRef.current?.files[0] ? inputRef.current?.files[0] : ""}/>*/}
-                    <input className={classes.item} type="file" ref={inputRef}/>
-                    <View className={classes.mapBox}>
+                    <input style={classes.item} type="file" ref={inputRef}/>
+                    <View style={classes.mapBox}>
                         <GoogleMapsContainer
                             onMapLoad={onMapLoad}
                             handleMarkerClick={null}
@@ -99,7 +99,7 @@ export default function CreateLocationPage() {
                             }}
                             styles={{height: "200px"}}/>
                     </View>
-                    <Button className={classes.button} variant={"contained"} color={"primary"} type={"submit"}>
+                    <Button style={classes.button} variant={"contained"} color={"primary"} type={"submit"}>
                         Save
                     </Button>
                 </View>

@@ -4,7 +4,7 @@ import {StyleSheet, Text, View} from "react-native";
 
 export default function RegistrationRedirectPage() {
     return (
-        <View className={classes.card}>
+        <View style={classes.card}>
             <Text variant={"h4"}>
                 Email Verification has been send!
             </Text>

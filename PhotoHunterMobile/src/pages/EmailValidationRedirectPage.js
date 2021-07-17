@@ -33,7 +33,7 @@ export default function EmailValidationRedirectPage() {
     }, [token])
 
     return (
-        <View className={classes.card}>
+        <View style={classes.card}>
             {loading && <View />}
             {!loading && <Text variant={"h4"}>
                 {result && "Email Verification done"}

@@ -8,14 +8,14 @@ export default function LocationItem({location, showDetailsPage}) {
     }
 
     return (
-        <View className={classes.card} onClick={handleListItemClick}>
-            <View className={classes.content}>
-                <View className={classes.media}
+        <View style={classes.card} onClick={handleListItemClick}>
+            <View style={classes.content}>
+                <View style={classes.media}
                            image={location.thumbnail ? location.thumbnail.url : "https://picsum.photos/300/200"}/>
-                <Text className={classes.title} component={"h6"} variant={"h6"}>
+                <Text style={classes.title} component={"h6"} variant={"h6"}>
                     {location.title}
                 </Text>
-                <View className={classes.box}>
+                <View style={classes.box}>
                     <Text component={"h5"} variant={"h5"}>
                         {location.rating}
                     </Text>
@@ -29,7 +29,8 @@ export default function LocationItem({location, showDetailsPage}) {
 const classes = StyleSheet.create(
     {
         card: {
-            margin: "15px 25px",
+            marginVertical: 15,
+            marginHorizontal: 25,
         },
         media: {
             width: 80,

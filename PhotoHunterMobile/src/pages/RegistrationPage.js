@@ -90,27 +90,27 @@ export default function RegistrationPage() {
 
     return (
         <>
-            <View className={classes.card}>
-                <Text className={classes.title} variant={"h3"}>
+            <View style={classes.card}>
+                <Text style={classes.title} variant={"h3"}>
                     Registration
                 </Text>
-                {serverError && <Text className={classes.error}>{serverError}</Text>}
+                {serverError && <Text style={classes.error}>{serverError}</Text>}
                 <form onSubmit={handleSubmit}>
-                    <View className={classes.content}>
-                        <TextInput className={classes.item} error={emailError !== undefined} helperText={emailError}
+                    <View style={classes.content}>
+                        <TextInput style={classes.item} error={emailError !== undefined} helperText={emailError}
                                    size={"small"} required variant={"outlined"}
                                    label={"Email"}/>
-                        <TextInput className={classes.item} size={"small"} required variant={"outlined"}
+                        <TextInput style={classes.item} size={"small"} required variant={"outlined"}
                                    label={"Name"}/>
-                        <TextInput type={"password"} className={classes.item} error={passwordError !== undefined}
+                        <TextInput type={"password"} style={classes.item} error={passwordError !== undefined}
                                    helperText={passwordError} size={"small"} required variant={"outlined"}
                                    label={"Password"}/>
-                        <TextInput type={"password"} className={classes.item} error={passwordError !== undefined}
+                        <TextInput type={"password"} style={classes.item} error={passwordError !== undefined}
                                    size={"small"} required
                                    variant={"outlined"}
                                    label={"Password"}/>
 
-                        <Button disabled={loading} type={"submit"} className={classes.item} variant={"contained"}
+                        <Button disabled={loading} type={"submit"} style={classes.item} variant={"contained"}
                                 color="primary">
                             Sign Up
                         </Button>

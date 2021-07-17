@@ -21,7 +21,8 @@ export default function GoogleMapsContainer({
     const mapContainerStyle = {
         width: '100vw',
         height: '70vh',
-        margin: '15px 25px',
+        marginVertical: 15,
+        marginHorizontal: 25,
         ...styles
     }
 

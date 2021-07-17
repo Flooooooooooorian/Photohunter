@@ -9,11 +9,11 @@ export default function ProfilePage() {
     const context = useContext(AuthContext)
 
     return(
-        <View className={classes.card}>
-            <Text className={classes.title} variant={"h3"}>
+        <View style={classes.card}>
+            <Text style={classes.title} variant={"h3"}>
                 Profile
             </Text>
-            <Text className={classes.title} variant={"h5"}>
+            <Text style={classes.title} variant={"h5"}>
                 {context.jwtDecoded.name}
             </Text>
             <LocationsPage/>

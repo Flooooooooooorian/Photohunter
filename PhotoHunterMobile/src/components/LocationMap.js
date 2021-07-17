@@ -5,9 +5,9 @@ import {StyleSheet, Button, Text, View} from "react-native";
 export default function LocationMap({locations, toggleView, geoLocation, showDetailsPage, showCreateLocationPage}) {
     return (
         <>
-            <View className={classes.box}>
-                <View className={classes.space}/>
-                <Text className={classes.title} variant={"h3"}>
+            <View style={classes.box}>
+                <View style={classes.space}/>
+                <Text style={classes.title} variant={"h3"}>
                     Locations
                 </Text>
                 <Button onClick={toggleView} aria-label="list" variant="outlined">
@@ -29,7 +29,8 @@ const classes = StyleSheet.create(
             //justifySelf: "end",
         },
         box: {
-            margin: "0px 10px",
+            marginVertical: 0,
+            marginHorizontal: 10,
             display: "flex",
             justifyContent: "space-between",
         },

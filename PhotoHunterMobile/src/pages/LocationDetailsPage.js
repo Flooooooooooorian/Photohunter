@@ -30,13 +30,13 @@ export default function LocationDetailsPage() {
     }
 
     return (
-        <View className={classes.card}>
-            <View className={classes.media}
+        <View style={classes.card}>
+            <View style={classes.media}
                   image={location.thumbnail ? location.thumbnail.url : "https://picsum.photos/300/200"}/>
             <View
                 title={location.title}
                 action={
-                    <View className={classes.box}>
+                    <View style={classes.box}>
                         <Text component={"h5"} variant={"h5"}>
                             {location.rating}
                         </Text>
@@ -50,7 +50,7 @@ export default function LocationDetailsPage() {
                     </View>
                 }>
             </View>
-            <View className={classes.content}>
+            <View style={classes.content}>
                 <Text display={"block"}>
                     {location.description}
                 </Text>

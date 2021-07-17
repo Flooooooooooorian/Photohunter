@@ -73,31 +73,31 @@ export default function PasswordResetPage() {
     }
 
     return (
-        <View className={classes.card}>
-            <Text className={classes.title} variant={"h3"}>
+        <View style={classes.card}>
+            <Text style={classes.title} variant={"h3"}>
                 Password Reset
             </Text>
-            {error && <Text className={classes.error}>{error}</Text>}
+            {error && <Text style={classes.error}>{error}</Text>}
             <form onSubmit={handleSubmit}>
-                <View className={classes.content}>
+                <View style={classes.content}>
                     <TextInput type={"password"}
                                error={passwordError !== undefined}
                                helperText={passwordError}
-                               className={classes.item}
+                               style={classes.item}
                                size={"small"}
                                required
                                variant={"outlined"}
                                label={"Password"}/>
                     <TextInput type={"password"}
                                error={passwordError !== undefined}
-                               className={classes.item}
+                               style={classes.item}
                                size={"small"}
                                required
                                variant={"outlined"}
                                label={"Password"}/>
                     <Button
                         type={"submit"}
-                        className={classes.item}
+                        style={classes.item}
                         variant={"contained"}
                         color="primary"
                         disabled={loading}>

@@ -31,8 +31,8 @@ export default function PasswordForgotPage() {
 
 
     if (done) {
-        return (<View className={classes.card}>
-                <Text className={classes.title} variant={"h3"}>
+        return (<View style={classes.card}>
+                <Text style={classes.title} variant={"h3"}>
                     Email send
                 </Text>
             </View>
@@ -41,16 +41,16 @@ export default function PasswordForgotPage() {
 
     return (
         <>
-            <View className={classes.card}>
-                <Text className={classes.title} variant={"h3"}>
+            <View style={classes.card}>
+                <Text style={classes.title} variant={"h3"}>
                     Send Password Reset Email
                 </Text>
-                {error && <Text className={classes.error}>{error}</Text>}
+                {error && <Text style={classes.error}>{error}</Text>}
                 <form onSubmit={handleSubmit}>
-                    <View className={classes.content}>
-                        <TextInput className={classes.item} size={"small"} required variant={"outlined"}
+                    <View style={classes.content}>
+                        <TextInput style={classes.item} size={"small"} required variant={"outlined"}
                                    label={"Email"}/>
-                        <Button disabled={loading} type={"submit"} className={classes.item} variant={"contained"}
+                        <Button disabled={loading} type={"submit"} style={classes.item} variant={"contained"}
                                 color="primary">
                             Send
                         </Button>
