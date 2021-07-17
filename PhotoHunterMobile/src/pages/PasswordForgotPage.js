@@ -20,7 +20,7 @@ export default function PasswordForgotPage() {
         }
 
         setLoading(true)
-        axios.post("/user/sendpasswordreset", {"email": email})
+        axios.post("https://photohunter.herokuapp.com/user/sendpasswordreset", {"email": email})
             .then((response) => response.data)
             .then(() => setDone(true))
             .catch((error) => console.error)

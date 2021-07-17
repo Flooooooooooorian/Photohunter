@@ -13,7 +13,7 @@ export default function AuthProvider({children}) {
 
     const login = credentials => {
         return axios
-            .post('/user/login', credentials)
+            .post('https://photohunter.herokuapp.com/user/login', credentials)
             .then(response => response.data)
             .then(data => {
                 setToken(data)
@@ -23,7 +23,7 @@ export default function AuthProvider({children}) {
     }
 
     const loginWithGoogleCode = code =>
-        axios.post("/auth/google/login", {code})
+        axios.post("https://photohunter.herokuapp.com/auth/google/login", {code})
             .then(response => response.data)
             .then(data => {
                 setToken(data)

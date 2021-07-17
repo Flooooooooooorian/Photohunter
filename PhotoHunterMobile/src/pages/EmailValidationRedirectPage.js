@@ -14,7 +14,7 @@ export default function EmailValidationRedirectPage() {
     const token = useQuery().get("token");
 
     useEffect(() => {
-        axios.post("/user/email", {"token": token})
+        axios.post("https://photohunter.herokuapp.com/user/email", {"token": token})
             .then((response) => response.data)
             .then((data) => {
                 if (data) {

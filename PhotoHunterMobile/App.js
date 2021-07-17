@@ -15,6 +15,7 @@ import PasswordResetPage from "./src/pages/PasswordResetPage";
 import EmailValidationRedirectPage from "./src/pages/EmailValidationRedirectPage";
 import PasswordRedirectPage from "./src/pages/PasswordRedirectPage";
 import CreateLocationPage from "./src/pages/CreateLocationPage";
+import {Switch} from "react-native";
 
 export default function App(props) {
 
@@ -22,45 +23,47 @@ export default function App(props) {
         <NativeRouter>
             <AuthProvider>
                 <Header/>
-                <Route path={"/locations"} exact>
-                    <LocationsPage geoLocation={props.coords}/>
-                </Route>
-                <PrivateRoute path={"/locations/new/"}>
-                    <CreateLocationPage geoLocation={props.coords}/>
-                </PrivateRoute>
-                <Route path={"/locations/:id"}>
-                    <LocationDetailsPage geoLocation={props.coords}/>
-                </Route>
-                <Route path={"/login"}>
-                    <LoginPage/>
-                </Route>
-                <Route path={"/registration"} exact>
-                    <RegistrationPage/>
-                </Route>
-                <Route path={"/registration/done"}>
-                    <RegistrationRedirectPage/>
-                </Route>
-                <Route path={"/forgot"}>
-                    <PasswordForgotPage/>
-                </Route>
-                <Route path={"/password/done"} exact>
-                    <PasswordRedirectPage/>
-                </Route>
-                <Route path={"/password/"}>
-                    <PasswordResetPage/>
-                </Route>
-                <Route path={"/email/"}>
-                    <EmailValidationRedirectPage/>
-                </Route>
-                <Route path={"/auth/google/redirect"}>
-                    <GoogleRedirectPage/>
-                </Route>
-                <PrivateRoute path={"/profile"}>
-                    <ProfilePage/>
-                </PrivateRoute>
-                <Route path={"/"}>
-                    <LocationsPage geoLocation={props.coords}/>
-                </Route>
+                <Switch>
+                    <Route path={"/locations"} exact>
+                        <LocationsPage geoLocation={props.coords}/>
+                    </Route>
+                    <PrivateRoute path={"/locations/new/"}>
+                        <CreateLocationPage geoLocation={props.coords}/>
+                    </PrivateRoute>
+                    <Route path={"/locations/:id"}>
+                        <LocationDetailsPage geoLocation={props.coords}/>
+                    </Route>
+                    <Route path={"/login"}>
+                        <LoginPage/>
+                    </Route>
+                    <Route path={"/registration"} exact>
+                        <RegistrationPage/>
+                    </Route>
+                    <Route path={"/registration/done"}>
+                        <RegistrationRedirectPage/>
+                    </Route>
+                    <Route path={"/forgot"}>
+                        <PasswordForgotPage/>
+                    </Route>
+                    <Route path={"/password/done"} exact>
+                        <PasswordRedirectPage/>
+                    </Route>
+                    <Route path={"/password/"}>
+                        <PasswordResetPage/>
+                    </Route>
+                    <Route path={"/email/"}>
+                        <EmailValidationRedirectPage/>
+                    </Route>
+                    <Route path={"/auth/google/redirect"}>
+                        <GoogleRedirectPage/>
+                    </Route>
+                    <PrivateRoute path={"/profile"}>
+                        <ProfilePage/>
+                    </PrivateRoute>
+                    <Route path={"/"}>
+                        <LocationsPage geoLocation={props.coords}/>
+                    </Route>
+                </Switch>
             </AuthProvider>
         </NativeRouter>
     );

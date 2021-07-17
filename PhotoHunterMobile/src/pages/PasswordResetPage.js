@@ -22,7 +22,7 @@ export default function PasswordResetPage() {
         if (validatePasswords(event.target[0].value, event.target[2].value)) {
             setLoading(true)
             const credentials = {"email": jwt_decode(token).sub, "password": event.target[0].value, "token": token}
-            axios.post("/user/passwordreset", credentials)
+            axios.post("https://photohunter.herokuapp.com/user/passwordreset", credentials)
                 .then((response) => response.data)
                 .then((data) => {
                     if (data) {

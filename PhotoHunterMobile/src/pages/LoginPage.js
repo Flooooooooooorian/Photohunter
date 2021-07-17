@@ -20,7 +20,7 @@ export default function LoginPage() {
     }
 
     useEffect(() => {
-        axios.get("/auth/google/login/config")
+        axios.get("https://photohunter.herokuapp.com/auth/google/login/config")
             .then(response => response.data)
             .then(setConfig)
     }, [])
@@ -34,7 +34,7 @@ export default function LoginPage() {
     }
 
     const handleRegistrationClick = () => {
-        history.push("/registration")
+        history.push("https://photohunter.herokuapp.com/registration")
     }
 
     const handleGoogleLoginClick = () => {
@@ -42,36 +42,31 @@ export default function LoginPage() {
     }
 
     return (
-        <View className={classes.card}>
-            <Text className={classes.title} variant={"h3"}>
+        <View style={classes.card}>
+            <Text style={classes.title} variant={"h3"}>
                 Login
             </Text>
-            {error && <Text className={classes.error}>{error}</Text>}
-            <form onSubmit={handleSubmit}>
-                <View className={classes.content}>
-                    <TextInput className={classes.item} size={"small"} required variant={"outlined"}
+            {error && <Text style={classes.error}>{error}</Text>}
+            <>
+                {/*onSubmit={handleSubmit}>*/}
+                <View style={classes.content}>
+                    <TextInput style={classes.item} size={"small"} required variant={"outlined"}
                                label={"Email"}/>
-                    <TextInput type={"password"} className={classes.item} size={"small"} required
+                    <TextInput type={"password"} style={classes.item} size={"small"} required
                                variant={"outlined"}
                                label={"Password"}/>
-                    <Button title={"Sign In"} type={"submit"} className={classes.item} variant={"contained"} color="primary">
-                        Sign In
-                    </Button>
+                    <Button title={"Sign In"} type={"submit"} style={classes.item} />
                 </View>
-            </form>
-            <Text className={classes.forgot} variant={"caption"} onClick={() => {
+            </>
+            <Text style={classes.forgot}  onPress={() => {
                 history.push("/forgot")
             }}>
                 Forgot your Password?
             </Text>
-            <Button title={"Registration"} className={classes.item} variant={"contained"} color="primary"
-                    onClick={handleRegistrationClick}>
-                Registration
-            </Button>
+            <Button title={"Registration"} style={classes.item} onPress={handleRegistrationClick} />
 
             {config &&
-            <View className={classes.google} onClick={handleGoogleLoginClick}>
-                <img alt={"G"}/>
+            <View style={classes.google} onPress={handleGoogleLoginClick}>
                 <Text>
                     Sign in with Google
                 </Text>

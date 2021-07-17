@@ -25,14 +25,14 @@ export default function RegistrationPage() {
                 "name": event.target[2].value,
                 "password": event.target[4].value
             }
-            axios.post("/user/register", credentials)
+            axios.post("https://photohunter.herokuapp.com/user/register", credentials)
                 .then((response) => response.data)
                 .then((data) => {
                     setServerError()
                     return data
                 })
                 .then((data) => {
-                    history.push("/registration/done")
+                    history.push("https://photohunter.herokuapp.com/registration/done")
                     return data
                 })
                 .catch((error) => {

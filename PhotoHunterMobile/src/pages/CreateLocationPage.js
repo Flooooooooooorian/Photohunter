@@ -67,7 +67,7 @@ export default function CreateLocationPage() {
             formData.append("file", inputRef.current.files[0])
         }
 
-        axios.post("/api/location", formData, config)
+        axios.post("https://photohunter.herokuapp.com/api/location", formData, config)
             .then((response) => response.data)
             .then((data) => {
                 history.push({

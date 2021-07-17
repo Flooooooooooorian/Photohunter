@@ -1,5 +1,5 @@
 import {useHistory} from "react-router-dom";
-import {StyleSheet, Text, View} from "react-native";
+import {SafeAreaView, StyleSheet, Text, View} from "react-native";
 import React from "react";
 
 export default function Header() {
@@ -14,15 +14,15 @@ export default function Header() {
     }
 
     return (
-        <View position={"static"} className={classes.appbar} >
-            <View className={classes.toolbar}>
-                <Text component={"h5"} variant={"h5"} onClick={handleLogoClick}>
+        <SafeAreaView>
+            <View position={"static"} style={classes.appbar}>
+                <Text style={classes.heading} onPress={handleLogoClick}>
                     PhotoHunter
                 </Text>
-                <View className={classes.avatar} onClick={handleAvatarOnClick}>
+                <View style={classes.avatar} onPress={handleAvatarOnClick}>
                 </View>
             </View>
-        </View>
+        </SafeAreaView>
     )
 }
 
@@ -38,6 +38,10 @@ const classes = StyleSheet.create(
         avatar: {
             width: 30,
             height: 30,
-        }
+        },
+        heading: {
+            fontSize: 50,
+            color: "white",
+        },
     }
 )

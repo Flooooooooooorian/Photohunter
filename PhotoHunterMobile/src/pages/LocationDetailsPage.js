@@ -12,7 +12,7 @@ export default function LocationDetailsPage() {
 
     useEffect(() => {
         if (!location) {
-            axios.get("/api/location/" + id)
+            axios.get("https://photohunter.herokuapp.com/api/location/" + id)
                 .then((response) => response.data)
                 .then(setLocation)
                 .catch((error) => {
