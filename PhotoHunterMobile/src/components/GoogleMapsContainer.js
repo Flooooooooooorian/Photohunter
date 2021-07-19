@@ -26,13 +26,13 @@ export default function GoogleMapsContainer({
         ...styles
     }
 
-    const {isLoaded, loadError} = useLoadScript({
-        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-        googleLibraries,
-    })
-
-    if (loadError) return "Error";
-    if (!isLoaded) return "Loading...";
+    // const {isLoaded, loadError} = useLoadScript({
+    //     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+    //     googleLibraries,
+    // })
+    //
+    // if (loadError) return "Error";
+    // if (!isLoaded) return "Loading...";
 
     return (
         <MapView

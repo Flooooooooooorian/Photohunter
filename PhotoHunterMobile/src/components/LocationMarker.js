@@ -1,4 +1,5 @@
 import {Marker} from "react-native-maps";
+import React from "react";
 
 export default function LocationMarker({location, handleMarkerClick}) {
 
@@ -7,6 +8,6 @@ export default function LocationMarker({location, handleMarkerClick}) {
     }
 
     return (
-        <Marker position={{lat: location.lat, lng: location.lng}} onClick={handleClick} />
+        <Marker onClick={handleClick}  coordinate={{latitude: location.lat, longitude: location.lng}}/>
     )
 }

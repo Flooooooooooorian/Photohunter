@@ -1,40 +1,25 @@
 import LocationItem from "./LocationItem";
 import React from "react";
-import {StyleSheet, Button, Text, View} from "react-native";
+import {Button, Text, TouchableOpacity, View} from "react-native";
+import Styles from "../Styles";
+import { Feather } from '@expo/vector-icons';
 
 export default function LocationList({locations, toggleView, showDetailsPage}) {
+    const classes = Styles()
+
     return (
         <>
-            <View style={classes.box}>
+            <View style={classes.card}>
                 <View style={classes.space}/>
-                <Text style={classes.title} variant={"h3"}>
+                <Text style={classes.page_title}>
                     Locations
                 </Text>
-                <Button title={""} style={classes.icon} onClick={toggleView} aria-label="map" variant="outlined">
-                    <View/>
-                </Button>
+
+                <TouchableOpacity onPress={toggleView}>
+                    <Feather name="map" size={24} color="black" />
+                </TouchableOpacity>
             </View>
             {locations.map((location) => <LocationItem key={location.id} showDetailsPage={showDetailsPage} location={location}/>)}
         </>
     )
 }
-
-const classes = StyleSheet.create(
-    {
-        title: {
-            textAlign: "center",
-        },
-        icon: {
-            //justiFySelf: "end",
-        },
-        box: {
-            marginVertical: 0,
-            marginHorizontal: 10,
-            display: "flex",
-            justifyContent: "space-between",
-        },
-        space:{
-            width: 48,
-        }
-    }
-)
