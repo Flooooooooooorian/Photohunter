@@ -17,6 +17,10 @@ export default function Styles() {
                 backgroundColor: '#FFFFFE',
                 borderRadius: 4,
             },
+            error: {
+                color: "red",
+                textAlign: "center",
+            },
             forgot: {
                 textDecoration: 'underline',
             },

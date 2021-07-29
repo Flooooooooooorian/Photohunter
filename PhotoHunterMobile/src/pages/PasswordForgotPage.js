@@ -2,15 +2,16 @@ import {useState} from "react";
 import axios from "axios";
 import React from "react";
 import {StyleSheet, Button, Text, TextInput, View} from "react-native";
+import Styles from "../Styles";
 
 export default function PasswordForgotPage() {
+    const [email, setEmail] = useState()
     const [done, setDone] = useState(false)
     const [error, setError] = useState()
     const [loading, setLoading] = useState(false)
+    const classes = Styles()
 
-    const handleSubmit = (event) => {
-        event.preventDefault()
-        const email = event.target[0].value
+    const handleResetEmail = () => {
 
         if (!/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
             setError("Email not valid")
@@ -23,16 +24,15 @@ export default function PasswordForgotPage() {
         axios.post("https://photohunter.herokuapp.com/user/sendpasswordreset", {"email": email})
             .then((response) => response.data)
             .then(() => setDone(true))
-            .catch((error) => console.error)
+            .catch(console.error)
             .finally(() => {
                 setLoading(false)
             })
     }
 
-
     if (done) {
         return (<View style={classes.card}>
-                <Text style={classes.title} variant={"h3"}>
+                <Text style={classes.page_title}>
                     Email send
                 </Text>
             </View>
@@ -40,50 +40,23 @@ export default function PasswordForgotPage() {
     }
 
     return (
-        <>
-            <View style={classes.card}>
-                <Text style={classes.title} variant={"h3"}>
-                    Send Password Reset Email
-                </Text>
+        <View style={classes.card}>
+            <Text style={classes.page_title}>
+                Send Password Reset Email
+            </Text>
+            <View style={classes.content}>
                 {error && <Text style={classes.error}>{error}</Text>}
-                <form onSubmit={handleSubmit}>
-                    <View style={classes.content}>
-                        <TextInput style={classes.item} size={"small"} required variant={"outlined"}
-                                   label={"Email"}/>
-                        <Button disabled={loading} type={"submit"} style={classes.item} variant={"contained"}
-                                color="primary">
-                            Send
-                        </Button>
-                    </View>
-                </form>
-                {loading && <View />}
+                <TextInput style={[classes.input, classes.shadow]}
+                           value={email}
+                           onChangeText={setEmail}
+                           placeholder={"Email"}/>
+                <Button
+                    disabled={loading}
+                    title={"Send"}
+                    onPress={handleResetEmail}>
+                </Button>
+                {loading && <View/>}
             </View>
-        </>
+        </View>
     )
 }
-
-const classes = StyleSheet.create(
-    {
-        card: {
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            margin: "25px",
-        },
-        content: {
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-        },
-        item: {
-            margin: 10,
-        },
-        title: {
-            textAlign: "center",
-        },
-        error: {
-            color: "red",
-            marginTop: "10px",
-        }
-    }
-)
