@@ -1,9 +1,12 @@
 import {useHistory} from "react-router-dom";
-import {SafeAreaView, StyleSheet, Text, View} from "react-native";
+import {SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import React from "react";
+import Styles from "../Styles";
+import {Feather} from "@expo/vector-icons";
 
 export default function Header() {
     const history = useHistory()
+    const classes = Styles()
 
     const handleAvatarOnClick = () => {
         history.push("/profile")
@@ -15,33 +18,16 @@ export default function Header() {
 
     return (
         <SafeAreaView>
-            <View position={"static"} style={classes.appbar}>
+            <View position={"static"} style={classes.header}>
                 <Text style={classes.heading} onPress={handleLogoClick}>
                     PhotoHunter
                 </Text>
-                <View style={classes.avatar} onPress={handleAvatarOnClick}>
-                </View>
+                <TouchableOpacity style={classes.avatar} onPress={handleAvatarOnClick}>
+                    <Text style={{color: "white"}}>
+                        Login
+                    </Text>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     )
 }
-
-const classes = StyleSheet.create(
-    {
-        appbar: {
-            backgroundColor: "#222",
-        },
-        toolbar: {
-            display: "flex",
-            justifyContent: "space-between"
-        },
-        avatar: {
-            width: 30,
-            height: 30,
-        },
-        heading: {
-            fontSize: 50,
-            color: "white",
-        },
-    }
-)

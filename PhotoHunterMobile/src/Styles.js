@@ -4,12 +4,28 @@ export default function Styles() {
 
     return StyleSheet.create(
         {
+            avatar: {
+                alignSelf: "center",
+                paddingRight: 10,
+                // width: 30,
+                // height: 30,
+            },
             card: {
                 marginVertical: 25,
                 marginHorizontal: 25,
                 display: "flex",
                 backgroundColor: '#FFFFFE',
                 borderRadius: 4,
+            },
+            header: {
+                display: "flex",
+                backgroundColor: "#222",
+                flexDirection: "row",
+                justifyContent: "space-between",
+            },
+            heading: {
+                fontSize: 50,
+                color: "white",
             },
             list_item: {
                 marginVertical: 15,
