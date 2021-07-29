@@ -1,5 +1,5 @@
 import React from "react";
-import {NativeRouter, Route, Switch} from "react-router-native";
+import {Route, Switch} from "react-router-native";
 import LocationsPage from "./src/pages/LocationsPage";
 import Header from "./src/components/Header";
 import LocationDetailsPage from "./src/pages/LocationDetailsPage";
@@ -15,11 +15,12 @@ import PasswordResetPage from "./src/pages/PasswordResetPage";
 import EmailValidationRedirectPage from "./src/pages/EmailValidationRedirectPage";
 import PasswordRedirectPage from "./src/pages/PasswordRedirectPage";
 import CreateLocationPage from "./src/pages/CreateLocationPage";
+import Router from "./src/routing/Router";
 
 export default function App(props) {
 
     return (
-        <NativeRouter>
+        <Router>
             <AuthProvider>
                 <Header/>
                 <Switch>
@@ -64,6 +65,6 @@ export default function App(props) {
                     </Route>
                 </Switch>
             </AuthProvider>
-        </NativeRouter>
+        </Router>
     );
 }
