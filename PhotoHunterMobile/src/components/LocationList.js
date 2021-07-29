@@ -19,7 +19,7 @@ export default function LocationList({locations, toggleView, showDetailsPage}) {
                     <Feather name="map" size={24} color="black" />
                 </TouchableOpacity>
             </View>
-            {locations.map((location) => <LocationItem key={location.id} showDetailsPage={showDetailsPage} location={location}/>)}
+            {locations.map((location) => <LocationItem showDetailsPage={showDetailsPage} location={location}/>)}
         </>
     )
 }

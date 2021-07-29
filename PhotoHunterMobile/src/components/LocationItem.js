@@ -9,9 +9,11 @@ export default function LocationItem({location, showDetailsPage}) {
     }
 
     return (
-        <TouchableOpacity style={{...classes.list_item, ...classes.shadow}} onPress={handleListItemClick}>
-            <Image style={classes.media}
-                  source={location.thumbnail ? location.thumbnail.url : "https://picsum.photos/300/200"}
+        <TouchableOpacity key={location.id} style={{...classes.list_item, ...classes.shadow}} onPress={handleListItemClick}>
+            <Image style={classes.list_media}
+                   source={{
+                       uri: location.thumbnail ? location.thumbnail.url : "https://picsum.photos/300/200",
+                   }}
             />
             <Text style={classes.text_title}>
                 {location.title}
