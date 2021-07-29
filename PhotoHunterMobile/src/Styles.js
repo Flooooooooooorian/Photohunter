@@ -17,6 +17,14 @@ export default function Styles() {
                 backgroundColor: '#FFFFFE',
                 borderRadius: 4,
             },
+            forgot: {
+                textDecoration: 'underline',
+            },
+            google: {
+                display: "flex",
+                alignItems: "center",
+                marginBottom: 25,
+            },
             header: {
                 display: "flex",
                 backgroundColor: "#222",
@@ -26,6 +34,10 @@ export default function Styles() {
             heading: {
                 fontSize: 50,
                 color: "white",
+            },
+            input: {
+                margin: 10,
+                padding: 10,
             },
             list_item: {
                 marginVertical: 15,
