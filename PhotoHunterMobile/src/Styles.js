@@ -5,21 +5,26 @@ export default function Styles() {
     return StyleSheet.create(
         {
             card: {
-                marginVertical: 0,
-                marginHorizontal: 10,
+                marginVertical: 25,
+                marginHorizontal: 25,
                 display: "flex",
-                justifyContent: "space-between",
                 backgroundColor: '#FFFFFE',
+                borderRadius: 4,
             },
             list_item: {
                 marginVertical: 15,
                 marginHorizontal: 25,
                 backgroundColor: '#FFFFFE',
             },
-            media: {
+            list_media: {
                 width: 80,
                 height: 50,
                 marginRight: 10,
+            },
+            media: {
+                height: 300,
+                flex: 1,
+                width: null
             },
             page_title: {
                 textAlign: "center",
@@ -40,7 +45,7 @@ export default function Styles() {
                 width: 48,
             },
             text_title: {
-              fontSize: 25,
+                fontSize: 25,
             },
         }
     )

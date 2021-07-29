@@ -1,14 +1,15 @@
 import {useEffect, useState} from "react";
 import {useLocation, useParams} from "react-router-dom";
 import axios from "axios";
-import {StyleSheet, Text, View} from "react-native";
+import {Image, Text, View} from "react-native";
+import React from "react";
+import Styles from "../Styles";
 
 export default function LocationDetailsPage() {
     const historyState = useLocation();
     const [location, setLocation] = useState(historyState.state?.loc)
     const {id} = useParams()
-
-    const classes = useStyles()
+    const classes = Styles()
 
     useEffect(() => {
         if (!location) {
@@ -30,27 +31,23 @@ export default function LocationDetailsPage() {
     }
 
     return (
-        <View style={classes.card}>
-            <View style={classes.media}
-                  image={location.thumbnail ? location.thumbnail.url : "https://picsum.photos/300/200"}/>
-            <View
-                title={location.title}
-                action={
-                    <View style={classes.box}>
-                        <Text component={"h5"} variant={"h5"}>
-                            {location.rating}
-                        </Text>
-                        <View/>
-                    </View>}
-                subheader={
-                    <View>
-                        <Text>
-                            {"Tags"}
-                        </Text>
-                    </View>
-                }>
-            </View>
-            <View style={classes.content}>
+        <View style={{...classes.card, ...classes.shadow}}>
+            <Image
+                style={classes.media}
+                source={{
+                    uri: location.thumbnail ? location.thumbnail.url : "https://picsum.photos/300/200",
+                }}
+            />
+            <View>
+                <Text style={classes.text_title}>
+                    {location.title}
+                </Text>
+                <Text>
+                    {location.rating}
+                </Text>
+                <Text>
+                    {"Tags"}
+                </Text>
                 <Text display={"block"}>
                     {location.description}
                 </Text>
@@ -58,24 +55,3 @@ export default function LocationDetailsPage() {
         </View>
     )
 }
-
-const useStyles = StyleSheet.create(
-    {
-        card: {
-            margin: 25,
-        },
-        media: {
-            height: 0,
-            paddingTop: "56.25%" //16:9
-        },
-        box: {
-            display: "flex",
-            justifyContent: "flex-end",
-            marginLeft: 10,
-            alignItems: "center",
-        },
-        content: {
-            paddingTop: 0,
-        }
-    }
-)
