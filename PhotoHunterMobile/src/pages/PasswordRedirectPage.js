@@ -17,7 +17,7 @@ const classes = StyleSheet.create(
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            margin: "25px",
+            margin: 25,
         },
     }
 )

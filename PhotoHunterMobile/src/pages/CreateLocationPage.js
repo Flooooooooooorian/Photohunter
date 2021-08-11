@@ -97,7 +97,7 @@ export default function CreateLocationPage() {
                                 latitude: coords.latitude,
                                 longitude: coords.longitude,
                             }}
-                            styles={{height: "200px"}}/>
+                            styles={{height: 200}}/>
                     </View>
                     <Button style={classes.button} variant={"contained"} color={"primary"} type={"submit"}>
                         Save

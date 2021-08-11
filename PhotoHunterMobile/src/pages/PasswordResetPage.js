@@ -116,7 +116,7 @@ const classes = StyleSheet.create(
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            margin: "25px",
+            margin: 25,
         },
         content: {
             display: "flex",
@@ -131,7 +131,7 @@ const classes = StyleSheet.create(
         },
         error: {
             color: "red",
-            marginTop: "10px",
+            marginTop: 10,
         }
     }
 )
