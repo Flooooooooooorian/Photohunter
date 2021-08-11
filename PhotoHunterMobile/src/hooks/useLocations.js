@@ -1,12 +1,13 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
+import ServerConfig from "../../ServerConfig";
 
 
 export default function useLocations(geoLocation) {
 
     const [locations, setLocations] = useState([])
     const geoUrlData = `${geoLocation?`?lat=${geoLocation.latitude}&lng=${geoLocation.longitude}` : ""}`
-    const url = `https://photohunter.herokuapp.com/api/location${geoUrlData}`
+    const url = ServerConfig().ip +`/api/location${geoUrlData}`
 
     useEffect(() => {
         axios.get(url)

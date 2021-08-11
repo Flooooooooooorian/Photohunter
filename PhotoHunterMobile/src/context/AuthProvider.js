@@ -4,6 +4,7 @@ import axios from "axios";
 import AuthContext from "./AuthContext";
 import jwt_decode from "jwt-decode";
 import React from "react";
+import ServerConfig from "../../ServerConfig";
 
 export default function AuthProvider({children}) {
 
@@ -13,7 +14,7 @@ export default function AuthProvider({children}) {
 
     const login = credentials => {
         return axios
-            .post('https://photohunter.herokuapp.com/user/login', credentials)
+            .post(ServerConfig().ip  + '/user/login', credentials)
             .then(response => response.data)
             .then(data => {
                 setToken(data)
@@ -23,7 +24,7 @@ export default function AuthProvider({children}) {
     }
 
     const loginWithGoogleCode = code =>
-        axios.post("https://photohunter.herokuapp.com/auth/google/login", {code})
+        axios.post(ServerConfig().ip  + "/auth/google/login", {code})
             .then(response => response.data)
             .then(data => {
                 setToken(data)

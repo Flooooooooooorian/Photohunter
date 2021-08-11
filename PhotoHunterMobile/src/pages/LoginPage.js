@@ -26,7 +26,7 @@ export default function LoginPage() {
     }
 
     const handleRegistrationClick = () => {
-        history.push("https://photohunter.herokuapp.com/registration")
+        history.push("/registration")
     }
 
     return (
@@ -56,7 +56,9 @@ export default function LoginPage() {
                     Forgot your Password?
                 </Text>
 
-                <Button title={"Registration"} style={classes.item} onPress={handleRegistrationClick}/>
+                <Button title={"Registration"}
+                        style={classes.item}
+                        onPress={handleRegistrationClick}/>
 
                 <GoogleLoginButton/>
             </View>
