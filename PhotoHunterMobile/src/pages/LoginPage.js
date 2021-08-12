@@ -7,6 +7,7 @@ import React from "react";
 import {StyleSheet, Button, Text, TextInput, View, TouchableOpacity} from "react-native";
 import Styles from "../Styles";
 import GoogleLoginButton from "../components/GoogleLoginButton";
+import FormTextInput from "../components/FormTextInput";
 
 export default function LoginPage() {
     const [email, setEmail] = useState()
@@ -36,18 +37,20 @@ export default function LoginPage() {
             </Text>
             {error && <Text style={classes.error}>{error}</Text>}
             <View style={classes.content}>
-                <TextInput style={{...classes.input, ...classes.shadow}}
-                           value={email}
-                           onChangeText={setEmail}
-                           placeholder={"Email"}
-                           keyboardType={"email-address"}/>
-                <TextInput style={{...classes.input, ...classes.shadow}}
-                           value={password}
-                           onChangeText={setPassword}
-                           placeholder={"Password"}
-                           secureTextEntry={true}/>
+                <FormTextInput
+                    titleText={"Email"}
+                    placeholder={"Email"}
+                    value={email}
+                    onChangeText={setEmail}
+                    keyboardType={"email-address"}/>
+                <FormTextInput
+                    titleText={"Password"}
+                    placeholder={"Password"}
+                    value={password}
+                    onChangeText={setPassword}
+                    secureTextEntry={true}/>
                 <TouchableOpacity
-                    style={{...classes.shadow, ...classes.button}}
+                    style={classes.button}
                     onPress={handleSignIn}>
                     <Text style={{textAlign: "center", color: "#ffffff"}}>
                         Sign In
@@ -62,7 +65,7 @@ export default function LoginPage() {
                 </Text>
 
                 <TouchableOpacity
-                    style={{...classes.shadow, ...classes.button}}
+                    style={classes.button}
                     onPress={handleRegistrationClick}>
                     <Text style={{textAlign: "center", color: "#ffffff"}}>
                         Registration

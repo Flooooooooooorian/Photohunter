@@ -9,7 +9,8 @@ export default function FormTextInput(props) {
             <Text style={classes.titleText}>
                 {props.titleText}
             </Text>
-            <TextInput style={classes.input} {...props}>
+            <TextInput {...props}
+                       style={classes.input}>
 
             </TextInput>
             <Text style={classes.errorText}>
@@ -26,7 +27,7 @@ const classes = StyleSheet.create(
         },
         input: {
             padding: 10,
-
+            backgroundColor: '#FFFFFE',
             shadowColor: "#000",
             shadowOffset: {
                 width: 0,

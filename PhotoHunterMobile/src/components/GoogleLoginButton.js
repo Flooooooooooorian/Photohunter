@@ -31,7 +31,6 @@ export default function GoogleLoginButton() {
         <View>
             {config &&
             <TouchableOpacity style={{
-                ...classes.shadow,
                 ...classes.button,
                 ...classes.google,
             }}

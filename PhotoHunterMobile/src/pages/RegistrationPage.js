@@ -2,7 +2,7 @@ import React from "react";
 import {useState} from "react";
 import axios from "axios";
 import {useHistory} from "react-router-dom";
-import {Button, Text, View} from "react-native";
+import {Button, Text, TouchableOpacity, View} from "react-native";
 import Styles from "../Styles";
 import FormTextInput from "../components/FormTextInput";
 import ServerConfig from "../../ServerConfig";
@@ -35,14 +35,14 @@ export default function RegistrationPage() {
                 "name": name,
                 "password": password1
             }
-            axios.post(ServerConfig().ip  + "/user/register", credentials)
+            axios.post(ServerConfig().ip + "/user/register", credentials)
                 .then((response) => response.data)
                 .then((data) => {
                     setServerError()
                     return data
                 })
                 .then((data) => {
-                    history.push(ServerConfig().ip  + "/registration/done")
+                    history.push(ServerConfig().ip + "/registration/done")
                     return data
                 })
                 .catch((error) => {
@@ -140,10 +140,15 @@ export default function RegistrationPage() {
                         secureTextEntry={true}
                         placeholder={"Password"}/>
 
-                    <Button disabled={loading}
-                            onPress={handleSubmit}
-                            style={classes.item}
-                            title={"Sign Up"}/>
+                    <TouchableOpacity disabled={loading}
+                                      onPress={handleSubmit}
+                                      style={classes.button}
+                    >
+                        <Text style={{textAlign: "center", color: "#ffffff"}}>
+                            Sign Up
+                        </Text>
+                    </TouchableOpacity>
+
                 </View>
                 {loading && <View/>}
             </View>
