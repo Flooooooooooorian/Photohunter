@@ -10,6 +10,11 @@ export default function Styles() {
                 // width: 30,
                 // height: 30,
             },
+            button: {
+                backgroundColor: "#483d8b",
+                padding: 20,
+                marginTop: 20,
+            },
             card: {
                 marginVertical: 25,
                 marginHorizontal: 25,
@@ -22,12 +27,13 @@ export default function Styles() {
                 textAlign: "center",
             },
             forgot: {
-                textDecoration: 'underline',
+                textDecorationLine: "underline",
+                textAlign: "center",
+                marginTop: 10
             },
             google: {
                 display: "flex",
                 alignItems: "center",
-                marginBottom: 25,
             },
             header: {
                 display: "flex",
@@ -46,7 +52,6 @@ export default function Styles() {
             list_item: {
                 marginVertical: 15,
                 marginHorizontal: 25,
-                backgroundColor: '#FFFFFE',
             },
             list_media: {
                 width: 80,
@@ -63,6 +68,7 @@ export default function Styles() {
                 fontSize: 50,
             },
             shadow: {
+                backgroundColor: '#FFFFFE',
                 shadowColor: "#000",
                 shadowOffset: {
                     width: 0,

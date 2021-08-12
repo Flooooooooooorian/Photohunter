@@ -2,47 +2,63 @@ import React from "react";
 import {useState} from "react";
 import axios from "axios";
 import {useHistory} from "react-router-dom";
-import {StyleSheet, Button, Text, TextInput, View} from "react-native";
+import {Button, Text, View} from "react-native";
+import Styles from "../Styles";
+import FormTextInput from "../components/FormTextInput";
+import ServerConfig from "../../ServerConfig";
 
 
 export default function RegistrationPage() {
+
+    const [email, setEmail] = useState("")
+    const [name, setName] = useState("")
+    const [password1, setPassword1] = useState("")
+    const [password2, setPassword2] = useState("")
 
     const [serverError, setServerError] = useState()
     const [passwordError, setPasswordError] = useState()
     const [emailError, setEmailError] = useState()
     const [loading, setLoading] = useState()
     const history = useHistory()
+    const classes = Styles()
 
-    const handleSubmit = (event) => {
-        event.preventDefault()
+    const handleSubmit = () => {
+        console.log(email)
+        console.log(name)
+        console.log(password1)
+        console.log(password2)
 
-        if (validatePasswords(event.target[4].value, event.target[6].value) && validateEmail(event.target[0].value)) {
+        if (validateEmail(email) && validatePasswords(password1, password2)) {
             setLoading(true)
             const credentials = {
-                "email": event.target[0].value,
-                "name": event.target[2].value,
-                "password": event.target[4].value
+                "email": email,
+                "name": name,
+                "password": password1
             }
-            axios.post("https://photohunter.herokuapp.com/user/register", credentials)
+            axios.post(ServerConfig().ip  + "/user/register", credentials)
                 .then((response) => response.data)
                 .then((data) => {
                     setServerError()
                     return data
                 })
                 .then((data) => {
-                    history.push("https://photohunter.herokuapp.com/registration/done")
+                    history.push(ServerConfig().ip  + "/registration/done")
                     return data
                 })
                 .catch((error) => {
                     if (error.response?.data?.message !== undefined) {
                         setServerError(error.response.data.message)
                     }
-                    console.error(error)
+                    console.error(error.response.data.message)
                 })
                 .finally(() => {
                     setLoading(false)
                 })
         }
+
+        console.log(serverError)
+        console.log(emailError)
+        console.log(passwordError)
     }
 
     const validateEmail = (email) => {
@@ -91,60 +107,46 @@ export default function RegistrationPage() {
     return (
         <>
             <View style={classes.card}>
-                <Text style={classes.title} variant={"h3"}>
+                <Text style={classes.page_title}>
                     Registration
                 </Text>
                 {serverError && <Text style={classes.error}>{serverError}</Text>}
-                <form onSubmit={handleSubmit}>
-                    <View style={classes.content}>
-                        <TextInput style={classes.item} error={emailError !== undefined} helperText={emailError}
-                                   size={"small"} required variant={"outlined"}
-                                   label={"Email"}/>
-                        <TextInput style={classes.item} size={"small"} required variant={"outlined"}
-                                   label={"Name"}/>
-                        <TextInput type={"password"} style={classes.item} error={passwordError !== undefined}
-                                   helperText={passwordError} size={"small"} required variant={"outlined"}
-                                   label={"Password"}/>
-                        <TextInput type={"password"} style={classes.item} error={passwordError !== undefined}
-                                   size={"small"} required
-                                   variant={"outlined"}
-                                   label={"Password"}/>
+                <View style={classes.content}>
 
-                        <Button disabled={loading} type={"submit"} style={classes.item} variant={"contained"}
-                                color="primary">
-                            Sign Up
-                        </Button>
-                    </View>
-                </form>
+                    <FormTextInput
+                        titleText={"Email"}
+                        value={email}
+                        onChangeText={setEmail}
+                        errorText={emailError}
+                        keyboardType={"email-address"}
+                        placeholder={"Email"}/>
+                    <FormTextInput
+                        titleText={"Name"}
+                        value={name}
+                        onChangeText={setName}
+                        placeholder={"Name"}/>
+                    <FormTextInput
+                        titleText={"Password"}
+                        errorText={passwordError}
+                        value={password1}
+                        onChangeText={setPassword1}
+                        secureTextEntry={true}
+                        placeholder={"Password"}/>
+                    <FormTextInput
+                        titleText={"Password"}
+                        errorText={passwordError}
+                        value={password2}
+                        onChangeText={setPassword2}
+                        secureTextEntry={true}
+                        placeholder={"Password"}/>
+
+                    <Button disabled={loading}
+                            onPress={handleSubmit}
+                            style={classes.item}
+                            title={"Sign Up"}/>
+                </View>
                 {loading && <View/>}
             </View>
         </>
     )
-
 }
-
-const classes = StyleSheet.create(
-    {
-        card: {
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            margin: "25px",
-        },
-        content: {
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-        },
-        item: {
-            margin: 10,
-        },
-        title: {
-            textAlign: "center",
-        },
-        error: {
-            color: "red",
-            marginTop: "10px",
-        }
-    }
-)

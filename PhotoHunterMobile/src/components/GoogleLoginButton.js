@@ -30,8 +30,13 @@ export default function GoogleLoginButton() {
     return (
         <View>
             {config &&
-            <TouchableOpacity style={classes.google} onPress={handleGoogleLoginClick}>
-                <Text>
+            <TouchableOpacity style={{
+                ...classes.shadow,
+                ...classes.button,
+                ...classes.google,
+            }}
+                              onPress={handleGoogleLoginClick}>
+                <Text style={{color: "#ffffff"}}>
                     Sign in with Google
                 </Text>
             </TouchableOpacity>

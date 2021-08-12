@@ -4,7 +4,7 @@ import {useHistory} from "react-router-dom";
 //import google_logo from "../assets/btn_google_light_normal_ios.svg"
 import AuthContext from "../context/AuthContext";
 import React from "react";
-import {StyleSheet, Button, Text, TextInput, View} from "react-native";
+import {StyleSheet, Button, Text, TextInput, View, TouchableOpacity} from "react-native";
 import Styles from "../Styles";
 import GoogleLoginButton from "../components/GoogleLoginButton";
 
@@ -36,29 +36,38 @@ export default function LoginPage() {
             </Text>
             {error && <Text style={classes.error}>{error}</Text>}
             <View style={classes.content}>
-                <TextInput style={[classes.input, classes.shadow]}
+                <TextInput style={{...classes.input, ...classes.shadow}}
                            value={email}
                            onChangeText={setEmail}
                            placeholder={"Email"}
                            keyboardType={"email-address"}/>
-                <TextInput style={[classes.input, classes.shadow]}
+                <TextInput style={{...classes.input, ...classes.shadow}}
                            value={password}
                            onChangeText={setPassword}
                            placeholder={"Password"}
                            secureTextEntry={true}/>
-                <Button
-                    title={"Sign In"}
-                    onPress={handleSignIn}/>
+                <TouchableOpacity
+                    style={{...classes.shadow, ...classes.button}}
+                    onPress={handleSignIn}>
+                    <Text style={{textAlign: "center", color: "#ffffff"}}>
+                        Sign In
+                    </Text>
+                </TouchableOpacity>
 
-                <Text style={classes.forgot} onPress={() => {
-                    history.push("/forgot")
-                }}>
+                <Text style={classes.forgot}
+                      onPress={() => {
+                          history.push("/forgot")
+                      }}>
                     Forgot your Password?
                 </Text>
 
-                <Button title={"Registration"}
-                        style={classes.item}
-                        onPress={handleRegistrationClick}/>
+                <TouchableOpacity
+                    style={{...classes.shadow, ...classes.button}}
+                    onPress={handleRegistrationClick}>
+                    <Text style={{textAlign: "center", color: "#ffffff"}}>
+                        Registration
+                    </Text>
+                </TouchableOpacity>
 
                 <GoogleLoginButton/>
             </View>
