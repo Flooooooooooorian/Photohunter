@@ -4,7 +4,7 @@ import {useState} from "react";
 import LocationMap from "../components/LocationMap";
 import {useHistory} from "react-router-dom";
 import React from "react";
-import {StyleSheet, View} from "react-native";
+import {View} from "react-native";
 
 export default function LocationsPage({geoLocation}) {
 
@@ -28,7 +28,7 @@ export default function LocationsPage({geoLocation}) {
     }
 
     return (
-        <View style={classes.box}>
+        <View>
             {mapIsEnabled ?
                 <LocationMap showCreateLocationPage={showCreateLocationPage} showDetailsPage={showDetailsPage}
                              locations={locations} toggleView={toggleView} geoLocation={geoLocation}/> :
@@ -37,15 +37,3 @@ export default function LocationsPage({geoLocation}) {
         </View>
     );
 }
-
-const classes = StyleSheet.create(
-    {
-        box: {
-            margin: 25,
-        },
-        title: {
-            textAlign: "center",
-        },
-    }
-)
-
