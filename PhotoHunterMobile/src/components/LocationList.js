@@ -1,6 +1,6 @@
 import LocationItem from "./LocationItem";
 import React from "react";
-import {Button, Text, TouchableOpacity, View} from "react-native";
+import {Text, TouchableOpacity, View} from "react-native";
 import Styles from "../Styles";
 import { Feather } from '@expo/vector-icons';
 

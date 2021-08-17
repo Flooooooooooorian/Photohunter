@@ -9,8 +9,7 @@ export default function LocationItem({location, showDetailsPage}) {
     }
 
     return (
-        <TouchableOpacity key={location.id}
-                          style={{...classes.list_item, ...classes.shadow}}
+        <TouchableOpacity style={{...classes.list_item, ...classes.shadow}}
                           onPress={handleListItemClick}>
             <Image style={classes.list_media}
                    source={{
