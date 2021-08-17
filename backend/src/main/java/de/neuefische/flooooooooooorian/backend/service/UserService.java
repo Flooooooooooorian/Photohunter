@@ -23,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -39,6 +40,8 @@ public class UserService {
     private final EmailConfig emailConfig;
     @Value("${domain_name:}")
     private String domain_name;
+    @Value("${debug:false}")
+    private boolean debug;
 
     @Autowired
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtilsService jwtUtilsService, AuthenticationManager authenticationManager, LocationService locationService, EmailConfig emailConfig) {
@@ -89,25 +92,27 @@ public class UserService {
             UsernamePasswordAuthenticationToken usernamePasswordData = new UsernamePasswordAuthenticationToken(userLoginDto.getEmail(), userLoginDto.getPassword());
             auth = authenticationManager.authenticate(usernamePasswordData);
 
-        }
-        catch (DisabledException e) {
+        } catch (DisabledException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email not verified");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad Credentials");
         }
         HashMap<String, Object> claims = new HashMap<>();
-        claims.put("name", ((CustomUserDetails)auth.getPrincipal()).getFullName());
+        claims.put("name", ((CustomUserDetails) auth.getPrincipal()).getFullName());
         return jwtUtilsService.createToken(claims, auth.getName());
     }
 
     public void startEmailVerification(String email) {
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("info.photohunter@gmail.com");
-            message.setTo(email);
-            message.setSubject("Email Verification PhotoHunter");
-            message.setText("Hallo \n" + domain_name + "/email/?token=" + jwtUtilsService.createToken(new HashMap<>(), email));
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("info.photohunter@gmail.com");
+        message.setTo(email);
+        message.setSubject("Email Verification PhotoHunter");
+        message.setText("Hallo \n" + domain_name + "/email/?token=" + jwtUtilsService.createToken(new HashMap<>(), email));
+        if (debug) {
+            System.out.println("Send Mail: " + message.getSubject() + " -> " + Arrays.toString(message.getTo()));
+        } else {
             emailConfig.getJavaMailSender().send(message);
+        }
     }
 
     public boolean verificateEmailToken(EmailVerificationDto emailVerificationDto) {
@@ -131,7 +136,11 @@ public class UserService {
         message.setTo(email);
         message.setSubject("Password Reset PhotoHunter");
         message.setText("Hallo \n" + domain_name + "/password/?token=" + jwtUtilsService.createPasswordResetToken(new HashMap<>(), user));
-        emailConfig.getJavaMailSender().send(message);
+        if (debug) {
+            System.out.println("Send Mail: " + message.getSubject() + " -> " + Arrays.toString(message.getTo()));
+        } else {
+            emailConfig.getJavaMailSender().send(message);
+        }
     }
 
     public boolean resetPassword(PasswordResetDto passwordResetDto) {
