@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class LocationDto {
+    private String id;
     private Instant creationDate;
     private UserDto owner;
     private double lat;

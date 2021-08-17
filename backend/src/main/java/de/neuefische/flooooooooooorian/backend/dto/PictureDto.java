@@ -11,6 +11,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @Builder
 public class PictureDto {
+    private String id;
     private String url;
     private UserDto owner;
     private Instant creationDate;

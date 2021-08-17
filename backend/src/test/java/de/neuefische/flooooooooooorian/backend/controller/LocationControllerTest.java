@@ -266,12 +266,13 @@ class LocationControllerTest {
         assertThat(response.getBody().getThumbnail().getCreationDate().isAfter(Instant.now().minusSeconds(1)), is(true));
         assertThat(response.getBody(), is(LocationDto
                 .builder()
+                .id(response.getBody().getId())
                 .creationDate(response.getBody().getCreationDate())
                 .lat(dto.getLat())
                 .lng(dto.getLng())
                 .title(dto.getTitle())
                 .owner(response.getBody().getOwner())
-                .thumbnail(PictureDto.builder().creationDate(response.getBody().getThumbnail().getCreationDate()).owner(response.getBody().getThumbnail().getOwner()).url("testurl").build())
+                .thumbnail(PictureDto.builder().id(response.getBody().getThumbnail().getId()).creationDate(response.getBody().getThumbnail().getCreationDate()).owner(response.getBody().getThumbnail().getOwner()).url("testurl").build())
                 .description(dto.getDescription())
                 .build()));
     }
@@ -301,6 +302,7 @@ class LocationControllerTest {
         assertThat(response.getBody().getCreationDate().isBefore(Instant.now()), is(true));
         assertThat(response.getBody().getCreationDate().isAfter(Instant.now().minusSeconds(1)), is(true));
         assertThat(response.getBody(), is(LocationDto.builder()
+                .id(response.getBody().getId())
                 .lng(dto.getLng())
                 .lat(dto.getLat())
                 .creationDate(response.getBody().getCreationDate())

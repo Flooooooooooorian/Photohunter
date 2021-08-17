@@ -9,6 +9,7 @@ public class LocationMapper {
 
     public static LocationDto toLocationDto(Location location) {
         return LocationDto.builder()
+                .id(location.getId())
                 .owner(UserDto.builder()
                         .avatar_url(location.getOwner().getAvatar_url())
                         .full_name(location.getOwner().getFull_name())
@@ -22,6 +23,7 @@ public class LocationMapper {
                 .tags(location.getTags())
                 .title(location.getTitle())
                 .thumbnail(location.getThumbnail() != null ? PictureDto.builder()
+                        .id(location.getThumbnail().getId())
                         .creationDate(location.getThumbnail().getCreationDate())
                         .url(location.getThumbnail().getUrl())
                         .owner(UserDto.builder()
