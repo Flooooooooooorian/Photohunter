@@ -14,12 +14,12 @@ public class BackendApplication {
     }
 
     @Bean
-    public RestTemplate createRestTemplate(){
+    public RestTemplate restTemplate(){
         return new RestTemplate();
     }
 
     @Bean
-    public EmailConfig createEmailConfig() {
+    public EmailConfig emailConfig() {
         return new EmailConfig();
     }
 }

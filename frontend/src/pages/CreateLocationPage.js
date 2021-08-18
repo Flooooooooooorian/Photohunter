@@ -17,6 +17,7 @@ export default function CreateLocationPage() {
     const history = useHistory()
     const classes = useStyles()
     const {token} = useContext(AuthContext)
+    const [titleError, setTitleError] = useState()
 
     const [coords, setCoords] = useState({
         latitude: parseFloat(query.get("lat")),
@@ -33,6 +34,14 @@ export default function CreateLocationPage() {
 
     const handleSubmit = (event) => {
         event.preventDefault()
+
+        if (event.target[0].value.length > 11) {
+            setTitleError("Title longer than 11 Characters")
+            return
+        }
+        else{
+            setTitleError()
+        }
 
         const formData = new FormData()
 
@@ -73,7 +82,7 @@ export default function CreateLocationPage() {
         <Card className={classes.card}>
             <form onSubmit={handleSubmit}>
                 <CardContent className={classes.content}>
-                    <TextField className={classes.item} size={"small"} required variant={"outlined"} label={"title"}/>
+                    <TextField error={titleError !== undefined} helperText={titleError} className={classes.item} size={"small"} required variant={"outlined"} label={"title"}/>
                     <TextField className={classes.item} size={"medium"} required multiline variant={"outlined"}
                                label={"description"}/>
                     {/*<CardMedia image={inputRef.current?.files[0] ? inputRef.current?.files[0] : ""}/>*/}
