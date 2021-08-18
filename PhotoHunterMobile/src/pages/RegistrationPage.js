@@ -2,7 +2,7 @@ import React from "react";
 import {useState} from "react";
 import axios from "axios";
 import {useHistory} from "react-router-dom";
-import {Button, Text, TouchableOpacity, View} from "react-native";
+import {Text, TouchableOpacity, View} from "react-native";
 import Styles from "../Styles";
 import FormTextInput from "../components/FormTextInput";
 import ServerConfig from "../../ServerConfig";
@@ -23,11 +23,6 @@ export default function RegistrationPage() {
     const classes = Styles()
 
     const handleSubmit = () => {
-        console.log(email)
-        console.log(name)
-        console.log(password1)
-        console.log(password2)
-
         if (validateEmail(email) && validatePasswords(password1, password2)) {
             setLoading(true)
             const credentials = {
@@ -115,6 +110,7 @@ export default function RegistrationPage() {
 
                     <FormTextInput
                         titleText={"Email"}
+                        autoCorrect={false}
                         value={email}
                         onChangeText={setEmail}
                         errorText={emailError}
@@ -122,18 +118,21 @@ export default function RegistrationPage() {
                         placeholder={"Email"}/>
                     <FormTextInput
                         titleText={"Name"}
+                        autoCorrect={false}
                         value={name}
                         onChangeText={setName}
                         placeholder={"Name"}/>
                     <FormTextInput
                         titleText={"Password"}
                         errorText={passwordError}
+                        autoCorrect={false}
                         value={password1}
                         onChangeText={setPassword1}
                         secureTextEntry={true}
                         placeholder={"Password"}/>
                     <FormTextInput
                         titleText={"Password"}
+                        autoCorrect={false}
                         errorText={passwordError}
                         value={password2}
                         onChangeText={setPassword2}

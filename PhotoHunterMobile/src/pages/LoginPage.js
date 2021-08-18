@@ -39,12 +39,14 @@ export default function LoginPage() {
             <View style={classes.content}>
                 <FormTextInput
                     titleText={"Email"}
+                    autoCorrect={false}
                     placeholder={"Email"}
                     value={email}
                     onChangeText={setEmail}
                     keyboardType={"email-address"}/>
                 <FormTextInput
                     titleText={"Password"}
+                    autoCorrect={false}
                     placeholder={"Password"}
                     value={password}
                     onChangeText={setPassword}

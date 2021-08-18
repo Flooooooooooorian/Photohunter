@@ -1,5 +1,5 @@
 import MapView from 'react-native-maps';
-import React from "react";
+import React, {useState} from "react";
 import LocationMarker from "./LocationMarker";
 import GeoLocationMarker from "./GeoLocationMarker";
 
@@ -12,12 +12,13 @@ export default function GoogleMapsContainer({
                                                 styles
                                             }) {
 
-    const googleLibraries = []
+    const [region, setRegion] = useState({
+        latitude: geoLocation ? geoLocation.latitude : 51.163361,
+        longitude: geoLocation ? geoLocation.longitude : 10.447683,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+    })
 
-    const mapCenter = {
-        lat: geoLocation ? geoLocation.latitude : 51.163361,
-        lng: geoLocation ? geoLocation.longitude : 10.447683,
-    }
     const mapContainerStyle = {
         width: '100vw',
         height: '70vh',
@@ -26,21 +27,17 @@ export default function GoogleMapsContainer({
         ...styles
     }
 
-    // const {isLoaded, loadError} = useLoadScript({
-    //     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    //     googleLibraries,
-    // })
-    //
-    // if (loadError) return "Error";
-    // if (!isLoaded) return "Loading...";
+    const onRegionChange = (region) => {
+        setRegion({region});
+    }
 
     return (
         <MapView
-            onClick={handleMapClick}
-            onLoad={onMapLoad}
-            mapContainerStyle={mapContainerStyle}
+            onPress={handleMapClick}
             zoom={9}
-            center={mapCenter}>
+            initialRegion={region}
+            onRegionChange={onRegionChange}>
+
             {geoLocation && <GeoLocationMarker geoLocation={geoLocation}/>}
             {locations.map((location) =>
                 <LocationMarker handleMarkerClick={handleMarkerClick} key={location.id} location={location}/>

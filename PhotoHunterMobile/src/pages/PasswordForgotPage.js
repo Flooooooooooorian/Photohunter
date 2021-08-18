@@ -1,8 +1,10 @@
 import {useState} from "react";
 import axios from "axios";
 import React from "react";
-import {StyleSheet, Button, Text, TextInput, View} from "react-native";
+import {StyleSheet, Button, Text, TextInput, View, TouchableOpacity} from "react-native";
 import Styles from "../Styles";
+import FormTextInput from "../components/FormTextInput";
+import ServerConfig from "../../ServerConfig";
 
 export default function PasswordForgotPage() {
     const [email, setEmail] = useState()
@@ -21,7 +23,7 @@ export default function PasswordForgotPage() {
         }
 
         setLoading(true)
-        axios.post("https://photohunter.herokuapp.com/user/sendpasswordreset", {"email": email})
+        axios.post(ServerConfig().ip + "/user/sendpasswordreset", {"email": email})
             .then((response) => response.data)
             .then(() => setDone(true))
             .catch(console.error)
@@ -42,19 +44,24 @@ export default function PasswordForgotPage() {
     return (
         <View style={classes.card}>
             <Text style={classes.page_title}>
-                Send Password Reset Email
+                Password Reset
             </Text>
             <View style={classes.content}>
-                {error && <Text style={classes.error}>{error}</Text>}
-                <TextInput style={[classes.input, classes.shadow]}
-                           value={email}
-                           onChangeText={setEmail}
-                           placeholder={"Email"}/>
-                <Button
+                <FormTextInput
+                    titleText={"Email"}
+                    autoCorrect={false}
+                    errorText={error}
+                    value={email}
+                    onChangeText={setEmail}
+                    placeholder={"Email"}/>
+                <TouchableOpacity
+                    style={classes.button}
                     disabled={loading}
-                    title={"Send"}
                     onPress={handleResetEmail}>
-                </Button>
+                    <Text style={{textAlign: "center", color: "#ffffff"}}>
+                        Send
+                    </Text>
+                </TouchableOpacity>
                 {loading && <View/>}
             </View>
         </View>
