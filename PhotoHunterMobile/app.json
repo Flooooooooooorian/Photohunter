@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "PhotoHunterMobile",
-    "slug": "PhotoHunterMobile",
+    "name": "PhotoHunter",
+    "slug": "PhotoHunter",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/photohunter_logo.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/photohunter_logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,16 +17,20 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "de.flooooooooooorian.photohunter",
+      "buildNumber": "1.0.0"
     },
     "android": {
+      "package": "de.flooooooooooorian.photohunter",
+      "versionCode": 1,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/photohunter_logo.png",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png",
+      "favicon": "./assets/photohunter_logo.png",
       "build": {
         "babel": {
           "include": ["react-router-native"]
