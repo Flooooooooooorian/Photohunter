@@ -4,6 +4,7 @@ import axios from "axios";
 import {Image, Text, View} from "react-native";
 import React from "react";
 import Styles from "../Styles";
+import AdMobBanner from "expo-ads-admob/build/AdMobBanner.web";
 
 export default function LocationDetailsPage() {
     const historyState = useLocation();
@@ -52,6 +53,10 @@ export default function LocationDetailsPage() {
                     {location.description}
                 </Text>
             </View>
+            <AdMobBanner
+                bannerSize="largeBanner"
+                adUnitID="ca-app-pub-1201256601321447/9246927022"
+                servePersonalizedAds={false} />
         </View>
     )
 }

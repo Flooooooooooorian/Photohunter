@@ -22,6 +22,9 @@
       "buildNumber": "1.0.0"
     },
     "android": {
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-1201256601321447~1898634638"
+      },
       "package": "de.flooooooooooorian.photohunter",
       "versionCode": 1,
       "adaptiveIcon": {
