@@ -14,6 +14,7 @@ export default function Styles() {
                 backgroundColor: "#483d8b",
                 padding: 20,
                 marginTop: 20,
+                marginHorizontal: 10,
 
                 shadowColor: "#000",
                 shadowOffset: {

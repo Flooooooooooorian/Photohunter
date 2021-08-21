@@ -10,7 +10,6 @@ export default function GoogleRedirectPage() {
     const {loginWithGoogleCode} = useContext(AuthContext);
 
     useEffect(() => {
-        console.log(code)
         loginWithGoogleCode(code)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[code])

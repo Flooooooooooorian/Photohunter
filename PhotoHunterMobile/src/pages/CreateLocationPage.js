@@ -1,45 +1,53 @@
 import {useHistory, useLocation} from "react-router-dom";
-import {useContext, useRef, useState} from "react";
+import {useContext, useState} from "react";
 import axios from "axios";
 import GoogleMapsContainer from "../components/GoogleMapsContainer";
 import AuthContext from "../context/AuthContext";
 import React from "react";
-import {StyleSheet, Button, TextInput, View} from "react-native";
-
-function useQuery() {
-    return new URLSearchParams(useLocation().search);
-}
+import {View, TouchableOpacity, Text, Image, Dimensions, ScrollView} from "react-native";
+import Styles from "../Styles";
+import FormTextInput from "../components/FormTextInput";
+import * as ImagePicker from 'expo-image-picker';
+import ServerConfig from "../../ServerConfig";
 
 export default function CreateLocationPage() {
 
-    const inputRef = useRef()
-    const mapRef = useRef();
-    let query = useQuery();
+    const historyState = useLocation();
     const history = useHistory()
     const {token} = useContext(AuthContext)
+
+    const [coords, setCoords] = useState(historyState.state?.coords)
+    const [photo, setPhoto] = useState()
     const [titleError, setTitleError] = useState()
+    const [title, setTitle] = useState()
+    const [description, setDescription] = useState()
 
-    const [coords, setCoords] = useState({
-        latitude: parseFloat(query.get("lat")),
-        longitude: parseFloat(query.get("lng")),
-    })
-
-    const onMapLoad = (map) => {
-        mapRef.current = map;
-    }
+    const classes = Styles()
 
     const handleMapClick = (event) => {
-        setCoords({longitude: event.latLng.lng(), latitude: event.latLng.lat()})
+        setCoords({
+            longitude: event.nativeEvent.coordinate.longitude,
+            latitude: event.nativeEvent.coordinate.latitude
+        })
     }
 
-    const handleSubmit = (event) => {
-        event.preventDefault()
+    const handleChoosePhoto = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            quality: 1,
+        });
 
-        if (event.target[0].value.length > 11) {
+        if (!result.cancelled) {
+            setPhoto(result);
+        }
+    };
+
+    const handleSubmit = () => {
+        if (title > 11) {
             setTitleError("Title longer than 11 Characters")
             return
-        }
-        else{
+        } else {
             setTitleError()
         }
 
@@ -53,8 +61,8 @@ export default function CreateLocationPage() {
         }
 
         const data = {
-            title: event.target[0].value,
-            description: event.target[2].value,
+            title: title,
+            description: description,
             lat: coords.latitude,
             lng: coords.longitude
         }
@@ -63,11 +71,11 @@ export default function CreateLocationPage() {
             type: "application/json"
         }));
 
-        if (inputRef.current.files[0]) {
-            formData.append("file", inputRef.current.files[0])
+        if (photo) {
+            formData.append("file", photo)
         }
 
-        axios.post("https://photohunter.herokuapp.com/api/location", formData, config)
+        axios.post(ServerConfig.ip + "/api/location", formData, config)
             .then((response) => response.data)
             .then((data) => {
                 history.push({
@@ -75,60 +83,63 @@ export default function CreateLocationPage() {
                     state: {loc: data}
                 })
             })
-            .catch(console.error)
+            .catch((error) => {
+                console.error(error)
+            })
     }
 
     return (
-        <View style={classes.card}>
-            <form onSubmit={handleSubmit}>
-                <View style={classes.content}>
-                    <TextInput error={titleError !== undefined} helperText={titleError} style={classes.item} size={"small"} required variant={"outlined"} label={"title"}/>
-                    <TextInput style={classes.item} size={"medium"} required multiline variant={"outlined"}
-                               label={"description"}/>
-                    {/*<CardMedia image={inputRef.current?.files[0] ? inputRef.current?.files[0] : ""}/>*/}
-                    <input style={classes.item} type="file" ref={inputRef}/>
-                    <View style={classes.mapBox}>
-                        <GoogleMapsContainer
-                            onMapLoad={onMapLoad}
-                            handleMarkerClick={null}
-                            handleMapClick={handleMapClick}
-                            locations={[]}
-                            geoLocation={{
-                                latitude: coords.latitude,
-                                longitude: coords.longitude,
-                            }}
-                            styles={{height: 200}}/>
-                    </View>
-                    <Button style={classes.button} variant={"contained"} color={"primary"} type={"submit"}>
-                        Save
-                    </Button>
+        <ScrollView style={classes.card}>
+            <View style={classes.content}>
+                <FormTextInput
+                    errorText={titleError}
+                    placeholder={"Title"}
+                    titleText={"Title"}
+                    value={title}
+                    onChangeText={setTitle}/>
+
+                <FormTextInput
+                    placeholder={"Description"}
+                    titleText={"Description"}
+                    value={description}
+                    onChangeText={setDescription}/>
+
+                <View style={{margin: 10}}>
+                    {photo && (
+                        <Image
+                            source={{uri: photo.uri}}
+                            style={{width: 300, height: 300}}
+                        />
+                    )}
                 </View>
-            </form>
-        </View>
+
+                <TouchableOpacity style={{...classes.button, marginTop: 10}}
+                                  onPress={handleChoosePhoto}>
+                    <Text style={{color: '#fff'}}>
+                        Select Image
+                    </Text>
+                </TouchableOpacity>
+
+
+                <GoogleMapsContainer
+                    handleMarkerClick={null}
+                    handleMapClick={handleMapClick}
+                    locations={[]}
+                    geoLocation={{
+                        latitude: coords.latitude,
+                        longitude: coords.longitude,
+                    }}
+                    styles={{
+                        width: Dimensions.get('window').width - 100,
+                        height: Dimensions.get('window').height - 450,
+                    }}/>
+                <TouchableOpacity style={classes.button}
+                                  onPress={handleSubmit}>
+                    <Text style={{color: '#fff'}}>
+                        Save
+                    </Text>
+                </TouchableOpacity>
+            </View>
+        </ScrollView>
     );
 }
-
-const classes = StyleSheet.create(
-    {
-        card: {
-            margin: 10,
-        },
-        content: {
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "stretch",
-            margin: 0,
-            padding: 0,
-        },
-        button: {
-            alignSelf: "flex-end",
-            marginRight: 10,
-        },
-        item: {
-            margin: 10,
-        },
-        mapBox: {
-            height: 300,
-        }
-    }
-)

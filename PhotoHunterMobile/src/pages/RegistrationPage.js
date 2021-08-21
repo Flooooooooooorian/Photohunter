@@ -50,10 +50,6 @@ export default function RegistrationPage() {
                     setLoading(false)
                 })
         }
-
-        console.log(serverError)
-        console.log(emailError)
-        console.log(passwordError)
     }
 
     const validateEmail = (email) => {

@@ -24,15 +24,28 @@ export default function LocationsPage({geoLocation}) {
     }
 
     const showCreateLocationPage = (event) => {
-        history.push(`/locations/new/?lat=${event.latLng.lat()}&lng=${event.latLng.lng()}`)
-    }
+        history.push({
+            pathname: "/locations/new",
+            state: {
+                coords: {
+                    latitude: event.nativeEvent.coordinate.latitude,
+                    longitude: event.nativeEvent.coordinate.longitude
+                }
+            }
+        })
+   }
 
     return (
         <View>
             {mapIsEnabled ?
-                <LocationMap showCreateLocationPage={showCreateLocationPage} showDetailsPage={showDetailsPage}
-                             locations={locations} toggleView={toggleView} geoLocation={geoLocation}/> :
-                <LocationList showDetailsPage={showDetailsPage} locations={locations} toggleView={toggleView}
+                <LocationMap showCreateLocationPage={showCreateLocationPage}
+                             showDetailsPage={showDetailsPage}
+                             locations={locations}
+                             toggleView={toggleView}
+                             geoLocation={geoLocation}/> :
+                <LocationList showDetailsPage={showDetailsPage}
+                              locations={locations}
+                              toggleView={toggleView}
                               geoLocation={geoLocation}/>}
         </View>
     );

@@ -40,8 +40,8 @@ public class UserService {
     private final EmailConfig emailConfig;
     @Value("${domain_name:}")
     private String domain_name;
-    @Value("${debug:false}")
-    private boolean debug;
+    @Value("${send_mail:true}")
+    private boolean sendMail;
 
     @Autowired
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtilsService jwtUtilsService, AuthenticationManager authenticationManager, LocationService locationService, EmailConfig emailConfig) {
@@ -108,10 +108,10 @@ public class UserService {
         message.setTo(email);
         message.setSubject("Email Verification PhotoHunter");
         message.setText("Hallo \n" + domain_name + "/email/?token=" + jwtUtilsService.createToken(new HashMap<>(), email));
-        if (debug) {
-            System.out.println("Send Mail: " + message.getSubject() + " -> " + Arrays.toString(message.getTo()));
-        } else {
+        if (sendMail) {
             emailConfig.getJavaMailSender().send(message);
+        } else {
+            System.out.println("Send Mail: " + message.getSubject() + " -> " + Arrays.toString(message.getTo()));
         }
     }
 
@@ -136,10 +136,10 @@ public class UserService {
         message.setTo(email);
         message.setSubject("Password Reset PhotoHunter");
         message.setText("Hallo \n" + domain_name + "/password/?token=" + jwtUtilsService.createPasswordResetToken(new HashMap<>(), user));
-        if (debug) {
-            System.out.println("Send Mail: " + message.getSubject() + " -> " + Arrays.toString(message.getTo()));
-        } else {
+        if (sendMail) {
             emailConfig.getJavaMailSender().send(message);
+        } else {
+            System.out.println("Send Mail: " + message.getSubject() + " -> " + Arrays.toString(message.getTo()));
         }
     }
 

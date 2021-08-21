@@ -2,13 +2,13 @@ import MapView from 'react-native-maps';
 import React, {useState} from "react";
 import LocationMarker from "./LocationMarker";
 import GeoLocationMarker from "./GeoLocationMarker";
+import {Dimensions, StyleSheet} from "react-native";
 
 export default function GoogleMapsContainer({
                                                 locations,
                                                 geoLocation,
                                                 handleMarkerClick,
                                                 handleMapClick,
-                                                onMapLoad,
                                                 styles
                                             }) {
 
@@ -19,24 +19,26 @@ export default function GoogleMapsContainer({
         longitudeDelta: 0.0421,
     })
 
-    const mapContainerStyle = {
-        width: '100vw',
-        height: '70vh',
-        marginVertical: 15,
-        marginHorizontal: 25,
-        ...styles
-    }
+    const style = StyleSheet.create({
+        map: {
+            marginHorizontal: 20,
+            width: Dimensions.get('window').width -40,
+            height: Dimensions.get('window').height -250,
+            ...styles,
+        },
+    });
 
     const onRegionChange = (region) => {
-        setRegion({region});
+        setRegion(region);
     }
 
     return (
-        <MapView
-            onPress={handleMapClick}
-            zoom={9}
-            initialRegion={region}
-            onRegionChange={onRegionChange}>
+        <MapView style={style.map}
+                 showsUserLocation={true}
+                 onPress={handleMapClick}
+                 zoom={9}
+                 initialRegion={region}
+                 onRegionChange={onRegionChange}>
 
             {geoLocation && <GeoLocationMarker geoLocation={geoLocation}/>}
             {locations.map((location) =>

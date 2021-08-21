@@ -1,6 +1,6 @@
 import React from "react";
 import GoogleMapsContainer from "./GoogleMapsContainer";
-import {StyleSheet, Button, Text, View, TouchableOpacity} from "react-native";
+import {Text, View, TouchableOpacity} from "react-native";
 import Styles from "../Styles";
 import { FontAwesome } from '@expo/vector-icons';
 
@@ -18,7 +18,12 @@ export default function LocationMap({locations, toggleView, geoLocation, showDet
                     <FontAwesome name="list" size={24} color="black" />
                 </TouchableOpacity>
             </View>
-            <GoogleMapsContainer handleMapClick={showCreateLocationPage} handleMarkerClick={showDetailsPage} locations={locations} geoLocation={geoLocation} styles={{}}/>
+            <GoogleMapsContainer
+                handleMapClick={showCreateLocationPage}
+                handleMarkerClick={showDetailsPage}
+                locations={locations}
+                geoLocation={geoLocation}
+                styles={{}}/>
         </>
     )
 

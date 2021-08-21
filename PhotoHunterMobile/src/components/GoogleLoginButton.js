@@ -2,6 +2,7 @@ import {Text, TouchableOpacity, View} from "react-native";
 import React, {useEffect, useState} from "react";
 import Styles from "../Styles";
 import axios from "axios";
+import ServerConfig from "../../ServerConfig";
 
 
 export default function GoogleLoginButton() {
@@ -15,7 +16,7 @@ export default function GoogleLoginButton() {
     }
 
     useEffect(() => {
-        axios.get("https://photohunter.herokuapp.com/auth/google/login/config")
+        axios.get(ServerConfig.ip + "/auth/google/login/config")
             .then(response => response.data)
             .then(setConfig)
             .catch((error) => {
