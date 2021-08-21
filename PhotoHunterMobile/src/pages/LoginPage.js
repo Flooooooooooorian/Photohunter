@@ -74,7 +74,7 @@ export default function LoginPage() {
                     </Text>
                 </TouchableOpacity>
 
-                <GoogleLoginButton/>
+                {/*<GoogleLoginButton/>*/}
             </View>
 
         </View>
