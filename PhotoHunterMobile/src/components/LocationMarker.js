@@ -8,6 +8,6 @@ export default function LocationMarker({location, handleMarkerClick}) {
     }
 
     return (
-        <Marker onClick={handleClick}  coordinate={{latitude: location.lat, longitude: location.lng}}/>
+        <Marker onPress={handleClick}  coordinate={{latitude: location.lat, longitude: location.lng}}/>
     )
 }
