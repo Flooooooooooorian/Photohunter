@@ -18,7 +18,7 @@ export default function Header() {
 
     return (
         <SafeAreaView>
-            <View position={"static"} style={classes.header}>
+            <View style={classes.header}>
                 <Text style={classes.heading} onPress={handleLogoClick}>
                     PhotoHunter
                 </Text>
