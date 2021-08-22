@@ -32,31 +32,33 @@ export default function LocationDetailsPage() {
     }
 
     return (
-        <View style={{...classes.card, ...classes.shadow}}>
-            <Image
-                style={classes.media}
-                source={{
-                    uri: location.thumbnail ? location.thumbnail.url : "https://picsum.photos/300/200",
-                }}
-            />
-            <View>
-                <Text style={classes.text_title}>
-                    {location.title}
-                </Text>
-                <Text>
-                    {location.rating}
-                </Text>
-                <Text>
-                    {"Tags"}
-                </Text>
-                <Text display={"block"}>
-                    {location.description}
-                </Text>
+        <>
+            <View style={{...classes.card, ...classes.shadow}}>
+                <Image
+                    style={classes.media}
+                    source={{
+                        uri: location.thumbnail ? location.thumbnail.url : "https://picsum.photos/300/200",
+                    }}
+                />
+                <View>
+                    <Text style={classes.text_title}>
+                        {location.title}
+                    </Text>
+                    <Text>
+                        {location.rating}
+                    </Text>
+                    <Text>
+                        {"Tags"}
+                    </Text>
+                    <Text display={"block"}>
+                        {location.description}
+                    </Text>
+                </View>
             </View>
             <AdMobBanner
                 bannerSize="largeBanner"
                 adUnitID="ca-app-pub-1201256601321447/9246927022"
-                servePersonalizedAds={false} />
-        </View>
+                servePersonalizedAds={false}/>
+        </>
     )
 }
