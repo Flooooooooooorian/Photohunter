@@ -22,7 +22,7 @@
       },
       "supportsTablet": true,
       "bundleIdentifier": "de.flooooooooooorian.photohunter",
-      "buildNumber": "1.0.1"
+      "buildNumber": "1.0.2"
     },
     "android": {
       "config": {
@@ -32,7 +32,7 @@
         "googleMobileAdsAppId": "ca-app-pub-1201256601321447~1898634638"
       },
       "package": "de.flooooooooooorian.photohunter",
-      "versionCode": 2,
+      "versionCode": 3,
       "adaptiveIcon": {
         "foregroundImage": "./assets/photohunter_logo.png",
         "backgroundColor": "#FFFFFF"
