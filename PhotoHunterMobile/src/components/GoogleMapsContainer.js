@@ -1,4 +1,4 @@
-import MapView from 'react-native-maps';
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import React, {useState} from "react";
 import LocationMarker from "./LocationMarker";
 import GeoLocationMarker from "./GeoLocationMarker";
@@ -34,6 +34,7 @@ export default function GoogleMapsContainer({
 
     return (
         <MapView style={style.map}
+                 provider={PROVIDER_GOOGLE}
                  showsUserLocation={true}
                  onPress={handleMapClick}
                  zoom={9}

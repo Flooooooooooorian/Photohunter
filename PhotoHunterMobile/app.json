@@ -17,12 +17,18 @@
       "**/*"
     ],
     "ios": {
+      "config": {
+        "googleMapsApiKey": "AIzaSyAsOL-cbOh3OjQ1RFFEVFskBM1NtjvsVE8"
+      },
       "supportsTablet": true,
       "bundleIdentifier": "de.flooooooooooorian.photohunter",
       "buildNumber": "1.0.1"
     },
     "android": {
       "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAtHNyAqs8tp_DJ-vrnE9dayxUhTgbzQL8"
+        },
         "googleMobileAdsAppId": "ca-app-pub-1201256601321447~1898634638"
       },
       "package": "de.flooooooooooorian.photohunter",
