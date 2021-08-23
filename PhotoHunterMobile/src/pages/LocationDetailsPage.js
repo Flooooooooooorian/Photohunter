@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {useLocation, useParams} from "react-router-dom";
 import axios from "axios";
-import {Image, Text, View} from "react-native";
+import {Image, Platform, Text, View} from "react-native";
 import React from "react";
 import Styles from "../Styles";
 import AdMobBanner from "expo-ads-admob/build/AdMobBanner.web";
@@ -11,6 +11,22 @@ export default function LocationDetailsPage() {
     const [location, setLocation] = useState(historyState.state?.loc)
     const {id} = useParams()
     const classes = Styles()
+
+    const AdmobBanner = Platform.select(
+        {
+            ios: () => {
+                return <AdMobBanner
+                    bannerSize="largeBanner"
+                    adUnitID="ca-app-pub-1201256601321447/3572724672"
+                    servePersonalizedAds={false}/>
+            },
+            android: () => {
+                return <AdMobBanner
+                    bannerSize="largeBanner"
+                    adUnitID="ca-app-pub-1201256601321447/9246927022"
+                    servePersonalizedAds={false}/>
+            }
+        })();
 
     useEffect(() => {
         if (!location) {
@@ -55,10 +71,7 @@ export default function LocationDetailsPage() {
                     </Text>
                 </View>
             </View>
-            <AdMobBanner
-                bannerSize="largeBanner"
-                adUnitID="ca-app-pub-1201256601321447/9246927022"
-                servePersonalizedAds={false}/>
+            <AdmobBanner/>
         </>
     )
 }
