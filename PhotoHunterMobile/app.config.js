@@ -18,7 +18,7 @@ export default {
         ],
         "ios": {
             "config": {
-                "googleMapsApiKey": "AIzaSyAsOL-cbOh3OjQ1RFFEVFskBM1NtjvsVE8"
+                "googleMapsApiKey": process.env.PHOTOHUNTER_IOS_GOOGLE_MAPS_API_KEY
             },
             "supportsTablet": true,
             "bundleIdentifier": "de.flooooooooooorian.photohunter",
@@ -27,7 +27,7 @@ export default {
         "android": {
             "config": {
                 "googleMaps": {
-                    "apiKey": "AIzaSyAtHNyAqs8tp_DJ-vrnE9dayxUhTgbzQL8"
+                    "apiKey": process.env.PHOTOHUNTER_ANDROID_GOOGLE_MAPS_API_KEY
                 },
                 "googleMobileAdsAppId": "ca-app-pub-1201256601321447~1898634638"
             },
