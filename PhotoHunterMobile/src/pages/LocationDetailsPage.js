@@ -1,10 +1,10 @@
 import {useEffect, useState} from "react";
 import {useLocation, useParams} from "react-router-dom";
 import axios from "axios";
-import {Image, Platform, Text, View} from "react-native";
+import {Image, Platform, ScrollView, Text, View} from "react-native";
 import React from "react";
 import Styles from "../Styles";
-import AdMobBanner from "expo-ads-admob/build/AdMobBanner.web";
+import {AdMobBanner} from "expo-ads-admob";
 
 export default function LocationDetailsPage() {
     const historyState = useLocation();
@@ -12,19 +12,16 @@ export default function LocationDetailsPage() {
     const {id} = useParams()
     const classes = Styles()
 
-    const AdmobBanner = Platform.select(
+    const AdmobBannerId = Platform.select(
         {
             ios: () => {
-                return <AdMobBanner
-                    bannerSize="largeBanner"
-                    adUnitID="ca-app-pub-1201256601321447/3572724672"
-                    servePersonalizedAds={false}/>
+                return "ca-app-pub-1201256601321447/3572724672"
             },
             android: () => {
-                return <AdMobBanner
-                    bannerSize="largeBanner"
-                    adUnitID="ca-app-pub-1201256601321447/9246927022"
-                    servePersonalizedAds={false}/>
+                return "ca-app-pub-1201256601321447/9246927022"
+            },
+            default: () => {
+                return "<View/>"
             }
         })();
 
@@ -39,16 +36,8 @@ export default function LocationDetailsPage() {
         }
     }, [id, location, setLocation])
 
-    if (!location) {
-        return (
-            <div>
-                Loading...
-            </div>
-        )
-    }
-
     return (
-        <>
+        <ScrollView>
             <View style={{...classes.card, ...classes.shadow}}>
                 <Image
                     style={classes.media}
@@ -71,7 +60,16 @@ export default function LocationDetailsPage() {
                     </Text>
                 </View>
             </View>
-            <AdmobBanner/>
-        </>
+            <View style={{
+                display: "flex",
+                alignItems: "center"
+            }}>
+                <AdMobBanner
+                    bannerSize="largeBanner"
+                    adUnitID={AdmobBannerId}
+                    servePersonalizedAds={false}/>
+            </View>
+
+        </ScrollView>
     )
 }
