@@ -28,6 +28,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -62,6 +63,7 @@ public class UserService {
                     .email(userCreationDto.getEmail())
                     .full_name(userCreationDto.getName())
                     .role("User")
+                    .joinedOn(Instant.now())
                     .password(passwordEncoder.encode(userCreationDto.getPassword()))
                     .build();
 
@@ -81,6 +83,7 @@ public class UserService {
                     .avatar_url(googleProfileDto.getPicture())
                     .full_name(googleProfileDto.getName())
                     .email(googleProfileDto.getEmail())
+                    .joinedOn(Instant.now())
                     .role("User")
                     .enabled(googleProfileDto.isVerified_email())
                     .build();
@@ -165,5 +168,9 @@ public class UserService {
                         .build())
                 .locations(locations.stream().map(LocationMapper::toLocationDto).collect(Collectors.toList()))
                 .build();
+    }
+
+    public Iterable<User> getUsers() {
+        return userRepository.findAll();
     }
 }
