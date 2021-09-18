@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
-                .mvcMatchers("/api/admin").hasRole("Staff")
+                .mvcMatchers("/api/admin/**").hasAuthority("Staff")
                 .mvcMatchers(HttpMethod.POST, "/api/location").authenticated()
                 .mvcMatchers( "/user/profile").authenticated()
                 .mvcMatchers("/**").permitAll()
