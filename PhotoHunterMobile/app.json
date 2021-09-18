@@ -33,8 +33,9 @@
       },
       "package": "de.flooooooooooorian.photohunter",
       "versionCode": 3,
+      "icon": "./assets/photohunter_logo.png",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/photohunter_logo.png",
+        "foregroundImage": "./assets/photohunter_logo_foreground.png",
         "backgroundColor": "#FFFFFF"
       }
     },
