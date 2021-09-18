@@ -1,4 +1,4 @@
-package de.neuefische.flooooooooooorian.backend.dto;
+package de.neuefische.flooooooooooorian.backend.dto.login.google;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

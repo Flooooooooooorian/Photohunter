@@ -1,8 +1,8 @@
 package de.neuefische.flooooooooooorian.backend.service;
 
 import de.neuefische.flooooooooooorian.backend.config.GoogleLoginConfig;
-import de.neuefische.flooooooooooorian.backend.dto.GoogleAccessTokenDto;
-import de.neuefische.flooooooooooorian.backend.dto.GoogleProfileDto;
+import de.neuefische.flooooooooooorian.backend.dto.login.google.GoogleAccessTokenDto;
+import de.neuefische.flooooooooooorian.backend.dto.login.google.GoogleProfileDto;
 import de.neuefische.flooooooooooorian.backend.security.model.User;
 import de.neuefische.flooooooooooorian.backend.security.service.JwtUtilsService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,10 @@
 package de.neuefische.flooooooooooorian.backend.controller;
 
-import de.neuefische.flooooooooooorian.backend.dto.*;
+import de.neuefische.flooooooooooorian.backend.dto.login.EmailDto;
+import de.neuefische.flooooooooooorian.backend.dto.login.EmailVerificationDto;
+import de.neuefische.flooooooooooorian.backend.dto.login.PasswordResetDto;
+import de.neuefische.flooooooooooorian.backend.dto.user.ProfileDto;
+import de.neuefische.flooooooooooorian.backend.dto.user.UserDto;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserCreationDto;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserLoginDto;
 import de.neuefische.flooooooooooorian.backend.security.model.User;

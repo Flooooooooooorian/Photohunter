@@ -1,8 +1,8 @@
 package de.neuefische.flooooooooooorian.backend.service;
 
 import de.neuefische.flooooooooooorian.backend.config.EmailConfig;
-import de.neuefische.flooooooooooorian.backend.dto.GoogleAccessTokenDto;
-import de.neuefische.flooooooooooorian.backend.dto.GoogleProfileDto;
+import de.neuefische.flooooooooooorian.backend.dto.login.google.GoogleAccessTokenDto;
+import de.neuefische.flooooooooooorian.backend.dto.login.google.GoogleProfileDto;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserCreationDto;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserLoginDto;
 import de.neuefische.flooooooooooorian.backend.security.model.CustomUserDetails;

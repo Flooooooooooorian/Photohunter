@@ -1,10 +1,10 @@
 package de.neuefische.flooooooooooorian.backend.controller;
 
 import de.neuefische.flooooooooooorian.backend.config.GoogleLoginConfig;
-import de.neuefische.flooooooooooorian.backend.dto.GoogleAccessTokenDto;
-import de.neuefische.flooooooooooorian.backend.dto.GoogleCodeDto;
-import de.neuefische.flooooooooooorian.backend.dto.GoogleLoginConfigDto;
-import de.neuefische.flooooooooooorian.backend.dto.GoogleProfileDto;
+import de.neuefische.flooooooooooorian.backend.dto.login.google.GoogleAccessTokenDto;
+import de.neuefische.flooooooooooorian.backend.dto.login.google.GoogleCodeDto;
+import de.neuefische.flooooooooooorian.backend.dto.login.google.GoogleLoginConfigDto;
+import de.neuefische.flooooooooooorian.backend.dto.login.google.GoogleProfileDto;
 import de.neuefische.flooooooooooorian.backend.security.repository.UserRepository;
 import de.neuefische.flooooooooooorian.backend.security.service.JwtUtilsService;
 import org.junit.jupiter.api.Assertions;
