@@ -9,7 +9,9 @@ import de.neuefische.flooooooooooorian.backend.security.model.CustomUserDetails;
 import de.neuefische.flooooooooooorian.backend.security.model.User;
 import de.neuefische.flooooooooooorian.backend.security.repository.UserRepository;
 import de.neuefische.flooooooooooorian.backend.security.service.JwtUtilsService;
+import org.assertj.core.condition.AnyOf;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -19,6 +21,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,15 +65,16 @@ class UserServiceTest {
 
 
         when(userRepository.existsUserByEmail(userCreationDto.getEmail())).thenReturn(false);
-        when(userRepository.save(user)).thenReturn(userWithId);
+        when(userRepository.save(Mockito.any(User.class))).thenReturn(userWithId);
         when(passwordEncoder.encode(userCreationDto.getPassword())).thenReturn("encoded_password");
 
         User actual_user = userService.registerUserByEmail(userCreationDto);
 
-        verify(userRepository).save(user);
+        verify(userRepository).save(Mockito.any(User.class));
         verify(userRepository).existsUserByEmail(userCreationDto.getEmail());
 
         verify(passwordEncoder).encode(userCreationDto.getPassword());
+        userWithId.setJoinedOn(actual_user.getJoinedOn());
         assertThat(actual_user, is(userWithId));
     }
 
@@ -87,7 +91,7 @@ class UserServiceTest {
     }
 
     @Test
-    void loginExistingUserWithGoogle() {
+    void loginNewUserWithGoogle() {
         GoogleProfileDto googleProfileDto = GoogleProfileDto.builder()
                 .email("test_email")
                 .family_name("family_name")
@@ -115,6 +119,7 @@ class UserServiceTest {
                 .enabled(googleProfileDto.isVerified_email())
                 .build();
 
+
         User userWithId = User.builder()
                 .google_access_token(googleAccessTokenDto.getAccess_token())
                 .google_refresh_token(googleAccessTokenDto.getRefresh_token())
@@ -127,17 +132,18 @@ class UserServiceTest {
                 .build();
 
         when(userRepository.existsUserByEmail(googleProfileDto.getEmail())).thenReturn(false);
-        when(userRepository.save(user)).thenReturn(userWithId);
+        when(userRepository.save(Mockito.any(User.class))).thenReturn(userWithId);
 
         User actual_user = userService.loginUserWithGoogle(googleProfileDto, googleAccessTokenDto);
 
         verify(userRepository).existsUserByEmail(googleProfileDto.getEmail());
-        verify(userRepository).save(user);
+        verify(userRepository).save(Mockito.any(User.class));
+        userWithId.setJoinedOn(actual_user.getJoinedOn());
         assertThat(actual_user, is(userWithId));
     }
 
     @Test
-    void loginNewUserWithGoogle() {
+    void loginExistingUserWithGoogle() {
         GoogleProfileDto googleProfileDto = GoogleProfileDto.builder()
                 .email("test_email")
                 .family_name("family_name")
