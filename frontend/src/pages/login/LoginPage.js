@@ -2,8 +2,8 @@ import {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import {Button, Card, CardContent, makeStyles, TextField, Typography} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
-import google_logo from "../resources/btn_google_light_normal_ios.svg"
-import AuthContext from "../context/AuthContext";
+import google_logo from "../../resources/btn_google_light_normal_ios.svg"
+import AuthContext from "../../context/AuthContext";
 import {createMuiTheme} from "@material-ui/core/styles";
 
 export default function LoginPage() {

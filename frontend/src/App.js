@@ -6,17 +6,17 @@ import {ThemeProvider} from '@material-ui/core/styles';
 import {createMuiTheme} from '@material-ui/core/styles';
 import LocationDetailsPage from "./pages/LocationDetailsPage";
 import {geolocated} from "react-geolocated";
-import LoginPage from "./pages/LoginPage";
-import GoogleRedirectPage from "./pages/GoogleRedirectPage";
+import LoginPage from "./pages/login/LoginPage";
+import GoogleRedirectPage from "./pages/login/GoogleRedirectPage";
 import AuthProvider from "./context/AuthProvider";
 import ProfilePage from "./pages/ProfilePage";
 import PrivateRoute from "./routing/PrivateRoute";
-import RegistrationPage from "./pages/RegistrationPage";
-import RegistrationRedirectPage from "./pages/RegistrationRedirectPage";
-import PasswordForgotPage from "./pages/PasswordForgotPage";
-import PasswordResetPage from "./pages/PasswordResetPage";
-import EmailValidationRedirectPage from "./pages/EmailValidationRedirectPage";
-import PasswordRedirectPage from "./pages/PasswordRedirectPage";
+import RegistrationPage from "./pages/login/RegistrationPage";
+import RegistrationRedirectPage from "./pages/login/RegistrationRedirectPage";
+import PasswordForgotPage from "./pages/login/PasswordForgotPage";
+import PasswordResetPage from "./pages/login/PasswordResetPage";
+import EmailValidationRedirectPage from "./pages/login/EmailValidationRedirectPage";
+import PasswordRedirectPage from "./pages/login/PasswordRedirectPage";
 import CreateLocationPage from "./pages/CreateLocationPage";
 
 function App(props) {

@@ -1,6 +1,6 @@
 import {useLocation} from "react-router-dom";
 import {useContext, useEffect} from "react";
-import AuthContext from "../context/AuthContext";
+import AuthContext from "../../context/AuthContext";
 
 export default function GoogleRedirectPage() {
 
