@@ -18,6 +18,8 @@ import PasswordResetPage from "./pages/login/PasswordResetPage";
 import EmailValidationRedirectPage from "./pages/login/EmailValidationRedirectPage";
 import PasswordRedirectPage from "./pages/login/PasswordRedirectPage";
 import CreateLocationPage from "./pages/CreateLocationPage";
+import AdminPage from "./pages/admin/AdminPage";
+import AdminUserPage from "./pages/admin/AdminUserPage";
 
 function App(props) {
 
@@ -68,6 +70,12 @@ function App(props) {
                         </Route>
                         <PrivateRoute path={"/profile"}>
                             <ProfilePage/>
+                        </PrivateRoute>
+                        <PrivateRoute path={"/admin/Users"}>
+                            <AdminUserPage/>
+                        </PrivateRoute>
+                        <PrivateRoute path={"/admin"} exact>
+                            <AdminPage/>
                         </PrivateRoute>
                         <Route path={"/"}>
                             <LocationsPage geoLocation={props.coords}/>

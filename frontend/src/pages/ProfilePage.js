@@ -3,16 +3,23 @@ import AuthContext from "../context/AuthContext";
 import {Card, makeStyles, Typography} from "@material-ui/core";
 import {createMuiTheme} from "@material-ui/core/styles";
 import LocationsPage from "./LocationsPage";
+import {useHistory} from "react-router-dom";
 
 export default function ProfilePage() {
 
     const context = useContext(AuthContext)
     const classes = useStyles()
+    const history = useHistory()
 
     return(
         <Card className={classes.card}>
             <Typography className={classes.title} variant={"h3"}>
                 Profile
+            </Typography>
+            <Typography className={classes.forgot} variant={"caption"} onClick={() => {
+                history.push("/admin")
+            }}>
+                Admin
             </Typography>
             <Typography className={classes.title} variant={"h5"}>
                 {context.jwtDecoded.name}

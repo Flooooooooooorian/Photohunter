@@ -18,7 +18,6 @@ export default function AuthProvider({children}) {
                 setToken(data)
                 setJwtDecoded(jwt_decode(data.toString()))
             })
-            .then(() => history.push('/profile'))
     }
 
     const loginWithGoogleCode = code =>

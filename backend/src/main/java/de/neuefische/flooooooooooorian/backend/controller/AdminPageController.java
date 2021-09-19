@@ -25,6 +25,11 @@ public class AdminPageController {
         this.locationService = locationService;
     }
 
+    @GetMapping()
+    public List<String> getAdminPage() {
+        return List.of("Users", "Locations");
+    }
+
     @GetMapping("/locations")
     public List<Location> getLocations() {
         return locationService.getLocations();
@@ -32,20 +37,18 @@ public class AdminPageController {
 
     @GetMapping("/users")
     public List<AdminUserDto> getUsers() {
-        List<AdminUserDto> users = new ArrayList();
-        userService.getUsers().forEach(user -> {
-            users.add(AdminUserDto.builder()
-                    .full_name(user.getFull_name())
-                    .avatar_url(user.getAvatar_url())
-                    .email(user.getEmail())
-                    .joinedOn(user.getJoinedOn())
-                    .enabled(user.isEnabled())
-                    .id(user.getId())
-                    .google_access_token(user.getGoogle_access_token())
-                    .google_refresh_token(user.getGoogle_refresh_token())
-                    .role(user.getRole())
-                    .build());
-        });
+        List<AdminUserDto> users = new ArrayList<>();
+        userService.getUsers().forEach(user -> users.add(AdminUserDto.builder()
+                .full_name(user.getFull_name())
+                .avatar_url(user.getAvatar_url())
+                .email(user.getEmail())
+                .joinedOn(user.getJoinedOn())
+                .enabled(user.isEnabled())
+                .id(user.getId())
+                .google_access_token(user.getGoogle_access_token())
+                .google_refresh_token(user.getGoogle_refresh_token())
+                .role(user.getRole())
+                .build()));
         return users;
     }
 }
