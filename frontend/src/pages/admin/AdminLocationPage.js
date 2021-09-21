@@ -10,24 +10,34 @@ import {
 } from "@material-ui/core";
 import {DataGrid} from "@mui/x-data-grid";
 
-export default function AdminUserPage() {
+export default function AdminLocationPage() {
 
-    const [users, setUsers] = useState([])
+    const [locations, setLocations] = useState([])
     let history = useHistory();
     const {token} = useContext(AuthContext)
     const classes = useStyles()
 
     const handleBackButton = () => history.goBack()
 
+    const getOwnerMail = (params) => {
+        return params.row? params.row.owner.email : params.value
+    }
+
     const columns = [
-        { field: 'id', headerName: 'ID', width: 90 },
-        { field: 'email', headerName: 'Email', width: 200 },
-        { field: 'full_name', headerName: 'Full Name', width: 150 },
-        { field: 'enabled', headerName: 'Enabled', type: 'boolean', width: 130 },
-        { field: 'role', headerName: 'Role', width: 130 },
-        { field: 'joinedOn', headerName: 'joined On', width: 130 },
-        { field: 'google_access_token', headerName: 'GAT', width: 130 },
-        { field: 'google_refresh_token', headerName: 'GRT', width: 130 },
+        {field: 'id', headerName: 'ID', width: 90},
+        {field: 'title', headerName: 'Title', width: 150},
+        {
+            field: 'owner', headerName: 'Owner', width: 200,
+            valueGetter: getOwnerMail,
+            sortComparator: (v1, v2, cellParams1, cellParams2) =>
+                getOwnerMail(cellParams1).localeCompare(getOwnerMail(cellParams2)),
+        },
+        {field: 'description', headerName: 'Description', width: 150},
+        {field: 'lat', headerName: 'Latitude', type: 'number', width: 130},
+        {field: 'lng', headerName: 'Longitude', type: 'number', width: 150},
+        {field: 'rating', headerName: 'Rating', type: 'number', width: 120},
+        {field: 'tags', headerName: 'Tags', width: 130},
+        {field: 'thumbnail', headerName: 'Thumbnail', width: 130},
     ];
 
     useEffect(() => {
@@ -36,37 +46,37 @@ export default function AdminUserPage() {
                 "Authorization": token,
             },
         }
-        axios.get("/api/admin/users", config)
+        axios.get("/api/admin/locations", config)
             .then((response) => response.data)
-            .then(setUsers)
+            .then(setLocations)
             .catch((error) => {
                 console.error(error)
                 history.push({
                     pathname: '/login',
-                    state: {nextPathname: '/admin/users'}
+                    state: {nextPathname: '/admin/locations'}
                 })
             })
     }, [token, history])
 
-    return(
+    return (
         <Box className={classes.content}>
             <div className={classes.top}>
                 <Button onClick={handleBackButton} variant={"outlined"}>
                     Back
                 </Button>
                 <Typography className={classes.title} variant={"h3"}>
-                    Admin User Page
+                    Admin Location Page
                 </Typography>
                 <div/>
             </div>
-            <div style={{ height: 800, width: '100%' }}>
+
+            <div style={{height: 800, width: '100%'}}>
                 <DataGrid
-                    rows={users}
+                    rows={locations}
                     columns={columns}
                     pageSize={5}
                     rowsPerPageOptions={[5]}
                     checkboxSelection
-
                 />
             </div>
         </Box>

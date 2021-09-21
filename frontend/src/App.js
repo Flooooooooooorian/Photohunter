@@ -20,6 +20,7 @@ import PasswordRedirectPage from "./pages/login/PasswordRedirectPage";
 import CreateLocationPage from "./pages/CreateLocationPage";
 import AdminPage from "./pages/admin/AdminPage";
 import AdminUserPage from "./pages/admin/AdminUserPage";
+import AdminLocationPage from "./pages/admin/AdminLocationPage";
 
 function App(props) {
 
@@ -71,8 +72,11 @@ function App(props) {
                         <PrivateRoute path={"/profile"}>
                             <ProfilePage/>
                         </PrivateRoute>
-                        <PrivateRoute path={"/admin/Users"}>
+                        <PrivateRoute path={"/admin/users"}>
                             <AdminUserPage/>
+                        </PrivateRoute>
+                        <PrivateRoute path={"/admin/locations"}>
+                            <AdminLocationPage/>
                         </PrivateRoute>
                         <PrivateRoute path={"/admin"} exact>
                             <AdminPage/>

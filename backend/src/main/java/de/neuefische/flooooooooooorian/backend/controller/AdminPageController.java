@@ -27,7 +27,7 @@ public class AdminPageController {
 
     @GetMapping()
     public List<String> getAdminPage() {
-        return List.of("Users", "Locations");
+        return List.of("users", "locations");
     }
 
     @GetMapping("/locations")
