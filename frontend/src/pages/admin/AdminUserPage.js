@@ -13,11 +13,15 @@ import {DataGrid} from "@mui/x-data-grid";
 export default function AdminUserPage() {
 
     const [users, setUsers] = useState([])
+    const [reload, setReload] = useState(false)
     let history = useHistory();
     const {token} = useContext(AuthContext)
     const classes = useStyles()
 
     const handleBackButton = () => history.goBack()
+    const handleReload = () => {
+        setReload(!reload)
+    }
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 90 },
@@ -57,7 +61,9 @@ export default function AdminUserPage() {
                 <Typography className={classes.title} variant={"h3"}>
                     Admin User Page
                 </Typography>
-                <div/>
+                <Button onClick={handleReload} variant={"outlined"}>
+                    Reload
+                </Button>
             </div>
             <div style={{ height: 800, width: '100%' }}>
                 <DataGrid

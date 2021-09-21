@@ -13,11 +13,15 @@ import {DataGrid} from "@mui/x-data-grid";
 export default function AdminLocationPage() {
 
     const [locations, setLocations] = useState([])
+    const [reload, setReload] = useState(false)
     let history = useHistory();
     const {token} = useContext(AuthContext)
     const classes = useStyles()
 
     const handleBackButton = () => history.goBack()
+    const handleReload = () => {
+        setReload(!reload)
+    }
 
     const getOwnerMail = (params) => {
         return params.row? params.row.owner.email : params.value
@@ -67,15 +71,17 @@ export default function AdminLocationPage() {
                 <Typography className={classes.title} variant={"h3"}>
                     Admin Location Page
                 </Typography>
-                <div/>
+                <Button onClick={handleReload} variant={"outlined"}>
+                    Reload
+                </Button>
             </div>
 
             <div style={{height: 800, width: '100%'}}>
                 <DataGrid
                     rows={locations}
                     columns={columns}
-                    pageSize={5}
-                    rowsPerPageOptions={[5]}
+                    pageSize={20}
+                    rowsPerPageOptions={[20]}
                     checkboxSelection
                 />
             </div>
