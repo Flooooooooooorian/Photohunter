@@ -2,13 +2,11 @@ import {useContext} from "react";
 import AuthContext from "../context/AuthContext";
 import {Card, createTheme, makeStyles, Typography} from "@material-ui/core";
 import LocationsPage from "./LocationsPage";
-import {useHistory} from "react-router-dom";
 
 export default function ProfilePage() {
 
     const context = useContext(AuthContext)
     const classes = useStyles()
-    const history = useHistory()
 
     return(
         <Card className={classes.card}>
