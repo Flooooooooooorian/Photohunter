@@ -1,10 +1,9 @@
 import {useContext, useEffect, useState} from "react";
 import axios from "axios";
-import {Button, Card, CardContent, makeStyles, TextField, Typography} from "@material-ui/core";
+import {Button, Card, CardContent, createTheme, makeStyles, TextField, Typography} from "@material-ui/core";
 import {useHistory, useLocation} from "react-router-dom";
 import google_logo from "../../resources/btn_google_light_normal_ios.svg"
 import AuthContext from "../../context/AuthContext";
-import {createMuiTheme} from "@material-ui/core/styles";
 
 export default function LoginPage() {
 
@@ -83,7 +82,7 @@ export default function LoginPage() {
         </Card>
     )
 };
-const theme = createMuiTheme({
+const theme = createTheme({
     palette: {
         mode: 'dark',
     },

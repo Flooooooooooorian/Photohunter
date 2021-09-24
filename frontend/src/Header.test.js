@@ -1,9 +1,12 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import {render, screen} from '@testing-library/react';
 import Header from "./components/Header";
+import AuthProvider from "./context/AuthProvider";
 
 test('renders PhotoHunter', () => {
-  render(<Header />);
-  const headerElement = screen.getByText(/PhotoHunter/i);
-  expect(headerElement).toBeInTheDocument();
+
+    render(<AuthProvider authorities={[]}>
+        <Header/>
+    </AuthProvider>);
+    const headerElement = screen.getByText(/PhotoHunter/i);
+    expect(headerElement).toBeInTheDocument();
 });

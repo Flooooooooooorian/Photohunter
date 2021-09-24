@@ -2,9 +2,8 @@ import {useContext, useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import axios from "axios";
-import {createMuiTheme} from "@material-ui/core/styles";
 import {
-    Box, Button,
+    Box, Button, createTheme,
     makeStyles,
     Typography
 } from "@material-ui/core";
@@ -89,7 +88,7 @@ export default function AdminLocationPage() {
     )
 }
 
-const theme = createMuiTheme({
+const theme = createTheme({
     palette: {
         mode: 'dark',
     },

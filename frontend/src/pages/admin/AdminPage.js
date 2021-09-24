@@ -2,8 +2,7 @@ import {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import {useHistory} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
-import {Box, makeStyles, Typography} from "@material-ui/core";
-import {createMuiTheme} from "@material-ui/core/styles";
+import {Box, createTheme, makeStyles, Typography} from "@material-ui/core";
 import AdminCategorieItem from "./AdminCategorieItem";
 
 export default function AdminPage() {
@@ -43,7 +42,7 @@ export default function AdminPage() {
     )
 };
 
-const theme = createMuiTheme({
+const theme = createTheme({
     palette: {
         mode: 'dark',
     },

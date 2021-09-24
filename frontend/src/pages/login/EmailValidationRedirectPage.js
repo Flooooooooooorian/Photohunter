@@ -1,8 +1,7 @@
 import {useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {Card, CircularProgress, makeStyles, Typography} from "@material-ui/core";
-import {createMuiTheme} from "@material-ui/core/styles";
+import {Card, CircularProgress, createTheme, makeStyles, Typography} from "@material-ui/core";
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -44,7 +43,7 @@ export default function EmailValidationRedirectPage() {
     )
 }
 
-const theme = createMuiTheme({
+const theme = createTheme({
     palette: {
         mode: 'dark',
     },

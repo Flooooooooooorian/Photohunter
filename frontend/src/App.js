@@ -3,7 +3,6 @@ import {BrowserRouter, Switch, Route} from "react-router-dom";
 import LocationsPage from "./pages/LocationsPage";
 import Header from "./components/Header";
 import {ThemeProvider} from '@material-ui/core/styles';
-import {createMuiTheme} from '@material-ui/core/styles';
 import LocationDetailsPage from "./pages/LocationDetailsPage";
 import {geolocated} from "react-geolocated";
 import LoginPage from "./pages/login/LoginPage";
@@ -21,10 +20,11 @@ import CreateLocationPage from "./pages/CreateLocationPage";
 import AdminPage from "./pages/admin/AdminPage";
 import AdminUserPage from "./pages/admin/AdminUserPage";
 import AdminLocationPage from "./pages/admin/AdminLocationPage";
+import {createTheme} from "@material-ui/core";
 
 function App(props) {
 
-    const darkTheme = createMuiTheme({
+    const darkTheme = createTheme({
         palette: {
             mode: 'dark',
         },

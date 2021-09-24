@@ -1,5 +1,4 @@
-import {Card, makeStyles, Typography} from "@material-ui/core";
-import {createMuiTheme} from "@material-ui/core/styles";
+import {Card, createTheme, makeStyles, Typography} from "@material-ui/core";
 
 
 export default function PasswordRedirectPage() {
@@ -13,7 +12,7 @@ export default function PasswordRedirectPage() {
     )
 }
 
-const theme = createMuiTheme({
+const theme = createTheme({
     palette: {
         mode: 'dark',
     },
