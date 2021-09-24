@@ -3,6 +3,7 @@ package de.neuefische.flooooooooooorian.backend.controller;
 import de.neuefische.flooooooooooorian.backend.dto.location.LocationCreationDto;
 import de.neuefische.flooooooooooorian.backend.dto.location.LocationDto;
 import de.neuefische.flooooooooooorian.backend.dto.PictureDto;
+import de.neuefische.flooooooooooorian.backend.dto.login.LoginJWTDto;
 import de.neuefische.flooooooooooorian.backend.dto.user.UserDto;
 import de.neuefische.flooooooooooorian.backend.model.Location;
 import de.neuefische.flooooooooooorian.backend.model.Picture;
@@ -311,11 +312,11 @@ class LocationControllerTest {
     }
 
     private HttpHeaders getHttpHeaderWithAuthToken() {
-        User u = userRepository.save(User.builder().enabled(true).email("test_email").role("User").password(passwordEncoder.encode("test_password")).build());
+        userRepository.save(User.builder().enabled(true).email("test_email").role("User").password(passwordEncoder.encode("test_password")).build());
         UserLoginDto loginData = new UserLoginDto("test_email", "test_password");
-        ResponseEntity<String> tokenResponse = testRestTemplate.postForEntity("http://localhost:" + port + "/user/login", loginData, String.class);
+        ResponseEntity<LoginJWTDto> tokenResponse = testRestTemplate.postForEntity("http://localhost:" + port + "/user/login", loginData, LoginJWTDto.class);
         HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(tokenResponse.getBody());
+        headers.setBearerAuth(tokenResponse.getBody().getJwt());
         return headers;
     }
 }

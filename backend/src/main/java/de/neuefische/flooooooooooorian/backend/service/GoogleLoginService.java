@@ -1,6 +1,7 @@
 package de.neuefische.flooooooooooorian.backend.service;
 
 import de.neuefische.flooooooooooorian.backend.config.GoogleLoginConfig;
+import de.neuefische.flooooooooooorian.backend.dto.login.LoginJWTDto;
 import de.neuefische.flooooooooooorian.backend.dto.login.google.GoogleAccessTokenDto;
 import de.neuefische.flooooooooooorian.backend.dto.login.google.GoogleProfileDto;
 import de.neuefische.flooooooooooorian.backend.security.model.User;
@@ -31,15 +32,19 @@ public class GoogleLoginService {
         this.jwtUtilsService = jwtUtilsService;
     }
 
-    public String loginWithGoogle(String code) {
+    public LoginJWTDto loginWithGoogle(String code) {
         GoogleAccessTokenDto googleAccessTokenDto = getAccessToken(code);
         GoogleProfileDto profile = getGoogleProfileInformations(googleAccessTokenDto.getAccess_token());
         User google_user = getUserWithGoogleProfile(profile, googleAccessTokenDto);
 
         HashMap<String, Object> claims = new HashMap<>();
         claims.put("name", google_user.getFull_name());
+        System.out.println(google_user);
 
-        return jwtUtilsService.createToken(claims, google_user.getEmail());
+        return LoginJWTDto.builder()
+                .authorities(new String[]{google_user.getRole()})
+                .jwt(jwtUtilsService.createToken(claims, google_user.getEmail()))
+                .build();
     }
 
     private User getUserWithGoogleProfile(GoogleProfileDto profile, GoogleAccessTokenDto googleAccessTokenDto) {

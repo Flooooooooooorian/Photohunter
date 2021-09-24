@@ -1,6 +1,7 @@
 package de.neuefische.flooooooooooorian.backend.service;
 
 import de.neuefische.flooooooooooorian.backend.config.GoogleLoginConfig;
+import de.neuefische.flooooooooooorian.backend.dto.login.LoginJWTDto;
 import de.neuefische.flooooooooooorian.backend.dto.login.google.GoogleAccessTokenDto;
 import de.neuefische.flooooooooooorian.backend.dto.login.google.GoogleProfileDto;
 import de.neuefische.flooooooooooorian.backend.security.model.User;
@@ -14,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.*;
 
@@ -81,13 +83,14 @@ class GoogleLoginServiceTest {
         claims.put("name", user.getFull_name());
         when(jwtUtilsService.createToken(claims, user.getEmail())).thenReturn("jwt_test_token");
 
-        String actual_token = googleLoginService.loginWithGoogle(code);
+        LoginJWTDto loginJWTDto = googleLoginService.loginWithGoogle(code);
 
         verify(restTemplate).exchange("https://oauth2.googleapis.com/token", HttpMethod.POST, new HttpEntity<>(map, token_headers), GoogleAccessTokenDto.class);
         verify(restTemplate).exchange("https://www.googleapis.com/oauth2/v1/userinfo?alt=json", HttpMethod.GET, new HttpEntity<>(userinfo_headers), GoogleProfileDto.class);
         verify(userService).loginUserWithGoogle(googleProfileDto, googleAccessTokenDto);
         verify(jwtUtilsService).createToken(claims, user.getEmail());
 
-        assertThat(actual_token, equalTo("jwt_test_token"));
+        assertThat(loginJWTDto.getJwt(), equalTo("jwt_test_token"));
+        assertThat(loginJWTDto.getAuthorities(), arrayContainingInAnyOrder("User"));
     }
 }

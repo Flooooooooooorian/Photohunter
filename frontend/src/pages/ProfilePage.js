@@ -16,11 +16,6 @@ export default function ProfilePage() {
             <Typography className={classes.title} variant={"h3"}>
                 Profile
             </Typography>
-            <Typography className={classes.forgot} variant={"caption"} onClick={() => {
-                history.push("/admin")
-            }}>
-                Admin
-            </Typography>
             <Typography className={classes.title} variant={"h5"}>
                 {context.jwtDecoded.name}
             </Typography>

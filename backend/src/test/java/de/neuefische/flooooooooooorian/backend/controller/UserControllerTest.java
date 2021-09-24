@@ -1,6 +1,7 @@
 package de.neuefische.flooooooooooorian.backend.controller;
 
 import de.neuefische.flooooooooooorian.backend.config.EmailConfig;
+import de.neuefische.flooooooooooorian.backend.dto.login.LoginJWTDto;
 import de.neuefische.flooooooooooorian.backend.dto.user.UserDto;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserCreationDto;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserLoginDto;
@@ -74,12 +75,12 @@ class UserControllerTest {
 
         userRepository.save(user);
 
-        ResponseEntity<String> response = testRestTemplate.exchange("http://localhost:" + port + "/user/login", HttpMethod.POST, new HttpEntity<>(userLoginDto), String.class);
+        ResponseEntity<LoginJWTDto> response = testRestTemplate.exchange("http://localhost:" + port + "/user/login", HttpMethod.POST, new HttpEntity<>(userLoginDto), LoginJWTDto.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
         assertThat(response.getBody(), notNullValue());
         try {
-            jwtUtilsService.parseClaim(response.getBody());
+            jwtUtilsService.parseClaim(response.getBody().getJwt());
         }
         catch (io.jsonwebtoken.MalformedJwtException e) {
             Assertions.fail(e.getMessage());

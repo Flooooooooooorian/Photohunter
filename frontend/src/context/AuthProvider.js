@@ -7,6 +7,7 @@ import jwt_decode from "jwt-decode";
 export default function AuthProvider({children}) {
 
     const [token, setToken] = useState()
+    const [authorities, setAuthorities] = useState([])
     const history = useHistory()
     const [jwtDecoded, setJwtDecoded] = useState()
 
@@ -15,8 +16,9 @@ export default function AuthProvider({children}) {
             .post('/user/login', credentials)
             .then(response => response.data)
             .then(data => {
-                setToken(data)
-                setJwtDecoded(jwt_decode(data.toString()))
+                setToken(data.jwt)
+                setAuthorities(data.authorities)
+                setJwtDecoded(jwt_decode(data.jwt.toString()))
             })
     }
 
@@ -24,15 +26,16 @@ export default function AuthProvider({children}) {
         axios.post("/auth/google/login", {code})
             .then(response => response.data)
             .then(data => {
-                setToken(data)
-                setJwtDecoded(jwt_decode(data.toString()))
+                setToken(data.jwt)
+                setAuthorities(data.authorities)
+                setJwtDecoded(jwt_decode(data.jwt.toString()))
             })
             .then(() => history.push('/profile'))
             .catch(error => console.error(error.message))
 
 
     return (
-        <AuthContext.Provider value={{token, login, loginWithGoogleCode, jwtDecoded}}>
+        <AuthContext.Provider value={{token, login, loginWithGoogleCode, jwtDecoded, authorities}}>
             {children}
         </AuthContext.Provider>
     )

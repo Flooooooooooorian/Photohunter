@@ -2,6 +2,7 @@ package de.neuefische.flooooooooooorian.backend.controller;
 
 import de.neuefische.flooooooooooorian.backend.dto.login.EmailDto;
 import de.neuefische.flooooooooooorian.backend.dto.login.EmailVerificationDto;
+import de.neuefische.flooooooooooorian.backend.dto.login.LoginJWTDto;
 import de.neuefische.flooooooooooorian.backend.dto.login.PasswordResetDto;
 import de.neuefische.flooooooooooorian.backend.dto.user.ProfileDto;
 import de.neuefische.flooooooooooorian.backend.dto.user.UserDto;
@@ -25,7 +26,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody UserLoginDto userLoginDto) {
+    public LoginJWTDto login(@RequestBody UserLoginDto userLoginDto) {
         return userService.login(userLoginDto);
     }
 

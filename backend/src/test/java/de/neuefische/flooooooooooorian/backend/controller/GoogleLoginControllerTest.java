@@ -1,6 +1,7 @@
 package de.neuefische.flooooooooooorian.backend.controller;
 
 import de.neuefische.flooooooooooorian.backend.config.GoogleLoginConfig;
+import de.neuefische.flooooooooooorian.backend.dto.login.LoginJWTDto;
 import de.neuefische.flooooooooooorian.backend.dto.login.google.GoogleAccessTokenDto;
 import de.neuefische.flooooooooooorian.backend.dto.login.google.GoogleCodeDto;
 import de.neuefische.flooooooooooorian.backend.dto.login.google.GoogleLoginConfigDto;
@@ -90,14 +91,13 @@ class GoogleLoginControllerTest {
         ResponseEntity<GoogleProfileDto> profileResponseEntity = new ResponseEntity<>(googleProfileDto, HttpStatus.OK);
         when(restTemplate.exchange("https://www.googleapis.com/oauth2/v1/userinfo?alt=json", HttpMethod.GET, new HttpEntity<>(userinfo_headers), GoogleProfileDto.class)).thenReturn(profileResponseEntity);
 
-        ResponseEntity<String> response = testRestTemplate.exchange("http://localhost:" + port + "/auth/google/login", HttpMethod.POST, new HttpEntity<>(code), String.class);
+        ResponseEntity<LoginJWTDto> response = testRestTemplate.exchange("http://localhost:" + port + "/auth/google/login", HttpMethod.POST, new HttpEntity<>(code), LoginJWTDto.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
         try {
-            jwtUtilsService.parseClaim(response.getBody());
-        }
-        catch (io.jsonwebtoken.MalformedJwtException e) {
+            jwtUtilsService.parseClaim(response.getBody().getJwt());
+        } catch (io.jsonwebtoken.MalformedJwtException e) {
             Assertions.fail(e.getMessage());
         }
     }

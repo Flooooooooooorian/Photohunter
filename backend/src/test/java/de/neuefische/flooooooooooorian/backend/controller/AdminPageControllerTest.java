@@ -1,6 +1,7 @@
 package de.neuefische.flooooooooooorian.backend.controller;
 
 import de.neuefische.flooooooooooorian.backend.dto.admin.AdminUserDto;
+import de.neuefische.flooooooooooorian.backend.dto.login.LoginJWTDto;
 import de.neuefische.flooooooooooorian.backend.model.Location;
 import de.neuefische.flooooooooooorian.backend.repository.LocationRepository;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserLoginDto;
@@ -16,6 +17,8 @@ import org.springframework.http.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.util.MultiValueMap;
+
+import java.util.Objects;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -91,21 +94,20 @@ class AdminPageControllerTest {
     }
 
     private HttpHeaders getHttpHeaderWithUserAuthToken() {
-        User u = userRepository.save(User.builder().enabled(true).email("test_email").role("User").password(passwordEncoder.encode("test_password")).build());
+        userRepository.save(User.builder().enabled(true).email("test_email").role("User").password(passwordEncoder.encode("test_password")).build());
         UserLoginDto loginData = new UserLoginDto("test_email", "test_password");
-        ResponseEntity<String> tokenResponse = testRestTemplate.postForEntity("http://localhost:" + port + "/user/login", loginData, String.class);
+        ResponseEntity<LoginJWTDto> tokenResponse = testRestTemplate.postForEntity("http://localhost:" + port + "/user/login", loginData, LoginJWTDto.class);
         HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(tokenResponse.getBody());
+        headers.setBearerAuth(Objects.requireNonNull(tokenResponse.getBody()).getJwt());
         return headers;
     }
 
     private HttpHeaders getHttpHeaderWithStaffAuthToken() {
-        User u = userRepository.save(User.builder().enabled(true).email("test_email").role("Staff").password(passwordEncoder.encode("test_password")).build());
-        System.out.println(u);
+        userRepository.save(User.builder().enabled(true).email("test_email").role("Staff").password(passwordEncoder.encode("test_password")).build());
         UserLoginDto loginData = new UserLoginDto("test_email", "test_password");
-        ResponseEntity<String> tokenResponse = testRestTemplate.postForEntity("http://localhost:" + port + "/user/login", loginData, String.class);
+        ResponseEntity<LoginJWTDto> tokenResponse = testRestTemplate.postForEntity("http://localhost:" + port + "/user/login", loginData, LoginJWTDto.class);
         HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(tokenResponse.getBody());
+        headers.setBearerAuth(Objects.requireNonNull(tokenResponse.getBody()).getJwt());
         return headers;
     }
 }

@@ -1,6 +1,7 @@
 package de.neuefische.flooooooooooorian.backend.service;
 
 import de.neuefische.flooooooooooorian.backend.config.EmailConfig;
+import de.neuefische.flooooooooooorian.backend.dto.login.LoginJWTDto;
 import de.neuefische.flooooooooooorian.backend.dto.login.google.GoogleAccessTokenDto;
 import de.neuefische.flooooooooooorian.backend.dto.login.google.GoogleProfileDto;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserCreationDto;
@@ -22,13 +23,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.*;
@@ -192,15 +190,18 @@ class UserServiceTest {
         when(authentication.getPrincipal()).thenReturn(new CustomUserDetails("test_username", userLoginDto.getEmail(), userLoginDto.getPassword(), List.of(new SimpleGrantedAuthority("User"))));
         when(authentication.getName()).thenReturn(userLoginDto.getEmail());
 
+        Mockito.doReturn(List.of(new SimpleGrantedAuthority("User"))).when(authentication).getAuthorities();
+
         when(jwtUtilsService.createToken(new HashMap<>(Map.of("name", "test_username")), userLoginDto.getEmail())).thenReturn("jwt_test_token");
 
-        String jwt = userService.login(userLoginDto);
+        LoginJWTDto jwtDto = userService.login(userLoginDto);
 
         verify(authenticationManager).authenticate(usernamePasswordAuthenticationToken);
         verify(authentication, atLeastOnce()).getPrincipal();
         verify(authentication).getName();
         verify(jwtUtilsService).createToken(new HashMap<>(Map.of("name", "test_username")), userLoginDto.getEmail());
-        assertThat(jwt, equalTo("jwt_test_token"));
+        assertThat(jwtDto.getJwt(), is("jwt_test_token"));
+        assertThat(jwtDto.getAuthorities(), arrayContainingInAnyOrder("User"));
     }
 
     @Test
