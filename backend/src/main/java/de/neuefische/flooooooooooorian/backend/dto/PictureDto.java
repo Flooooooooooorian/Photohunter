@@ -1,5 +1,6 @@
 package de.neuefische.flooooooooooorian.backend.dto;
 
+import de.neuefische.flooooooooooorian.backend.dto.user.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

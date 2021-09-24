@@ -1,8 +1,8 @@
 package de.neuefische.flooooooooooorian.backend.utils;
 
-import de.neuefische.flooooooooooorian.backend.dto.LocationDto;
+import de.neuefische.flooooooooooorian.backend.dto.location.LocationDto;
 import de.neuefische.flooooooooooorian.backend.dto.PictureDto;
-import de.neuefische.flooooooooooorian.backend.dto.UserDto;
+import de.neuefische.flooooooooooorian.backend.dto.user.UserDto;
 import de.neuefische.flooooooooooorian.backend.model.Location;
 
 public class LocationMapper {

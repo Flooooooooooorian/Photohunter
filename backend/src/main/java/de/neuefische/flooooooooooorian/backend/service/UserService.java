@@ -1,7 +1,13 @@
 package de.neuefische.flooooooooooorian.backend.service;
 
 import de.neuefische.flooooooooooorian.backend.config.EmailConfig;
-import de.neuefische.flooooooooooorian.backend.dto.*;
+import de.neuefische.flooooooooooorian.backend.dto.login.EmailVerificationDto;
+import de.neuefische.flooooooooooorian.backend.dto.login.LoginJWTDto;
+import de.neuefische.flooooooooooorian.backend.dto.login.PasswordResetDto;
+import de.neuefische.flooooooooooorian.backend.dto.login.google.GoogleAccessTokenDto;
+import de.neuefische.flooooooooooorian.backend.dto.login.google.GoogleProfileDto;
+import de.neuefische.flooooooooooorian.backend.dto.user.ProfileDto;
+import de.neuefische.flooooooooooorian.backend.dto.user.UserDto;
 import de.neuefische.flooooooooooorian.backend.model.Location;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserCreationDto;
 import de.neuefische.flooooooooooorian.backend.security.dto.UserLoginDto;
@@ -19,14 +25,16 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.Instant;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,6 +65,7 @@ public class UserService {
                     .email(userCreationDto.getEmail())
                     .full_name(userCreationDto.getName())
                     .role("User")
+                    .joinedOn(Instant.now())
                     .password(passwordEncoder.encode(userCreationDto.getPassword()))
                     .build();
 
@@ -76,6 +85,7 @@ public class UserService {
                     .avatar_url(googleProfileDto.getPicture())
                     .full_name(googleProfileDto.getName())
                     .email(googleProfileDto.getEmail())
+                    .joinedOn(Instant.now())
                     .role("User")
                     .enabled(googleProfileDto.isVerified_email())
                     .build();
@@ -83,7 +93,7 @@ public class UserService {
         }
     }
 
-    public String login(UserLoginDto userLoginDto) {
+    public LoginJWTDto login(UserLoginDto userLoginDto) {
         Authentication auth;
         try {
             UsernamePasswordAuthenticationToken usernamePasswordData = new UsernamePasswordAuthenticationToken(userLoginDto.getEmail(), userLoginDto.getPassword());
@@ -98,7 +108,12 @@ public class UserService {
         }
         HashMap<String, Object> claims = new HashMap<>();
         claims.put("name", ((CustomUserDetails)auth.getPrincipal()).getFullName());
-        return jwtUtilsService.createToken(claims, auth.getName());
+        return LoginJWTDto.builder()
+                .authorities(auth.getAuthorities().stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .toArray(String[]::new))
+                .jwt(jwtUtilsService.createToken(claims, auth.getName()))
+                .build();
     }
 
     public void startEmailVerification(String email) {
@@ -160,5 +175,9 @@ public class UserService {
                         .build())
                 .locations(locations.stream().map(LocationMapper::toLocationDto).collect(Collectors.toList()))
                 .build();
+    }
+
+    public Iterable<User> getUsers() {
+        return userRepository.findAll();
     }
 }

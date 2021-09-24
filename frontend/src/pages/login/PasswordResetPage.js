@@ -1,9 +1,17 @@
-import {Button, Card, CardContent, CircularProgress, makeStyles, TextField, Typography} from "@material-ui/core";
+import {
+    Button,
+    Card,
+    CardContent,
+    CircularProgress,
+    createTheme,
+    makeStyles,
+    TextField,
+    Typography
+} from "@material-ui/core";
 import {useState} from "react";
 import axios from "axios";
 import {useHistory, useLocation} from "react-router-dom";
 import jwt_decode from "jwt-decode";
-import {createMuiTheme} from "@material-ui/core/styles";
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -111,7 +119,7 @@ export default function PasswordResetPage() {
     )
 }
 
-const theme = createMuiTheme({
+const theme = createTheme({
     palette: {
         mode: 'dark',
     },

@@ -1,19 +1,18 @@
-import {Card, makeStyles, Typography} from "@material-ui/core";
-import {createMuiTheme} from "@material-ui/core/styles";
+import {Card, createTheme, makeStyles, Typography} from "@material-ui/core";
 
 
-export default function PasswordRedirectPage() {
+export default function RegistrationRedirectPage() {
     const classes = useStyles()
     return (
         <Card className={classes.card}>
             <Typography variant={"h4"}>
-                Password has been reset!
+                Email Verification has been send!
             </Typography>
         </Card>
     )
 }
 
-const theme = createMuiTheme({
+const theme = createTheme({
     palette: {
         mode: 'dark',
     },
