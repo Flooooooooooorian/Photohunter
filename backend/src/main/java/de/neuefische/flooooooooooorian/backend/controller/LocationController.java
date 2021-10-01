@@ -40,9 +40,9 @@ public class LocationController {
     }
 
     @GetMapping
-    public List<LocationDto> getLocations(@RequestParam Optional<Double> lat, @RequestParam Optional<Double> lng) {
+    public List<LocationDto> getLocations(Principal principal, @RequestParam Optional<Double> lat, @RequestParam Optional<Double> lng) {
         return locationService.getLocations(lat, lng).stream()
-                .map((LocationMapper::toLocationDto))
+                .map((location -> LocationMapper.toLocationDto(location, principal != null? userService.findUserByEmail(principal.getName()) : Optional.empty())))
                 .collect(Collectors.toList());
     }
 
@@ -53,14 +53,14 @@ public class LocationController {
             File fileToUpload = File.createTempFile("photo", null);
             thumbnail.get().transferTo(fileToUpload);
             Picture photoToSave = cloudinaryService.uploadImage(fileToUpload);
-            return LocationMapper.toLocationDto(locationService.createLocation(locationCreationDto, photoToSave, user));
+            return LocationMapper.toLocationDto(locationService.createLocation(locationCreationDto, photoToSave, user), Optional.of(user));
         }
-        return LocationMapper.toLocationDto(locationService.createLocation(locationCreationDto, user));
+        return LocationMapper.toLocationDto(locationService.createLocation(locationCreationDto, user), Optional.of(user));
     }
 
     @GetMapping("/{id}")
-    public LocationDto getLocationById(@PathVariable String id) {
-        return LocationMapper.toLocationDto(locationService.getLocationById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Id not valid!")));
+    public LocationDto getLocationById(Principal principal, @PathVariable String id) {
+        return LocationMapper.toLocationDto(locationService.getLocationById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Id not valid!")), principal != null? userService.findUserByEmail(principal.getName()) : Optional.empty());
     }
 
     @PutMapping("/{id}/favorite")
@@ -69,11 +69,10 @@ public class LocationController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id not valid");
         }
         Optional<User> optionalUser = userService.findUserByEmail(principal.getName());
-        User user = optionalUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+        User user = optionalUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN));
         Optional<Location> optionalLocation = locationService.getLocationById(id);
-        Location location = optionalLocation.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id not valid"));
+        Location location = optionalLocation.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Id not valid"));
 
-        location = userService.favories(user, location);
-        return LocationMapper.toLocationDto(location);
+        return LocationMapper.toLocationDto(userService.favories(user, location), Optional.of(user));
     }
 }

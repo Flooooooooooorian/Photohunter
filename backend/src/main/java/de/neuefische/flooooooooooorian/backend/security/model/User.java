@@ -1,12 +1,7 @@
 package de.neuefische.flooooooooooorian.backend.security.model;
 
-import de.neuefische.flooooooooooorian.backend.model.Location;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
@@ -36,7 +31,5 @@ public class User {
     private String google_access_token;
     private String google_refresh_token;
 
-    @DBRef
-    private List<Location> favorites = new ArrayList();
-
+    private List<String> favoriteLocationIds = new ArrayList<>();
 }

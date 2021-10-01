@@ -21,6 +21,7 @@ public class Location {
     @Id
     private String id;
     private Instant creationDate;
+    @DBRef
     private User owner;
     private String g_placesId;
     private double lat;

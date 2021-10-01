@@ -43,6 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/api/admin/**").hasAuthority("Staff")
                 .mvcMatchers(HttpMethod.POST, "/api/location").authenticated()
                 .mvcMatchers( "/user/profile").authenticated()
+                .mvcMatchers("api/location/**/favorite").authenticated()
                 .mvcMatchers("/**").permitAll()
                 .and().addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
