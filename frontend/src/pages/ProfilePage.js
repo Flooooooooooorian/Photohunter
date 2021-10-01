@@ -1,7 +1,6 @@
 import {useContext} from "react";
 import AuthContext from "../context/AuthContext";
-import {Card, makeStyles, Typography} from "@material-ui/core";
-import {createMuiTheme} from "@material-ui/core/styles";
+import {Card, createTheme, makeStyles, Typography} from "@material-ui/core";
 import LocationsPage from "./LocationsPage";
 
 export default function ProfilePage() {
@@ -22,7 +21,7 @@ export default function ProfilePage() {
     )
 }
 
-const theme = createMuiTheme({
+const theme = createTheme({
     palette: {
         mode: 'dark',
     },

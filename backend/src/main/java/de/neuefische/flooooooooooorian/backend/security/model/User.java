@@ -12,6 +12,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.time.Instant;
+
 @Document(collection = "users")
 @Data
 @AllArgsConstructor
@@ -21,6 +23,7 @@ public class User {
 
     @Id
     private String id;
+    private Instant joinedOn;
     private String email;
     private String full_name;
     private String avatar_url;

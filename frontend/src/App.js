@@ -3,25 +3,28 @@ import {BrowserRouter, Switch, Route} from "react-router-dom";
 import LocationsPage from "./pages/LocationsPage";
 import Header from "./components/Header";
 import {ThemeProvider} from '@material-ui/core/styles';
-import {createMuiTheme} from '@material-ui/core/styles';
 import LocationDetailsPage from "./pages/LocationDetailsPage";
 import {geolocated} from "react-geolocated";
-import LoginPage from "./pages/LoginPage";
-import GoogleRedirectPage from "./pages/GoogleRedirectPage";
+import LoginPage from "./pages/login/LoginPage";
+import GoogleRedirectPage from "./pages/login/GoogleRedirectPage";
 import AuthProvider from "./context/AuthProvider";
 import ProfilePage from "./pages/ProfilePage";
 import PrivateRoute from "./routing/PrivateRoute";
-import RegistrationPage from "./pages/RegistrationPage";
-import RegistrationRedirectPage from "./pages/RegistrationRedirectPage";
-import PasswordForgotPage from "./pages/PasswordForgotPage";
-import PasswordResetPage from "./pages/PasswordResetPage";
-import EmailValidationRedirectPage from "./pages/EmailValidationRedirectPage";
-import PasswordRedirectPage from "./pages/PasswordRedirectPage";
+import RegistrationPage from "./pages/login/RegistrationPage";
+import RegistrationRedirectPage from "./pages/login/RegistrationRedirectPage";
+import PasswordForgotPage from "./pages/login/PasswordForgotPage";
+import PasswordResetPage from "./pages/login/PasswordResetPage";
+import EmailValidationRedirectPage from "./pages/login/EmailValidationRedirectPage";
+import PasswordRedirectPage from "./pages/login/PasswordRedirectPage";
 import CreateLocationPage from "./pages/CreateLocationPage";
+import AdminPage from "./pages/admin/AdminPage";
+import AdminUserPage from "./pages/admin/AdminUserPage";
+import AdminLocationPage from "./pages/admin/AdminLocationPage";
+import {createTheme} from "@material-ui/core";
 
 function App(props) {
 
-    const darkTheme = createMuiTheme({
+    const darkTheme = createTheme({
         palette: {
             mode: 'dark',
         },
@@ -68,6 +71,15 @@ function App(props) {
                         </Route>
                         <PrivateRoute path={"/profile"}>
                             <ProfilePage/>
+                        </PrivateRoute>
+                        <PrivateRoute path={"/admin/users"}>
+                            <AdminUserPage/>
+                        </PrivateRoute>
+                        <PrivateRoute path={"/admin/locations"}>
+                            <AdminLocationPage/>
+                        </PrivateRoute>
+                        <PrivateRoute path={"/admin"} exact>
+                            <AdminPage/>
                         </PrivateRoute>
                         <Route path={"/"}>
                             <LocationsPage geoLocation={props.coords}/>

@@ -2,6 +2,8 @@ package de.neuefische.flooooooooooorian.backend.controller;
 
 import de.neuefische.flooooooooooorian.backend.dto.*;
 import de.neuefische.flooooooooooorian.backend.model.Location;
+import de.neuefische.flooooooooooorian.backend.dto.location.LocationCreationDto;
+import de.neuefische.flooooooooooorian.backend.dto.location.LocationDto;
 import de.neuefische.flooooooooooorian.backend.model.Picture;
 import de.neuefische.flooooooooooorian.backend.security.model.User;
 import de.neuefische.flooooooooooorian.backend.service.CloudinaryService;

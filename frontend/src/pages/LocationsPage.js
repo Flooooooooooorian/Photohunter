@@ -3,8 +3,7 @@ import LocationList from "../components/LocationList";
 import {useState} from "react";
 import LocationMap from "../components/LocationMap";
 import {useHistory} from "react-router-dom";
-import {Box, makeStyles} from "@material-ui/core";
-import {createMuiTheme} from "@material-ui/core/styles";
+import {Box, createTheme, makeStyles} from "@material-ui/core";
 
 export default function LocationsPage({geoLocation}) {
 
@@ -39,7 +38,7 @@ export default function LocationsPage({geoLocation}) {
     );
 }
 
-const theme = createMuiTheme({
+const theme = createTheme({
     palette: {
         mode: 'dark',
     },

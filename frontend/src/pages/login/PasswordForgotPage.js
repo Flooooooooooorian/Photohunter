@@ -1,7 +1,15 @@
-import {Button, Card, CardContent, CircularProgress, makeStyles, TextField, Typography} from "@material-ui/core";
+import {
+    Button,
+    Card,
+    CardContent,
+    CircularProgress,
+    createTheme,
+    makeStyles,
+    TextField,
+    Typography
+} from "@material-ui/core";
 import {useState} from "react";
 import axios from "axios";
-import {createMuiTheme} from "@material-ui/core/styles";
 
 export default function PasswordForgotPage() {
     const [done, setDone] = useState(false)
@@ -63,7 +71,7 @@ export default function PasswordForgotPage() {
     )
 }
 
-const theme = createMuiTheme({
+const theme = createTheme({
     palette: {
         mode: 'dark',
     },

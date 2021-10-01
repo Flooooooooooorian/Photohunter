@@ -1,6 +1,7 @@
-package de.neuefische.flooooooooooorian.backend.dto;
+package de.neuefische.flooooooooooorian.backend.dto.location;
 
-import de.neuefische.flooooooooooorian.backend.model.Picture;
+import de.neuefische.flooooooooooorian.backend.dto.PictureDto;
+import de.neuefische.flooooooooooorian.backend.dto.user.UserDto;
 import de.neuefische.flooooooooooorian.backend.model.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
