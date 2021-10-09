@@ -1,11 +1,11 @@
 package de.neuefische.flooooooooooorian.backend.security.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import java.time.Instant;
 
@@ -31,4 +31,5 @@ public class User {
     private String google_access_token;
     private String google_refresh_token;
 
+    private List<String> favoriteLocationIds = new ArrayList<>();
 }

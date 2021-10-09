@@ -32,10 +32,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.util.Arrays;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -177,16 +174,43 @@ public class UserService {
         User user = optionalUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
         List<Location> locations = locationService.getLocationsFromUser(user);
 
+        List<Location> favorites = new ArrayList<>();
+        user.getFavoriteLocationIds().forEach((id) -> {
+            Optional<Location> optionalLocation = locationService.getLocationById(id);
+            optionalLocation.ifPresent(favorites::add);
+        });
+
         return ProfileDto.builder()
                 .user(UserDto.builder()
                         .avatar_url(user.getAvatar_url())
                         .full_name(user.getFull_name())
                         .build())
-                .locations(locations.stream().map(LocationMapper::toLocationDto).collect(Collectors.toList()))
+                .locations(locations.stream().map((location -> LocationMapper.toLocationDto(location, Optional.of(user)))).collect(Collectors.toList()))
+                .favorites(favorites.stream().map((location -> LocationMapper.toLocationDto(location, Optional.of(user)))).collect(Collectors.toList()))
                 .build();
     }
 
     public Iterable<User> getUsers() {
         return userRepository.findAll();
+    }
+
+    public List<Location> getFavoritesFrom(User user) {
+        List<Location> favorites = new ArrayList<>();
+        user.getFavoriteLocationIds().forEach((id) -> {
+            Optional<Location> optionalLocation = locationService.getLocationById(id);
+            optionalLocation.ifPresent(favorites::add);
+        });
+        return favorites;
+    }
+
+    public Location favories(User user, Location location) {
+        if (user.getFavoriteLocationIds().contains(location.getId())) {
+            user.getFavoriteLocationIds().remove(location.getId());
+        }
+        else {
+            user.getFavoriteLocationIds().add(location.getId());
+        }
+        userRepository.save(user);
+        return location;
     }
 }
