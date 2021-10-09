@@ -1,9 +1,8 @@
 import {useEffect, useState} from "react";
-import {Box, Card, CardContent, CardHeader, CardMedia, makeStyles, Typography} from "@material-ui/core";
+import {Box, Card, CardContent, CardHeader, CardMedia, createTheme, makeStyles, Typography} from "@material-ui/core";
 import {useLocation, useParams} from "react-router-dom";
 import StarIcon from '@material-ui/icons/Star';
 import axios from "axios";
-import {createMuiTheme} from "@material-ui/core/styles";
 
 export default function LocationDetailsPage() {
     const historyState = useLocation();
@@ -60,7 +59,7 @@ export default function LocationDetailsPage() {
     )
 }
 
-const theme = createMuiTheme({
+const theme = createTheme({
     palette: {
         mode: 'dark',
     },

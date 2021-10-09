@@ -1,4 +1,4 @@
-package de.neuefische.flooooooooooorian.backend.dto;
+package de.neuefische.flooooooooooorian.backend.dto.login;
 
 import de.neuefische.flooooooooooorian.backend.security.validation.ValidPassword;
 import lombok.AllArgsConstructor;
