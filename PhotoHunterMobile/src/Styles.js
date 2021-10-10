@@ -27,8 +27,7 @@ export default function Styles() {
                 elevation: 5,
             },
             card: {
-                marginVertical: 25,
-                marginHorizontal: 25,
+                margin: 15,
                 display: "flex",
                 backgroundColor: '#FFFFFE',
                 borderRadius: 4,
@@ -61,13 +60,14 @@ export default function Styles() {
                 padding: 10,
             },
             list_item: {
-                marginVertical: 15,
-                marginHorizontal: 25,
+                display: "flex",
+                flexDirection: "row",
+                margin: 15,
             },
             list_media: {
-                width: 80,
-                height: 50,
-                marginRight: 10,
+                width: 160,
+                height: 100,
+                margin: 10,
             },
             media: {
                 height: 300,
@@ -94,6 +94,7 @@ export default function Styles() {
                 width: 48,
             },
             text_title: {
+                marginTop: 10,
                 fontSize: 25,
             },
         }

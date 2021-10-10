@@ -19,12 +19,12 @@ export default function LocationItem({location, showDetailsPage}) {
             <Text style={classes.text_title}>
                 {location.title}
             </Text>
-            <View style={classes.box}>
-                <Text>
-                    {location.rating}
-                </Text>
-                <View/>
-            </View>
+            {/*<View style={classes.box}>*/}
+            {/*    <Text>*/}
+            {/*        {location.rating}*/}
+            {/*    </Text>*/}
+            {/*    <View/>*/}
+            {/*</View>*/}
         </TouchableOpacity>
     )
 }
