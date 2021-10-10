@@ -1,0 +1,14 @@
+.*
+*.iml
+README.md
+/node_modules
+/build
+package-lock.json
+package.json
+/.expo
+/.expo-shared
+/.idea
+/assets
+/web-build
+.env
+
