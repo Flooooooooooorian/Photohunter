@@ -6,6 +6,7 @@ import Styles from '../Styles'
 import FormTextInput from '../components/FormTextInput'
 import ServerConfig from '../../ServerConfig'
 import CustomButton from '../components/CustomButton'
+import CardView from '../components/CardView'
 
 export default function RegistrationPage() {
   const [email, setEmail] = useState('')
@@ -100,7 +101,7 @@ export default function RegistrationPage() {
 
   return (
     <>
-      <View style={classes.card}>
+      <CardView>
         <Text style={classes.page_title}>Registration</Text>
         {serverError && <Text style={classes.error}>{serverError}</Text>}
         <View style={classes.content}>
@@ -146,7 +147,7 @@ export default function RegistrationPage() {
           </CustomButton>
         </View>
         {loading && <View />}
-      </View>
+      </CardView>
     </>
   )
 }

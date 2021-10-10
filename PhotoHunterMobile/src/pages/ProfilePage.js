@@ -1,13 +1,14 @@
-import React, {useContext} from 'react'
+import React, { useContext } from 'react'
 import AuthContext from '../context/AuthContext'
 import LocationsPage from './LocationsPage'
-import {StyleSheet, Text, View} from 'react-native'
+import { StyleSheet, Text } from 'react-native'
+import CardView from '../components/CardView'
 
 export default function ProfilePage() {
   const context = useContext(AuthContext)
 
   return (
-    <View style={classes.card}>
+    <CardView>
       <Text style={classes.title} variant={'h3'}>
         Profile
       </Text>
@@ -15,7 +16,7 @@ export default function ProfilePage() {
         {context.jwtDecoded.name}
       </Text>
       <LocationsPage />
-    </View>
+    </CardView>
   )
 }
 

@@ -2,12 +2,6 @@ import { StyleSheet } from 'react-native'
 
 export default function Styles() {
   return StyleSheet.create({
-    card: {
-      margin: 15,
-      display: 'flex',
-      backgroundColor: '#FFFFFE',
-      borderRadius: 4,
-    },
     error: {
       color: 'red',
       textAlign: 'center',

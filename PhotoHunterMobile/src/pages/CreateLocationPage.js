@@ -10,6 +10,7 @@ import * as ImagePicker from 'expo-image-picker'
 import ServerConfig from '../../ServerConfig'
 import CustomButton from '../components/CustomButton'
 import styled from 'styled-components/native'
+import CardScrollView from '../components/CardScrollView'
 
 export default function CreateLocationPage() {
   const historyState = useLocation()
@@ -93,7 +94,7 @@ export default function CreateLocationPage() {
   }
 
   return (
-    <ScrollView style={classes.card}>
+    <CardScrollView>
       <View style={classes.content}>
         <FormTextInput
           errorText={titleError}
@@ -140,7 +141,7 @@ export default function CreateLocationPage() {
           <Text style={{ color: '#fff' }}>Save</Text>
         </CustomButton>
       </View>
-    </ScrollView>
+    </CardScrollView>
   )
 }
 

@@ -1,7 +1,8 @@
-import {useLocation} from 'react-router-dom'
-import React, {useEffect, useState} from 'react'
+import { useLocation } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import {StyleSheet, Text, View} from 'react-native'
+import { Text, View } from 'react-native'
+import CardView from '../components/CardView'
 
 function useQuery() {
   return new URLSearchParams(useLocation().search)
@@ -32,7 +33,7 @@ export default function EmailValidationRedirectPage() {
   }, [token])
 
   return (
-    <View style={classes.card}>
+    <CardView>
       {loading && <View />}
       {!loading && (
         <Text variant={'h4'}>
@@ -40,15 +41,6 @@ export default function EmailValidationRedirectPage() {
           {!result && 'Email Verification failed'}
         </Text>
       )}
-    </View>
+    </CardView>
   )
 }
-
-const classes = StyleSheet.create({
-  card: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    margin: 25,
-  },
-})

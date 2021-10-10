@@ -1,10 +1,11 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { Image, ScrollView, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, View } from 'react-native'
 import Styles from '../Styles'
 import useDetailedLocations from '../hooks/useDetailedLocations'
 import styled from 'styled-components/native'
 import AdBanner from '../components/AdBanner'
+import CardScrollView from '../components/CardScrollView'
 
 export default function LocationDetailsPage() {
   const { id } = useParams()
@@ -13,8 +14,8 @@ export default function LocationDetailsPage() {
   const { detailedLocation } = useDetailedLocations(id)
 
   return (
-    <ScrollView>
-      <View style={{ ...classes.card, ...classes.shadow }}>
+    <CardScrollView>
+      <View style={style.shadow}>
         <Image
           style={classes.media}
           source={{
@@ -38,10 +39,27 @@ export default function LocationDetailsPage() {
       >
         <AdBanner />
       </View>
-    </ScrollView>
+    </CardScrollView>
   )
 }
 
 const DetailedLocationContent = styled.View`
   margin: 5px;
 `
+
+const style = StyleSheet.create({
+  shadow: {
+    margin: 5,
+    // boxShadow: '5px 5px 11px -7px #000000',
+    backgroundColor: '#FFFFFE',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
+  },
+})

@@ -5,6 +5,7 @@ import { Text, View } from 'react-native'
 import Styles from '../Styles'
 import FormTextInput from '../components/FormTextInput'
 import CustomButton from '../components/CustomButton'
+import CardView from '../components/CardView'
 
 export default function LoginPage() {
   const [email, setEmail] = useState()
@@ -26,7 +27,7 @@ export default function LoginPage() {
   }
 
   return (
-    <View style={classes.card}>
+    <CardView>
       <Text style={classes.page_title}>Login</Text>
       {error && <Text style={classes.error}>{error}</Text>}
       <View style={classes.content}>
@@ -67,6 +68,6 @@ export default function LoginPage() {
 
         {/*<GoogleLoginButton/>*/}
       </View>
-    </View>
+    </CardView>
   )
 }

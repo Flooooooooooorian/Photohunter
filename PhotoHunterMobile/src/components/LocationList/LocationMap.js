@@ -1,8 +1,7 @@
 import React from 'react'
 import GoogleMapsContainer from '../GoogleMapsContainer'
-import { View } from 'react-native'
-import Styles from '../../Styles'
 import LocationActionBar from './LocationActionBar'
+import CardView from '../CardView'
 
 export default function LocationMap({
   locations,
@@ -11,13 +10,11 @@ export default function LocationMap({
   showDetailsPage,
   showCreateLocationPage,
 }) {
-  const classes = Styles()
-
   return (
     <>
-      <View style={classes.card}>
+      <CardView>
         <LocationActionBar toggleView={toggleView} icon={'list'} />
-      </View>
+      </CardView>
       <GoogleMapsContainer
         handleMapClick={showCreateLocationPage}
         handleMarkerClick={showDetailsPage}

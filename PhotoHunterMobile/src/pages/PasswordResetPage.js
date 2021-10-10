@@ -1,8 +1,9 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
-import {useHistory, useLocation} from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
-import {Button, StyleSheet, Text, TextInput, View} from 'react-native'
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
+import CardView from '../components/CardView'
 
 function useQuery() {
   return new URLSearchParams(useLocation().search)
@@ -80,7 +81,7 @@ export default function PasswordResetPage() {
   }
 
   return (
-    <View style={classes.card}>
+    <CardView>
       <Text style={classes.title} variant={'h3'}>
         Password Reset
       </Text>
@@ -118,7 +119,7 @@ export default function PasswordResetPage() {
         </View>
       </form>
       {loading && <View />}
-    </View>
+    </CardView>
   )
 }
 

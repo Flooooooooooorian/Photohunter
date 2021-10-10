@@ -5,6 +5,7 @@ import Styles from '../Styles'
 import FormTextInput from '../components/FormTextInput'
 import ServerConfig from '../../ServerConfig'
 import CustomButton from '../components/CustomButton'
+import CardView from '../components/CardView'
 
 export default function PasswordForgotPage() {
   const [email, setEmail] = useState()
@@ -38,14 +39,14 @@ export default function PasswordForgotPage() {
 
   if (done) {
     return (
-      <View style={classes.card}>
+      <CardView>
         <Text style={classes.page_title}>Email send</Text>
-      </View>
+      </CardView>
     )
   }
 
   return (
-    <View style={classes.card}>
+    <CardView>
       <Text style={classes.page_title}>Password Reset</Text>
       <View style={classes.content}>
         <FormTextInput
@@ -61,6 +62,6 @@ export default function PasswordForgotPage() {
         </CustomButton>
         {loading && <View />}
       </View>
-    </View>
+    </CardView>
   )
 }
