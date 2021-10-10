@@ -1,7 +1,7 @@
 import LocationItem from './LocationItem'
 import React from 'react'
-import {ScrollView} from 'react-native'
-import Styles from '../Styles'
+import { ScrollView } from 'react-native'
+import Styles from '../../Styles'
 import LocationActionBar from './LocationActionBar'
 
 export default function LocationList({

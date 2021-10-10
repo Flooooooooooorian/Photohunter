@@ -1,13 +1,15 @@
-import {useHistory, useLocation} from 'react-router-dom'
-import React, {useContext, useState} from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
+import React, { useContext, useState } from 'react'
 import axios from 'axios'
 import GoogleMapsContainer from '../components/GoogleMapsContainer'
 import AuthContext from '../context/AuthContext'
-import {Dimensions, Image, ScrollView, Text, TouchableOpacity, View,} from 'react-native'
+import { Dimensions, Image, ScrollView, Text, View } from 'react-native'
 import Styles from '../Styles'
 import FormTextInput from '../components/FormTextInput'
 import * as ImagePicker from 'expo-image-picker'
 import ServerConfig from '../../ServerConfig'
+import CustomButton from '../components/CustomButton'
+import styled from 'styled-components/native'
 
 export default function CreateLocationPage() {
   const historyState = useLocation()
@@ -117,12 +119,9 @@ export default function CreateLocationPage() {
           )}
         </View>
 
-        <TouchableOpacity
-          style={{ ...classes.button, marginTop: 10 }}
-          onPress={handleChoosePhoto}
-        >
+        <StyledCustomButton onPress={handleChoosePhoto}>
           <Text style={{ color: '#fff' }}>Select Image</Text>
-        </TouchableOpacity>
+        </StyledCustomButton>
 
         <GoogleMapsContainer
           handleMarkerClick={null}
@@ -137,10 +136,14 @@ export default function CreateLocationPage() {
             height: Dimensions.get('window').height - 450,
           }}
         />
-        <TouchableOpacity style={classes.button} onPress={handleSubmit}>
+        <CustomButton onPress={handleSubmit}>
           <Text style={{ color: '#fff' }}>Save</Text>
-        </TouchableOpacity>
+        </CustomButton>
       </View>
     </ScrollView>
   )
 }
+
+const StyledCustomButton = styled(CustomButton)`
+  margin-top: 10px;
+`

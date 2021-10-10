@@ -1,7 +1,8 @@
-import {useHistory} from 'react-router-dom'
-import {SafeAreaView, Text, TouchableOpacity, View,} from 'react-native'
+import { useHistory } from 'react-router-dom'
+import { SafeAreaView, Text, View } from 'react-native'
 import React from 'react'
 import Styles from '../Styles'
+import styled from 'styled-components/native'
 
 export default function Header() {
   const history = useHistory()
@@ -21,10 +22,15 @@ export default function Header() {
         <Text style={classes.heading} onPress={handleLogoClick}>
           PhotoHunter
         </Text>
-        <TouchableOpacity style={classes.avatar} onPress={handleAvatarOnClick}>
+        <Profile onPress={handleAvatarOnClick}>
           <Text style={{ color: 'white' }}>Login</Text>
-        </TouchableOpacity>
+        </Profile>
       </View>
     </SafeAreaView>
   )
 }
+
+const Profile = styled.TouchableOpacity`
+  align-self: center;
+  padding-right: 10px;
+`

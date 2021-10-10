@@ -1,29 +1,7 @@
-import {StyleSheet} from 'react-native'
+import { StyleSheet } from 'react-native'
 
 export default function Styles() {
   return StyleSheet.create({
-    avatar: {
-      alignSelf: 'center',
-      paddingRight: 10,
-      // width: 30,
-      // height: 30,
-    },
-    button: {
-      backgroundColor: '#483d8b',
-      padding: 20,
-      marginTop: 20,
-      marginHorizontal: 10,
-
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-
-      elevation: 5,
-    },
     card: {
       margin: 15,
       display: 'flex',
@@ -38,10 +16,6 @@ export default function Styles() {
       textDecorationLine: 'underline',
       textAlign: 'center',
       marginTop: 10,
-    },
-    google: {
-      display: 'flex',
-      alignItems: 'center',
     },
     header: {
       display: 'flex',
@@ -77,6 +51,7 @@ export default function Styles() {
       fontSize: 50,
     },
     shadow: {
+      // boxShadow: '5px 5px 11px -7px #000000',
       backgroundColor: '#FFFFFE',
       shadowColor: '#000',
       shadowOffset: {
@@ -87,9 +62,6 @@ export default function Styles() {
       shadowRadius: 3.84,
 
       elevation: 5,
-    },
-    space: {
-      width: 48,
     },
     text_title: {
       marginTop: 10,

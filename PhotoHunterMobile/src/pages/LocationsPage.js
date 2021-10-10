@@ -1,9 +1,9 @@
 import useLocations from '../hooks/useLocations'
-import LocationList from '../components/LocationList'
-import React, {useState} from 'react'
-import LocationMap from '../components/LocationMap'
-import {useHistory} from 'react-router-dom'
-import {View} from 'react-native'
+import LocationList from '../components/LocationList/LocationList'
+import React, { useState } from 'react'
+import LocationMap from '../components/LocationList/LocationMap'
+import { useHistory } from 'react-router-dom'
+import { View } from 'react-native'
 
 export default function LocationsPage({ geoLocation }) {
   const [mapIsEnabled, setMapIsEnabled] = useState(false)

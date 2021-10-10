@@ -1,4 +1,4 @@
-import {Marker} from 'react-native-maps'
+import { Marker } from 'react-native-maps'
 import React from 'react'
 
 export default function LocationMarker({ location, handleMarkerClick }) {

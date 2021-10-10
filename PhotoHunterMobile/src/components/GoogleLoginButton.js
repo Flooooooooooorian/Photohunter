@@ -1,8 +1,10 @@
-import {Text, TouchableOpacity, View} from 'react-native'
-import React, {useEffect, useState} from 'react'
-import Styles from '../Styles'
+import { Text, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import ServerConfig from '../../ServerConfig'
+import Styles from '../Styles'
+import CustomButton from './CustomButton'
+import styled from 'styled-components/native'
 
 export default function GoogleLoginButton() {
   const classes = Styles()
@@ -35,16 +37,20 @@ export default function GoogleLoginButton() {
   return (
     <View>
       {config && (
-        <TouchableOpacity
-          style={{
-            ...classes.button,
-            ...classes.google,
-          }}
-          onPress={handleGoogleLoginClick}
-        >
+        <StyledCustomButton onPress={handleGoogleLoginClick}>
           <Text style={{ color: '#ffffff' }}>Sign in with Google</Text>
-        </TouchableOpacity>
+        </StyledCustomButton>
       )}
     </View>
   )
 }
+
+const StyledCustomButton = styled(CustomButton)`
+  background-color: #483d8b;
+  padding: 20px;
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+`

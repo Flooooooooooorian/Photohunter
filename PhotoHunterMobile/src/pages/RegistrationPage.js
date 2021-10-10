@@ -1,10 +1,11 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
-import {useHistory} from 'react-router-dom'
-import {Text, TouchableOpacity, View} from 'react-native'
+import { useHistory } from 'react-router-dom'
+import { Text, View } from 'react-native'
 import Styles from '../Styles'
 import FormTextInput from '../components/FormTextInput'
 import ServerConfig from '../../ServerConfig'
+import CustomButton from '../components/CustomButton'
 
 export default function RegistrationPage() {
   const [email, setEmail] = useState('')
@@ -138,15 +139,11 @@ export default function RegistrationPage() {
             placeholder={'Password'}
           />
 
-          <TouchableOpacity
-            disabled={loading}
-            onPress={handleSubmit}
-            style={classes.button}
-          >
+          <CustomButton disabled={loading} onPress={handleSubmit}>
             <Text style={{ textAlign: 'center', color: '#ffffff' }}>
               Sign Up
             </Text>
-          </TouchableOpacity>
+          </CustomButton>
         </View>
         {loading && <View />}
       </View>

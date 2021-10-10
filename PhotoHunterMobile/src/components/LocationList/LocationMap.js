@@ -1,7 +1,7 @@
 import React from 'react'
-import GoogleMapsContainer from './GoogleMapsContainer'
-import {View} from 'react-native'
-import Styles from '../Styles'
+import GoogleMapsContainer from '../GoogleMapsContainer'
+import { View } from 'react-native'
+import Styles from '../../Styles'
 import LocationActionBar from './LocationActionBar'
 
 export default function LocationMap({

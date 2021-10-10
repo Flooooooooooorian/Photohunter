@@ -1,9 +1,10 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
-import {Text, TouchableOpacity, View,} from 'react-native'
+import { Text, View } from 'react-native'
 import Styles from '../Styles'
 import FormTextInput from '../components/FormTextInput'
 import ServerConfig from '../../ServerConfig'
+import CustomButton from '../components/CustomButton'
 
 export default function PasswordForgotPage() {
   const [email, setEmail] = useState()
@@ -55,13 +56,9 @@ export default function PasswordForgotPage() {
           onChangeText={setEmail}
           placeholder={'Email'}
         />
-        <TouchableOpacity
-          style={classes.button}
-          disabled={loading}
-          onPress={handleResetEmail}
-        >
+        <CustomButton disabled={loading} onPress={handleResetEmail}>
           <Text style={{ textAlign: 'center', color: '#ffffff' }}>Send</Text>
-        </TouchableOpacity>
+        </CustomButton>
         {loading && <View />}
       </View>
     </View>

@@ -1,9 +1,10 @@
-import React, {useContext, useState} from 'react'
-import {useHistory} from 'react-router-dom'
+import React, { useContext, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import AuthContext from '../context/AuthContext'
-import {Text, TouchableOpacity, View,} from 'react-native'
+import { Text, View } from 'react-native'
 import Styles from '../Styles'
 import FormTextInput from '../components/FormTextInput'
+import CustomButton from '../components/CustomButton'
 
 export default function LoginPage() {
   const [email, setEmail] = useState()
@@ -45,9 +46,9 @@ export default function LoginPage() {
           onChangeText={setPassword}
           secureTextEntry={true}
         />
-        <TouchableOpacity style={classes.button} onPress={handleSignIn}>
+        <CustomButton onPress={handleSignIn}>
           <Text style={{ textAlign: 'center', color: '#ffffff' }}>Sign In</Text>
-        </TouchableOpacity>
+        </CustomButton>
 
         <Text
           style={classes.forgot}
@@ -58,14 +59,11 @@ export default function LoginPage() {
           Forgot your Password?
         </Text>
 
-        <TouchableOpacity
-          style={classes.button}
-          onPress={handleRegistrationClick}
-        >
+        <CustomButton onPress={handleRegistrationClick}>
           <Text style={{ textAlign: 'center', color: '#ffffff' }}>
             Registration
           </Text>
-        </TouchableOpacity>
+        </CustomButton>
 
         {/*<GoogleLoginButton/>*/}
       </View>

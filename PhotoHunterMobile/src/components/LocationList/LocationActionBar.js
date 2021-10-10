@@ -1,7 +1,7 @@
 import React from 'react'
-import {Text, TouchableOpacity, View} from 'react-native'
+import { Text, TouchableOpacity } from 'react-native'
 import styled from 'styled-components/native'
-import Styles from '../Styles'
+import Styles from '../../Styles'
 import LocationActionBarIcon from './LocationActionBarIcon'
 
 export default function LocationActionBar({ toggleView, icon }) {
@@ -13,7 +13,7 @@ export default function LocationActionBar({ toggleView, icon }) {
         <LocationActionBarIcon icon={icon} />
       </TouchableOpacity>
       <Text style={classes.page_title}>Locations</Text>
-      <View style={classes.space} />
+      <Spacer style={classes.space} />
     </ActionBar>
   )
 }
@@ -23,4 +23,8 @@ const ActionBar = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+`
+
+const Spacer = styled.View`
+  width: 48px;
 `

@@ -1,39 +1,16 @@
-import React, {useEffect, useState} from 'react'
-import {useLocation, useParams} from 'react-router-dom'
-import axios from 'axios'
-import {Image, Platform, ScrollView, Text, View} from 'react-native'
+import React from 'react'
+import { useParams } from 'react-router-dom'
+import { Image, ScrollView, Text, View } from 'react-native'
 import Styles from '../Styles'
-import {AdMobBanner} from 'expo-ads-admob'
+import useDetailedLocations from '../hooks/useDetailedLocations'
+import styled from 'styled-components/native'
+import AdBanner from '../components/AdBanner'
 
 export default function LocationDetailsPage() {
-  const historyState = useLocation()
-  const [location, setLocation] = useState(historyState.state?.loc)
   const { id } = useParams()
   const classes = Styles()
 
-  const AdmobBannerId = Platform.select({
-    ios: () => {
-      return 'ca-app-pub-1201256601321447/3572724672'
-    },
-    android: () => {
-      return 'ca-app-pub-1201256601321447/9246927022'
-    },
-    default: () => {
-      return '<View/>'
-    },
-  })()
-
-  useEffect(() => {
-    if (!location) {
-      axios
-        .get('https://photohunter.herokuapp.com/api/location/' + id)
-        .then(response => response.data)
-        .then(setLocation)
-        .catch(error => {
-          console.error(error)
-        })
-    }
-  }, [id, location, setLocation])
+  const { detailedLocation } = useDetailedLocations(id)
 
   return (
     <ScrollView>
@@ -41,17 +18,17 @@ export default function LocationDetailsPage() {
         <Image
           style={classes.media}
           source={{
-            uri: location.thumbnail
-              ? location.thumbnail.url
+            uri: detailedLocation.thumbnail
+              ? detailedLocation.thumbnail.url
               : 'https://picsum.photos/300/200',
           }}
         />
-        <View>
-          <Text style={classes.text_title}>{location.title}</Text>
-          <Text>{location.rating}</Text>
+        <DetailedLocationContent>
+          <Text style={classes.text_title}>{detailedLocation.title}</Text>
+          <Text>{detailedLocation.rating}</Text>
           <Text>{'Tags'}</Text>
-          <Text display={'block'}>{location.description}</Text>
-        </View>
+          <Text display={'block'}>{detailedLocation.description}</Text>
+        </DetailedLocationContent>
       </View>
       <View
         style={{
@@ -59,12 +36,12 @@ export default function LocationDetailsPage() {
           alignItems: 'center',
         }}
       >
-        <AdMobBanner
-          bannerSize="largeBanner"
-          adUnitID={AdmobBannerId}
-          servePersonalizedAds={false}
-        />
+        <AdBanner />
       </View>
     </ScrollView>
   )
 }
+
+const DetailedLocationContent = styled.View`
+  margin: 5px;
+`

@@ -1,6 +1,6 @@
 import React from 'react'
-import {Image, Text, TouchableOpacity} from 'react-native'
-import Styles from '../Styles'
+import { Image, Text, TouchableOpacity } from 'react-native'
+import Styles from '../../Styles'
 
 export default function LocationItem({ location, showDetailsPage }) {
   const classes = Styles()

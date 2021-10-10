@@ -1,8 +1,8 @@
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'
-import React, {useState} from 'react'
-import LocationMarker from './LocationMarker'
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+import React, { useState } from 'react'
+import LocationMarker from './LocationList/LocationMarker'
 import GeoLocationMarker from './GeoLocationMarker'
-import {Dimensions, StyleSheet} from 'react-native'
+import { Dimensions, StyleSheet } from 'react-native'
 
 export default function GoogleMapsContainer({
   locations,

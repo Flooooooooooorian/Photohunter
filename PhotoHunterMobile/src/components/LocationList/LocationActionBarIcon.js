@@ -1,5 +1,5 @@
 import React from 'react'
-import {Feather, FontAwesome} from '@expo/vector-icons'
+import { Feather, FontAwesome } from '@expo/vector-icons'
 
 export default function LocationActionBarIcon({ icon }) {
   return (
