@@ -120,6 +120,8 @@ class GoogleLoginControllerTest {
         ResponseEntity<String> response = testRestTemplate.exchange("http://localhost:" + port + "/auth/google/login", HttpMethod.POST, new HttpEntity<>(code), String.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.BAD_REQUEST));
+
+        Assertions.fail();
     }
 
     @Test
