@@ -100,8 +100,6 @@ class GoogleLoginControllerTest {
         } catch (io.jsonwebtoken.MalformedJwtException e) {
             Assertions.fail(e.getMessage());
         }
-
-        Assertions.fail();
     }
 
     @Test
