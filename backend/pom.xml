@@ -14,6 +14,10 @@
     <name>backend</name>
     <description>photohunter</description>
     <properties>
+        <sonar.organization>flooooooooooorian</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.sources>src/, ../frontend/src</sonar.sources>
+        <sonar.exclusions>=../frontend/package-lock.json,./src/test</sonar.exclusions>
         <java.version>16</java.version>
     </properties>
     <dependencies>
