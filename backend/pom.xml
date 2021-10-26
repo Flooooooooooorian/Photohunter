@@ -14,8 +14,6 @@
     <name>backend</name>
     <description>photohunter</description>
     <properties>
-        <sonar.organization>flooooooooooorian</sonar.organization>
-        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <java.version>16</java.version>
     </properties>
     <dependencies>
