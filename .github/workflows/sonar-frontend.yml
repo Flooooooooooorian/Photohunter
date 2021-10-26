@@ -1,4 +1,4 @@
-name: Sonar
+name: Sonar-frontend
 on:
   push:
   pull_request:
