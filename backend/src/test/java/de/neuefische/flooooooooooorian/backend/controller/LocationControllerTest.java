@@ -1,5 +1,6 @@
 package de.neuefische.flooooooooooorian.backend.controller;
 
+import de.neuefische.flooooooooooorian.backend.dto.FavoriteDto;
 import de.neuefische.flooooooooooorian.backend.dto.location.LocationCreationDto;
 import de.neuefische.flooooooooooorian.backend.dto.location.LocationDto;
 import de.neuefische.flooooooooooorian.backend.dto.PictureDto;
@@ -32,6 +33,8 @@ import org.springframework.util.MultiValueMap;
 import java.io.File;
 import java.io.IOException;
 import java.time.Instant;
+import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -121,7 +124,7 @@ class LocationControllerTest {
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
         assertThat(response.getBody(), notNullValue());
-        assertThat(response.getBody(), arrayContainingInAnyOrder(LocationMapper.toLocationDto(l1), LocationMapper.toLocationDto(l2)));
+        assertThat(response.getBody(), arrayContainingInAnyOrder(LocationMapper.toLocationDto(l1, Optional.empty()), LocationMapper.toLocationDto(l2, Optional.empty())));
     }
 
     @Test
@@ -176,7 +179,7 @@ class LocationControllerTest {
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
         assertThat(response.getBody(), notNullValue());
-        assertThat(response.getBody(), is(LocationMapper.toLocationDto(l2)));
+        assertThat(response.getBody(), is(LocationMapper.toLocationDto(l2, Optional.empty())));
     }
 
     @Test
@@ -230,7 +233,7 @@ class LocationControllerTest {
         ResponseEntity<LocationDto[]> response = testRestTemplate.getForEntity("http://localhost:" + port + "/api/location?lat=50&lng=50", LocationDto[].class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
-        assertThat(response.getBody(), arrayContainingInAnyOrder(LocationMapper.toLocationDto(l1)));
+        assertThat(response.getBody(), arrayContainingInAnyOrder(LocationMapper.toLocationDto(l1, Optional.empty())));
     }
 
     @Test
@@ -310,6 +313,55 @@ class LocationControllerTest {
                         .build())
                 .build()));
     }
+
+    @Test
+    void favoriseLocationTrue() {
+        User u = User.builder().id("1").email("email").role("User").enabled(true).build();
+        userRepository.save(u);
+        locationRepository.save(Location.builder().title("test-location").id("1").owner(u).build());
+
+        FavoriteDto fav = FavoriteDto.builder().id("1").status(true).build();
+
+        HttpHeaders headers = getHttpHeaderWithAuthToken();
+
+        ResponseEntity<LocationDto> response = testRestTemplate.exchange("/api/location/1/favorite", HttpMethod.PUT, new HttpEntity<>(fav, headers), LocationDto.class);
+
+        assertThat(response.getStatusCode(), is(HttpStatus.OK));
+        assertThat(response.getBody(), notNullValue());
+        assertThat(response.getBody().isFavorite(), is(true));
+    }
+
+    @Test
+    void favoriseLocationFalse() {
+        User u = User.builder().id("1").email("email").role("User").enabled(true).build();
+        userRepository.save(u);
+        Location l = Location.builder().title("test-location").id("1").owner(u).build();
+        locationRepository.save(l);
+
+        HttpHeaders headers = getHttpHeaderWithAuthToken();
+
+        User user = userRepository.findUserByEmail("test_email").get();
+        user.setFavoriteLocationIds(List.of(l.getId()));
+        userRepository.save(user);
+
+        FavoriteDto fav = FavoriteDto.builder().id("1").status(true).build();
+
+        ResponseEntity<LocationDto> response = testRestTemplate.exchange("/api/location/1/favorite", HttpMethod.PUT, new HttpEntity<>(fav, headers), LocationDto.class);
+
+        assertThat(response.getStatusCode(), is(HttpStatus.OK));
+        assertThat(response.getBody(), notNullValue());
+        assertThat(response.getBody().isFavorite(), is(false));
+    }
+
+    @Test
+    void favoriseLocationUnauthorized() {
+        FavoriteDto fav = FavoriteDto.builder().id("1").status(true).build();
+
+        ResponseEntity<LocationDto> response = testRestTemplate.exchange("/api/location/1/favorite", HttpMethod.PUT, new HttpEntity<>(fav), LocationDto.class);
+
+        assertThat(response.getStatusCode(), is(HttpStatus.FORBIDDEN));
+    }
+
 
     private HttpHeaders getHttpHeaderWithAuthToken() {
         userRepository.save(User.builder().enabled(true).email("test_email").role("User").password(passwordEncoder.encode("test_password")).build());

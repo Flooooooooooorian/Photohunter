@@ -15,4 +15,5 @@ import java.util.List;
 public class ProfileDto {
     private UserDto user;
     private List<LocationDto> locations;
+    private List<LocationDto> favorites;
 }

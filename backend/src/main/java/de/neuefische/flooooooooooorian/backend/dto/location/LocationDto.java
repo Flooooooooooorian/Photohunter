@@ -26,4 +26,6 @@ public class LocationDto {
     private List<String> pictures;
     private double rating;
     private List<Tag> tags;
+
+    private boolean favorite = false;
 }
